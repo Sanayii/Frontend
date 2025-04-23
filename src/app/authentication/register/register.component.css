@@ -12,11 +12,13 @@ body {
   overflow: hidden;
   display: flex;
   flex-wrap: wrap;
+  margin-top: 10%;
+  margin-bottom: 5%;
 }
 
 .register-img {
   flex: 1 1 50%;
-  background: url('/images/register.jpg') no-repeat center center;
+  background: url('/assets/images/register.jpg') no-repeat center center;
   background-size: cover;
   min-height: 400px;
 }

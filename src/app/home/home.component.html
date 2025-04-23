@@ -8,11 +8,6 @@
   href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css"
   rel="stylesheet"
   />
-  <link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css"
-  />
-
 </head>
 <body>
 
@@ -20,10 +15,10 @@
   <section class="banner" id="home">
     <div class="banner-content">
       <h1>Welcome to Sanayii</h1>
-      <h2>Connecting You with Trusted Artisans</h2>
+      <h3>Connecting You with Trusted Artisans</h3>
       <p>Plumbers, electricians, carpenters — all in one place.</p>
       <div class="banner-button">
-        <a href="#services" class="btn btn-outline">Explore Services</a>
+        <a href="#services" class="btn btn-outline btn__primary">Explore Services</a>
       </div>
     </div>
   </section>
@@ -50,22 +45,22 @@
 
         <div class="about__grid">
           <div class="about__card">
-            <span><i class="ri-building-4-line"></i></span>
+            <span><i class="ri-building-4-line blueIcon"></i></span>
             <h4>1800</h4>
             <p>Worldwide Branches</p>
           </div>
           <div class="about__card">
-            <span><i class="ri-user-fill"></i></span>
+            <span><i class="ri-user-fill blueIcon"></i></span>
             <h4>1920</h4>
             <p>Qualified Engineers</p>
           </div>
           <div class="about__card">
-            <span><i class="ri-user-smile-line"></i></span>
+            <span><i class="ri-user-smile-line blueIcon"></i></span>
             <h4>1612</h4>
             <p>Work Facilities</p>
           </div>
           <div class="about__card">
-            <span><i class="ri-trophy-fill"></i></span>
+            <span><i class="ri-trophy-fill blueIcon"></i></span>
             <h4>1980</h4>
             <p>Completed Projects</p>
           </div>
@@ -74,17 +69,136 @@
       </div>
 
       <div class="about__image">
-        <img src="/images/a2.jpeg" alt="" />
-        <img src="/images/about.jpeg" alt="" />
+        <img src="/assets/images/a2.jpeg" alt="" />
+        <img src="/assets/images/about.jpeg" alt="" />
       </div>
 
     </div>
   </section>
-
+  <section class="services" id="services">
+    <h2 class="section__header para"><span>Services</span> We Offer</h2>
+    <div class="swiper" #servicesSwiper>
+      <div class="swiper-wrapper">
+        
+        <!-- Service 1 -->
+        <div class="swiper-slide">
+          <div class="service-card">
+            <img src="https://cdn-icons-png.flaticon.com/512/1077/1077012.png" alt="Matching Icon" class="ServiceIcon" />
+            <h4>Artisan Matching</h4>
+            <p>Connect instantly with skilled and verified artisans in your area based on your needs.</p>
+          </div>
+        </div>
+  
+        <!-- Service 2 -->
+        <div class="swiper-slide">
+          <div class="service-card">
+            <img src="https://cdn-icons-png.flaticon.com/512/3348/3348728.png" alt="Real-Time Booking Icon" class="ServiceIcon" />
+            <h4>Real-Time Booking</h4>
+            <p>Request services on demand and schedule appointments at your convenience.</p>
+          </div>
+        </div>
+  
+        <!-- Service 3 -->
+        <div class="swiper-slide">
+          <div class="service-card active">
+            <img src="https://cdn-icons-png.flaticon.com/512/1019/1019607.png" alt="Chat Icon" class="ServiceIcon"/>
+            <h4>Live Chat & Support</h4>
+            <p>Chat directly with artisans or our support team to ensure your requests are fulfilled properly.</p>
+          </div>
+        </div>
+  
+        <!-- Service 4 -->
+        <div class="swiper-slide">
+          <div class="service-card">
+            <img src="https://cdn-icons-png.flaticon.com/512/1828/1828884.png" alt="Rating Icon" class="ServiceIcon"/>
+            <h4>Ratings & Reviews</h4>
+            <p>Rate services and browse artisan profiles with user reviews to make informed decisions.</p>
+          </div>
+        </div>
+  
+        <!-- Service 5 -->
+        <div class="swiper-slide">
+          <div class="service-card">
+            <img src="https://cdn-icons-png.flaticon.com/512/681/681392.png" alt="Publishing Icon" class="ServiceIcon" />
+            <h4>Artisan Profile Publishing</h4>
+            <p>Artisans can showcase their portfolios, receive feedback, and grow their reputation online.</p>
+          </div>
+        </div>
+  
+      </div>
+      <div class="swiper-pagination services-pagination"></div>
+    </div>
+  </section>
+  
+  
+  
 
   <!-- start services  -->
-
-
+  <section class="customer">
+    <div class="section__container customer__container">
+      <p class="para section__header ms-5 mb-5" id="Reviews">
+        What Our <span>Customers Say</span>
+      </p>
+      <div class="customer__review">
+        <!-- Slider main container -->
+        <div class="swiper reviewSlider" #ReviewSwiper>
+          <!-- Additional required wrapper -->
+          <div class="swiper-wrapper">
+            <!-- Slides -->
+            <div class="swiper-slide">
+              <div class="customer__review__card">
+                <span><i class="ri-double-quotes-r"></i></span>
+                <p>
+                  I urgently needed a plumber and Sanayii made it so easy. Within minutes, a skilled artisan was at my door. The entire experience was professional and stress-free. I’ll definitely use this platform again.
+                </p>
+                <div class="customer__review__details">
+                  <img src="/assets/images/customer-1.jpg" alt="customer" />
+                  <div>
+                    <h4>Mohamed Ali</h4>
+                    <h5>Homeowner</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <div class="swiper-slide">
+              <div class="customer__review__card">
+                <span><i class="ri-double-quotes-r"></i></span>
+                <p>
+                  Sanayii connected us with a certified electrician who handled our office rewiring quickly and efficiently. It’s rare to find such a dependable service. Highly recommended!
+                </p>
+                <div class="customer__review__details">
+                  <img src="/assets/images/customer-2.jpg" alt="customer" />
+                  <div>
+                    <h4>Sara Youssef</h4>
+                    <h5>Business Owner</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+  
+            <div class="swiper-slide">
+              <div class="customer__review__card">
+                <span><i class="ri-double-quotes-r"></i></span>
+                <p>
+                  What I love most about Sanayii is their transparency and quality. I was able to chat with the artisan beforehand, see their rating, and get the job done exactly as I wanted. Fantastic service!
+                </p>
+                <div class="customer__review__details">
+                  <img src="/assets/images/customer-3.jpg" alt="customer" />
+                  <div>
+                    <h4>Ziad Khaled</h4>
+                    <h5>Interior Designer</h5>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-pagination review-pagination"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
 
   <!-- start contact  -->
   <section class="contact-section" id="Contact">
@@ -116,9 +230,5 @@
       </form>
     </div>
   </section>
-
-
-  <!--  -->
-
 </body>
 </html>

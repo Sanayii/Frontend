@@ -16,7 +16,7 @@ body {
 
 .login-img {
   flex: 1 1 50%;
-  background: url('/images/lo.avif') no-repeat center center;
+  background: url('/assets/images/lo.avif') no-repeat center center;
   background-size: cover;
   min-height: 400px;
 }
