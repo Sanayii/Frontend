@@ -1,0 +1,38 @@
+.footer {
+  background-color: #2f2f3b;
+  color: #fff;
+  padding:40px 20px 20px;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+.footer-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding-left:50px;
+}
+
+.footer h2, .footer h3 {
+  color: #2980b9;
+}
+
+.footer p, .footer a {
+  color: #ccc;
+  font-size: 14px;
+  text-decoration: none;
+}
+
+.footer a:hover {
+  color: #2980b9;
+}
+
+.footer-bottom {
+  text-align: center;
+  border-top: 1px solid #444;
+  margin-top: 20px;
+  padding-top: 15px;
+  font-size: 13px;
+  color: #888;
+}
