@@ -12,20 +12,26 @@ import { RouterLink } from '@angular/router';
   styleUrl: './categories.component.css'
 })
 export class CategoriesComponent {
+
   categories = [
-    {name: 'سباكة',image: 'images/plumbing.jpeg'},
-    {name: 'كهرباء',image: 'images/electrical.jpeg'},
-    {name: 'نجارة',image: 'images/joiner.jpeg'},
-    {name:'دهانات ونقاشة',image:'images/debate.jpeg'},
-    {name:'تركيب سيراميك وبلاط',image:'images/maintenance.jpeg'},
-    {name:'حدادة وألمنيوم',image:'images/blacksmith.jpeg'},
-    {name:'تنظيف وصيانة منازل',image:'images/cleaning.jpeg'},
-    {name:'تصميم وحدات ديكور',image:'images/decor.jpeg'},
-    {name:'إصلاح أجهزة كهربائية',image:'images/elec_repair.jpeg'},
-    {name:'صيانة المكيفات والتبريد',image:'images/conditioning.jpeg'}
+    {name: 'سباكة',image: 'assets/images/plumbing.jpeg'},
+    {name: 'كهرباء',image: 'assets/images/electrical.jpeg'},
+    {name: 'نجارة',image: 'assets/images/joiner.jpeg'},
+    {name:'دهانات ونقاشة',image:'assets/images/debate.jpeg'},
+    {name:'تركيب سيراميك وبلاط',image:'assets/images/maintenance.jpeg'},
+    {name:'حدادة وألمنيوم',image:'assets/images/blacksmith.jpeg'},
+    {name:'تنظيف وصيانة منازل',image:'assets/images/cleaning.jpeg'},
+    {name:'تصميم وحدات ديكور',image:'assets/images/decor.jpeg'},
+    {name:'إصلاح أجهزة كهربائية',image:'assets/images/elec_repair.jpeg'},
+    {name:'صيانة المكيفات والتبريد',image:'assets/images/conditioning.jpeg'}
   ];
 
   selectedCategory: string = "";
+  showAll = false;
+
+  get visibleCategories() {
+    return this.showAll ? this.categories : this.categories.slice(0, 6);
+  }
 
   handleCategoryClick(serviceName: string) {
     this.selectedCategory = serviceName;
@@ -37,5 +43,9 @@ export class CategoriesComponent {
   }
   submitRequestForm() {
     alert(`Request submitted for: ${this.selectedCategory}`);
+  }
+
+  toggleShowAll() {
+    this.showAll = !this.showAll;
   }
 }
