@@ -1,0 +1,222 @@
+<div class="container my-5">
+
+  <div class="mt-5 pt-3"></div>
+
+  <div class="text-center mb-5 pt-4">
+    <h1 class="text-primary mb-4">Checkout</h1>
+    <div class="d-flex justify-content-center">
+      <div class="stepper">
+        <div class="step completed">
+          <div class="step-circle">1</div>
+          <div class="step-label">Service Details</div>
+        </div>
+        <div class="step completed">
+          <div class="step-circle">2</div>
+          <div class="step-label">Schedule</div>
+        </div>
+        <div class="step active">
+          <div class="step-circle">3</div>
+          <div class="step-label">Checkout</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4">
+    <!-- Left Column - Order Summary -->
+    <div class="col-lg-8">
+      <!-- Service Card with more spacing -->
+      <div class="card border-0 shadow-sm rounded-3 mb-5">
+        <div class="card-header bg-primary text-white py-3 rounded-top-3">
+          <h5 class="mb-0"><mat-icon>receipt</mat-icon> Order Summary</h5>
+        </div>
+        <div class="card-body">
+          <!-- Service Details -->
+          <div class="mb-5 pb-3 border-bottom">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h6 class="mb-0 fw-bold">Service Information</h6>
+              <button mat-button color="primary" class="p-0">
+                <mat-icon>edit</mat-icon> Edit
+              </button>
+            </div>
+            <div class="d-flex align-items-start">
+              <img src="assets/service-image.jpg" alt="Service Image" class="rounded-3 me-3" width="80" height="80">
+              <div>
+                <h5 class="mb-2">Premium Home Cleaning</h5>
+                <p class="text-muted mb-2">Deep cleaning for entire home including kitchen, bathrooms, and living areas</p>
+                <div class="d-flex align-items-center text-muted">
+                  <mat-icon style="font-size: 18px;">schedule</mat-icon>
+                  <span class="ms-1">3-4 hours</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Schedule Details -->
+          <div class="mb-5 pb-3 border-bottom">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h6 class="mb-0 fw-bold">Schedule</h6>
+              <button mat-button color="primary" class="p-0">
+                <mat-icon>edit</mat-icon> Edit
+              </button>
+            </div>
+            <div class="row g-3">
+              <div class="col-md-6">
+                <div class="d-flex align-items-center bg-light p-3 rounded-2">
+                  <mat-icon class="text-primary me-2">calendar_today</mat-icon>
+                  <div>
+                    <div class="small text-muted">Date</div>
+                    <div class="fw-bold">Monday, June 12, 2023</div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="d-flex align-items-center bg-light p-3 rounded-2">
+                  <mat-icon class="text-primary me-2">access_time</mat-icon>
+                  <div>
+                    <div class="small text-muted">Time</div>
+                    <div class="fw-bold">9:00 AM - 1:00 PM</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Address Details -->
+          <div class="mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+              <h6 class="mb-0 fw-bold">Service Address</h6>
+              <button mat-button color="primary" class="p-0">
+                <mat-icon>edit</mat-icon> Edit
+              </button>
+            </div>
+            <div class="d-flex align-items-start bg-light p-3 rounded-2">
+              <mat-icon class="text-primary me-2">location_on</mat-icon>
+              <div>
+                <div class="fw-bold">Home Address</div>
+                <div class="text-muted">123 Main Street, Apt 4B</div>
+                <div class="text-muted">New York, NY 10001, United States</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Payment Method with more spacing -->
+      <div class="card border-0 shadow-sm rounded-3 mb-4">
+        <div class="card-header bg-primary text-white py-3 rounded-top-3">
+          <h5 class="mb-0"><mat-icon>payment</mat-icon> Payment Method</h5>
+        </div>
+        <div class="card-body">
+          <div class="mb-4">
+            <div class="form-check">
+              <input class="form-check-input" type="radio" name="paymentMethod" id="creditCard" checked>
+              <label class="form-check-label d-flex align-items-center" for="creditCard">
+                <mat-icon class="mx-2">credit_card</mat-icon>
+                Credit/Debit Card
+              </label>
+            </div>
+          </div>
+
+          <!-- Credit Card Form -->
+          <div class="mb-4 p-3 bg-light rounded-2">
+            <div class="row g-3">
+              <div class="col-12">
+                <label for="cardNumber" class="form-label">Card Number</label>
+                <input type="text" class="form-control" id="cardNumber" placeholder="1234 5678 9012 3456">
+              </div>
+              <div class="col-md-6">
+                <label for="cardName" class="form-label">Name on Card</label>
+                <input type="text" class="form-control" id="cardName" placeholder="John Smith">
+              </div>
+              <div class="col-md-3">
+                <label for="expiryDate" class="form-label">Expiry Date</label>
+                <input type="text" class="form-control" id="expiryDate" placeholder="MM/YY">
+              </div>
+              <div class="col-md-3">
+                <label for="cvv" class="form-label">CVV</label>
+                <input type="text" class="form-control" id="cvv" placeholder="123">
+              </div>
+            </div>
+          </div>
+
+          <div class="form-check mb-4">
+            <input class="form-check-input" type="radio" name="paymentMethod" id="paypal">
+            <label class="form-check-label d-flex align-items-center" for="paypal">
+              <mat-icon class="mx-2">account_balance_wallet</mat-icon>
+              PayPal
+            </label>
+          </div>
+
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="paymentMethod" id="cash">
+            <label class="form-check-label d-flex align-items-center" for="cash">
+              <mat-icon class="mx-2">attach_money</mat-icon>
+              Cash on Service Completion
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column - Order Total -->
+    <div class="col-lg-4">
+      <div class="card border-0 shadow-sm rounded-3 sticky-md-top" style="top: 100px;">
+        <div class="card-header bg-primary text-white py-3 rounded-top-3">
+          <h5 class="mb-0"><mat-icon>shopping_cart</mat-icon> Order Total</h5>
+        </div>
+        <div class="card-body">
+          <div class="mb-4">
+            <div class="d-flex justify-content-between mb-3">
+              <span>Service Fee</span>
+              <span>2,250 EGP</span>
+            </div>
+            <div class="d-flex justify-content-between mb-3">
+              <span>Tax (14%)</span>
+              <span>315 EGP</span>
+            </div>
+            <div class="d-flex justify-content-between mb-3">
+              <span>Convenience Fee</span>
+              <span>50 EGP</span>
+            </div>
+            <div class="d-flex justify-content-between fw-bold fs-5 mt-4 pt-3 border-top">
+              <span>Total</span>
+              <span>2,615 EGP</span>
+            </div>
+          </div>
+
+          <!-- Promo Code -->
+          <div class="mb-4">
+            <label for="promoCode" class="form-label">Promo Code</label>
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" id="promoCode" placeholder="Enter code">
+              <button class="btn btn-outline-primary" type="button">Apply</button>
+            </div>
+          </div>
+
+          <!-- Terms and Conditions -->
+          <div class="form-check mb-4">
+            <input class="form-check-input" type="checkbox" id="termsCheck">
+            <label class="form-check-label small" for="termsCheck">
+              I agree to the <a href="#" class="text-primary">Terms of Service</a> and <a href="#" class="text-primary">Privacy Policy</a>
+            </label>
+          </div>
+
+          <!-- Checkout Button -->
+          <button mat-raised-button color="primary" class="w-100 py-3 mb-3">
+            <mat-icon>lock</mat-icon> Confirm & Pay 2,615 EGP
+          </button>
+
+          <!-- Security Info -->
+          <div class="text-center mt-3">
+            <div class="d-flex justify-content-center align-items-center text-muted small">
+              <mat-icon style="font-size: 16px;" class="me-1">security</mat-icon>
+              <span>Secure SSL Encryption</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
