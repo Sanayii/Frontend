@@ -1,1 +1,21 @@
-<p>nav works!</p>
+  <!-- start nav  -->
+  <div class="head d-flex justify-content-between align-items-center shadow-sm p-2 bg-body-tertiary ">
+    <div class="logo">
+        <img src="/assets/images/logo.png" alt="logo" class="logoImg">
+    </div>
+
+    <ul class="nav d-flex align-items-center links">
+      <li><a href="/home" >Home</a></li>
+      <li><a href="/home#about" routerLinkActive="acyive">About Us</a></li>
+      <li><a href="/home#services">Services</a></li>
+      <li><a href="/home#Reviews">Reviews</a></li>
+      <li><a href="/home#Contact">Contact</a></li>
+    </ul>
+
+    <div class="auth-buttons">
+      <a routerLink="/login" class="btn btn-sm">Login</a>
+      <a routerLink="/register"  class="btn btn-sm">Register</a>
+    </div>
+</div>
+
+<router-outlet></router-outlet>

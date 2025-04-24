@@ -1,1 +1,84 @@
-<p>register works!</p>
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Registration</title>
+</head>
+<body>
+
+  <div class="register">
+    <div class="register-img"></div>
+
+    <div class="register-form">
+      <h3>Create Account</h3>
+      <form>
+        <div class="mb-3">
+          <input type="text" class="form-control" id="username" placeholder="Username" required>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-6 mb-2 mb-md-0">
+            <input type="text" class="form-control" id="fname" placeholder="First Name" required>
+          </div>
+          <div class="col-md-6">
+            <input type="text" class="form-control" id="lname" placeholder="Last Name" required>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-6 mb-2 mb-md-0">
+            <input type="tel" class="form-control" id="phone" placeholder="Phone Number" required>
+          </div>
+          <div class="col-md-6">
+            <input type="number" class="form-control" id="age" placeholder="Age" required>
+          </div>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-4 mb-2 mb-md-0">
+            <input type="text" class="form-control" id="street" placeholder="Street" required>
+          </div>
+          <div class="col-md-4 mb-2 mb-md-0">
+            <input type="text" class="form-control" id="city" placeholder="City" required>
+          </div>
+          <div class="col-md-4">
+            <select id="governate" class="form-select" required>
+              <option value="" disabled selected>Government</option>
+              <option>Alexandria</option>
+              <option>Cairo</option>
+              <option>Giza</option>
+              <option>Sharkia</option>
+              <option>Luxor</option>
+              <option>Aswan</option>
+              <option>Dakahlia</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <input type="email" class="form-control" id="email" placeholder="Email" required>
+        </div>
+
+        <div class="mb-3">
+          <input type="password" class="form-control" id="password" placeholder="Password" required>
+        </div>
+        <div class="mb-3">
+          <input type="password" class="form-control" id="Conpassword" placeholder="Confirm Password" required>
+        </div>
+
+        <div class="d-grid">
+          <button type="submit" class="btn btn-primary">Register</button>
+        </div>
+
+        <div class="text-center mt-3">
+          <small>Already have an account? <a href="#" style="font-size: 18px;"><strong>Login</strong></a></small>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</body>
+</html>

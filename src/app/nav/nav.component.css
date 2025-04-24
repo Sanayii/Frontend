@@ -1,0 +1,65 @@
+
+/* start nav */
+.head{
+  background-color: #0f172a;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 50;
+}
+
+.logo a span{
+  letter-spacing: 3px;
+  font-size: 20px;
+  font-weight: 800;
+}
+.logoImg{
+  width: 50px;
+  height: 50px;
+  border-radius: 40%;
+  margin-left: 10px;
+}
+.head a{
+  text-decoration: none;
+  color: black;
+  padding: 5px 18px;
+  border-radius: 3px;
+
+}
+.head .links a:hover{
+  color: black;
+  background-color: lightgray;
+}
+
+.active{
+  color: black;
+  background-color: lightgray;
+}
+
+.auth-buttons .btn {
+  background-color: #2980b9;
+  border: 2px solid white;
+  color: #fff;
+  border-radius: 5px;
+
+  margin-left: 1rem;
+  padding: 10px 15px;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.auth-buttons .btn:hover  {
+  background-color: transparent;
+  border-color: #2980b9;
+  color: #2980b9;
+}
+
+
+@media (max-width: 808px) {
+  .links{
+      display: none !important;
+  }
+
+}
