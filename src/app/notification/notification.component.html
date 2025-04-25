@@ -1,0 +1,34 @@
+<div class="container">
+  <div class="notificationContainer">
+
+    <header class="notification-header">
+      <div class="notification-title">
+        <h2>Notifications</h2>
+        <span class="notification-count">{{ unreadCount }}</span>
+      </div>
+      <div class="btn">
+        <p class="mark-read" (click)="markAllAsRead()">Mark all read</p>
+        <p class="delete-all" (click)="deleteAllNotifications()">Delete All</p>
+      </div>
+    </header>
+
+    <main>
+      <div *ngFor="let noti of notifications; let i = index"
+          class="notContent"
+          [ngClass]="{'unread': noti.unread}">
+        <img src="/assets/images/not.jpg" alt="photo">
+        <div class="content">
+          <div class="description"  (click)="openDetailsPopup(noti)">
+            <p>{{ noti.text }}</p>
+            <p id="noti-time">{{ noti.time }}</p>
+          </div>
+          <p class="delete-noti" (click)="deleteNotification(i)">&#10006;</p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <app-notification-details *ngIf="selectedNotification" [notification]="selectedNotification"></app-notification-details>
+</div>
+
+

@@ -14,7 +14,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card';
 @Component({
   selector: 'app-services-requests-history',
-  imports: [RouterLink,RouterOutlet,MatButtonModule,MatIconModule,MatProgressSpinnerModule,MatCardModule,MatPaginator,MatSort],
+  imports: [RouterLink,RouterOutlet,MatButtonModule,MatIconModule,
+    MatProgressSpinnerModule,MatCardModule,MatPaginator,MatSort],
   templateUrl: './services-requests-history.component.html',
   styleUrl: './services-requests-history.component.css'
 })

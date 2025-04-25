@@ -3,26 +3,27 @@ import { Component } from '@angular/core';
 import * as bootstrap from 'bootstrap';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { ChatComponent } from '../chat/chat.component';
 
 
 @Component({
   selector: 'app-categories',
-  imports: [CommonModule,FormsModule,RouterLink],
+  imports: [CommonModule,FormsModule,RouterLink,ChatComponent],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.css'
 })
 export class CategoriesComponent {
   categories = [
-    {name: 'سباكة',image: 'images/plumbing.jpeg'},
-    {name: 'كهرباء',image: 'images/electrical.jpeg'},
-    {name: 'نجارة',image: 'images/joiner.jpeg'},
-    {name:'دهانات ونقاشة',image:'images/debate.jpeg'},
-    {name:'تركيب سيراميك وبلاط',image:'images/maintenance.jpeg'},
-    {name:'حدادة وألمنيوم',image:'images/blacksmith.jpeg'},
-    {name:'تنظيف وصيانة منازل',image:'images/cleaning.jpeg'},
-    {name:'تصميم وحدات ديكور',image:'images/decor.jpeg'},
-    {name:'إصلاح أجهزة كهربائية',image:'images/elec_repair.jpeg'},
-    {name:'صيانة المكيفات والتبريد',image:'images/conditioning.jpeg'}
+    {name:'Plumbing',image: '/assets/images/plumbing.jpeg'},
+    {name:'Electricity',image: '/assets/images/electrical.jpeg'},
+    {name:'Carpentry',image: '/assets/images/joiner.jpeg'},
+    {name:'Painting and Decorating',image:'/assets/images/debate.jpeg'},
+    {name:'Ceramic and tile installation',image:'/assets/images/maintenance.jpeg'},
+    {name:'Blacksmithing and Aluminum',image:'/assets/images/blacksmith.jpeg'},
+    {name:'House cleaning and maintenance',image:'/images/cleaning.jpeg'},
+    {name:'Decorative unit design',image:'/assets/images/decor.jpeg'},
+    {name:'Electrical appliance repair',image:'/assets/images/elec_repair.jpeg'},
+    {name:'Air conditioning and refrigeration maintenance',image:'/assets/images/conditioning.jpeg'}
   ];
 
   selectedCategory: string = "";

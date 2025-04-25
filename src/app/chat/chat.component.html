@@ -1,0 +1,50 @@
+<div class="chatbox-wrapper">
+  <div class="chatbox-toggle" (click)="toggleChatbox()">
+    <i class='bx bx-message-dots'></i>
+  </div>
+
+  <div class="chatbox-message-wrapper" [class.show]="isChatboxOpen">
+    <div class="chatbox-message-header">
+
+      <div class="chatbox-message-profile">
+        <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&w=500&q=60"
+            alt="" class="chatbox-message-image">
+        <div>
+          <h4 class="chatbox-message-name">Jonathan Doe</h4>
+          <p class="chatbox-message-status">online</p>
+        </div>
+      </div>
+
+      <div class="chatbox-message-dropdown" (click)="toggleDropdown($event)">
+        <i class='bx bx-dots-vertical-rounded chatbox-message-dropdown-toggle'></i>
+        <ul class="chatbox-message-dropdown-menu" [class.show]="dropdownOpen">
+          <li><a href="#">Search</a></li>
+          <li><a href="#">Report</a></li>
+        </ul>
+      </div>
+
+    </div>
+
+    <div class="chatbox-message-content" #chatContent>
+      <h4 class="chatbox-message-no-message" *ngIf="messages.length === 0">You don't have message yet!</h4>
+      <div *ngFor="let msg of messages" [ngClass]="['chatbox-message-item', msg.type]">
+        <span class="chatbox-message-item-text" [innerHTML]="msg.text"></span>
+        <span class="chatbox-message-item-time">{{ msg.time }}</span>
+      </div>
+    </div>
+
+    <div class="chatbox-message-bottom">
+      <form class="chatbox-message-form" (submit)="onSubmit()" #formRef="ngForm"
+            [ngStyle]="{ alignItems: textareaRows > 1 ? 'flex-end' : 'center' }">
+        <textarea rows="{{textareaRows}}"
+                  placeholder="Type message..."
+                  class="chatbox-message-input"
+                  [(ngModel)]="messageText"
+                  name="message"
+                  (input)="onInputChange()"></textarea>
+        <button type="submit" class="chatbox-message-submit"><i class='bx bx-send'></i></button>
+      </form>
+    </div>
+    
+  </div>
+</div>

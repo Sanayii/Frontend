@@ -1,0 +1,10 @@
+<div class="popup" *ngIf="showPopup">
+
+  <div class="popup-content">
+    <button class="close-btn" (click)="closePopup()"> &#10006;</button>
+    <h3>{{ notification?.text }}</h3>
+    <p>{{ notification?.time }}</p>
+    <p>{{ notification?.details }}</p>
+  </div>
+
+</div>

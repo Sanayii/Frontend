@@ -1,24 +1,21 @@
-body {
-
-  font-family: 'Segoe UI', sans-serif;
-}
 
 .login{
   width: 650px;
-  margin: 150px auto;
+  margin: 80px auto;
   background-color: #fff;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   border-radius: 15px;
-  overflow: hidden;
   display: flex;
   flex-wrap: wrap;
+  margin-top: 10%;
+
 }
 
 .login-img {
   flex: 1 1 50%;
   background: url('/assets/images/lo.avif') no-repeat center center;
   background-size: cover;
-  min-height: 400px;
+
 }
 
 .login-form {
@@ -79,7 +76,9 @@ body {
 @media (max-width: 768px) {
   .login {
     flex-direction: column;
-    width: 60%
+    width: 70%;
+    margin-top: 120px;
+    margin-bottom: 50px;
   }
 
   .login-img {

@@ -1,0 +1,154 @@
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.container{
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  justify-content:center;
+  background-color: rgb(235, 235, 235);
+}
+
+.notificationContainer{
+  background-color: #f8f9fa;
+  width: 500px;
+  margin: 20px;
+  margin-top: 100px;
+  border-radius: 10px;
+  padding: 25px;
+}
+
+.notification-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 5px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.notification-title {
+  display: flex;
+  align-items: center;
+}
+
+.notification-title h2 {
+  margin: 0;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.notification-count {
+  background-color: #2980b9;
+  color: white;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  margin-left: 8px;
+  font-size: 15px;
+}
+.btn{
+  display: flex;
+  gap: 5px;
+}
+.mark-read, .delete-all  {
+  color: white;
+  background-color: #2980b9;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  font-size: 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, ;
+}
+
+.mark-read:hover {
+  background-color: #1f6bb5;
+}
+
+.delete-all {
+  background-color: #e74c3c;
+}
+
+.delete-all:hover {
+  background-color: #c0392b;
+}
+
+main{
+  margin-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+}
+.notContent{
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  border-radius: 5px;
+  position: relative;
+}
+.description{
+  cursor: pointer;
+}
+
+.notContent::after{
+  content: "";
+  width:100%;
+  background-color: rgb(194, 194, 194);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+}
+
+.notContent img{
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+.content{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 82%;
+}
+.notContent .description{
+  margin-left: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+#noti-time{
+  color: gray;
+}
+.delete-noti {
+  font-size: 20px;
+  cursor: pointer;
+}
+.unread{
+  background-color: #c2e8ff;
+}
+
+.notification-icon {
+    position: relative;
+    font-size: 24px;
+    cursor: pointer;
+  }
+
+  .badge {
+    position: absolute;
+    top: -6px;
+    right: -10px;
+    background: crimson;
+    color: #fff;
+    font-size: 12px;
+    padding: 2px 6px;
+    border-radius: 50%;
+  }

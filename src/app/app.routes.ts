@@ -5,14 +5,28 @@ import { LoginComponent } from './authentication/login/login.component';
 import { ServicesRequestsHistoryComponent } from './services-requests-history/services-requests-history.component';
 import { CheckoutRequestComponent } from './checkout-request/checkout-request.component';
 import { CategoriesComponent } from './categories/categories.component';
+import { NotificationComponent } from './notification/notification.component';
+import { ServiceRequestDetailsComponent } from './service-request-details/service-request-details.component';
+import { UserProfileComponent } from './user-profile/user-profile.component';
+import { EditProfileComponent } from './edit-profile/edit-profile.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 export const routes: Routes = [
-  {path:'',component: HomeComponent},
-  {path:'home',component: HomeComponent},
+
+  {path: 'home', component: HomeComponent },
   {path:'register', component: RegisterComponent},
   {path:'login',component:LoginComponent},
+
   {path:'services-requests-history', component: ServicesRequestsHistoryComponent},
   {path:'checkout-request', component: CheckoutRequestComponent},
   {path:'categories',component:CategoriesComponent},
+  {path:'services-requests-datails',component:ServiceRequestDetailsComponent},
+
+  {path: 'notify', component: NotificationComponent},
+  {path: 'user-profile', component: UserProfileComponent},
+  {path: 'edit-profile', component: EditProfileComponent},
+
+  {path:'notFound', component: NotFoundComponent},
+
   {path:'**', redirectTo: 'home'}
 ];
 
