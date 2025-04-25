@@ -1,0 +1,111 @@
+
+<div class="container">
+  <!-- Profile Header -->
+  <div class="profile-header">
+    <div class="profile-avatar">
+      <img src="assets/images/not.jpg" alt="Customer Photo">
+    </div>
+    <div class="profile-info">
+      <h1>Mohamed Ahmed Ali</h1>
+      <div class="profile-stats">
+        <div class="stat">
+          <span class="stat-value">12</span>
+          <span class="stat-label">Services</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">4.8</span>
+          <span class="stat-label">Avg Rating</span>
+        </div>
+        <div class="stat">
+          <span class="stat-value">3</span>
+          <span class="stat-label">Active</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Personal Details Section -->
+  <div class="details-section">
+    <h2 class="section-title"><i class="fas fa-user-circle"></i> Personal Information</h2>
+    <div class="details-grid">
+      <!-- Replace this static data with bindings later if needed -->
+      <div class="detail-item"><label>First Name</label><p>Mohamed</p></div>
+      <div class="detail-item"><label>Last Name</label><p>Ali</p></div>
+      <div class="detail-item"><label>Username</label><p>mohamed.ali</p></div>
+      <div class="detail-item"><label>Email</label><p>mohamed.ali&#64;example.com</p></div>
+      <div class="detail-item"><label>Phone 1</label><p>+201012345678</p></div>
+      <div class="detail-item"><label>Phone 2</label><p>+201098765432</p></div>
+      <div class="detail-item"><label>Government</label><p>Cairo</p></div>
+      <div class="detail-item"><label>City</label><p>Nasr City</p></div>
+      <div class="detail-item"><label>Street</label><p>23 Makram Ebeid St.</p></div>
+    </div>
+  </div>
+
+  <!-- Services Section -->
+  <div class="services-section">
+    <div class="section-header">
+      <h2 class="section-title"><i class="fas fa-history"></i> Service History</h2>
+      <div class="table-actions">
+        <div class="search-box">
+          <i class="fas fa-search"></i>
+          <input type="text" placeholder="Search services...">
+        </div>
+        <select class="filter-select">
+          <option>All Status</option>
+          <option>Completed</option>
+          <option>In Progress</option>
+          <option>Cancelled</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="services-table-container">
+      <table class="services-table">
+        <thead>
+          <tr>
+            <th style="width: 25%;">Service Type</th>
+            <th style="width: 15%;">Date</th>
+            <th style="width: 20%;">Technician</th>
+            <th style="width: 15%;">Status</th>
+            <th style="width: 10%;">Rating</th>
+            <th style="width: 15%;">Amount</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>AC Maintenance</td>
+            <td>17 Jun 2023</td>
+            <td>Ahmed Mohamed</td>
+            <td><span class="status completed">Completed</span></td>
+            <td><div class="rating-stars">★★★★☆</div></td>
+            <td>EGP 450</td>
+          </tr>
+          <tr>
+            <td>Plumbing Repair</td>
+            <td>02 Jul 2023</td>
+            <td>Mahmoud Hassan</td>
+            <td><span class="status in-progress">In Progress</span></td>
+            <td>-</td>
+            <td>EGP 320</td>
+          </tr>
+          <tr>
+            <td>Electrical Repair</td>
+            <td>15 May 2023</td>
+            <td>Ali Ahmed</td>
+            <td><span class="status completed">Completed</span></td>
+            <td><div class="rating-stars">★★★★★</div></td>
+            <td>EGP 550</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pagination">
+      <button class="page-btn prev-btn" disabled><i class="fas fa-chevron-left"></i></button>
+      <span class="page-number active">1</span>
+      <span class="page-number">2</span>
+      <span class="page-number">3</span>
+      <button class="page-btn next-btn"><i class="fas fa-chevron-right"></i></button>
+    </div>
+  </div>
+</div>
