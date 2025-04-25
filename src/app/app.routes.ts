@@ -5,11 +5,17 @@ import { LoginComponent } from './authentication/login/login.component';
 import { ServicesRequestsHistoryComponent } from './services-requests-history/services-requests-history.component';
 import { CheckoutRequestComponent } from './checkout-request/checkout-request.component';
 import { CategoriesComponent } from './categories/categories.component';
+
 import { NotificationComponent } from './notification/notification.component';
 import { ServiceRequestDetailsComponent } from './service-request-details/service-request-details.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+
+import { ServicePaymentComponent } from './service-payment/service-payment.component';
+import { SuccessfulPaymentComponent } from './successful-payment/successful-payment.component';
+import { FailedPaymentComponent } from './failed-payment/failed-payment.component';
+
 export const routes: Routes = [
 
   {path: 'home', component: HomeComponent },
@@ -19,6 +25,7 @@ export const routes: Routes = [
   {path:'services-requests-history', component: ServicesRequestsHistoryComponent},
   {path:'checkout-request', component: CheckoutRequestComponent},
   {path:'categories',component:CategoriesComponent},
+
   {path:'services-requests-datails',component:ServiceRequestDetailsComponent},
 
   {path: 'notify', component: NotificationComponent},
@@ -26,6 +33,11 @@ export const routes: Routes = [
   {path: 'edit-profile', component: EditProfileComponent},
 
   {path:'notFound', component: NotFoundComponent},
+
+
+  { path: 'service-payment', component: ServicePaymentComponent },
+  {path:'payment-success',component: SuccessfulPaymentComponent},
+  {path:'payment-failed',component: FailedPaymentComponent},
 
   {path:'**', redirectTo: 'home'}
 ];

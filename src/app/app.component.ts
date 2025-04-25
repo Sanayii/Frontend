@@ -4,8 +4,6 @@ import { NavComponent } from './nav/nav.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { ServicesRequestsHistoryComponent } from './services-requests-history/services-requests-history.component';
 import { CheckoutRequestComponent } from './checkout-request/checkout-request.component';
-import { FooterComponent } from './footer/footer.component';
-import { NotFoundComponent } from './not-found/not-found.component';
 
 @Component({
   selector: 'app-root',

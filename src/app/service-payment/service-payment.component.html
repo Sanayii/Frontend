@@ -1,0 +1,85 @@
+<div class="container mt-5 mb-5 pt-3" *ngIf="data">
+  <div class="card shadow rounded-4 p-4 mt-5">
+    <h3 class="mb-4 text-center text-primary">
+      Service Request Details
+    </h3>
+    <div class="row g-3 mb-4">
+      <div class="col-md-6">
+        <div class="border rounded-3 p-3 bg-light h-100">
+          <strong class="text-muted">Category</strong>
+          <p class="mb-0">{{ data.selectedCategory }}</p>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="border rounded-3 p-3 bg-light h-100">
+          <strong class="text-muted">Name</strong>
+          <p class="mb-0">{{ data.firstName }} {{ data.lastName }}</p>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="border rounded-3 p-3 bg-light h-100">
+          <strong class="text-muted">Contact</strong>
+          <p class="mb-0">{{ data.contact }}</p>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="border rounded-3 p-3 bg-light h-100">
+          <strong class="text-muted">Address</strong>
+          <p class="mb-0">{{ data.address }}</p>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <div class="border rounded-3 p-3 bg-light">
+          <strong class="text-muted">Service Details</strong>
+          <p class="mb-0">{{ data.details }}</p>
+        </div>
+      </div>
+
+      <div class="col-12">
+        <div class="border rounded-3 p-3 bg-light">
+          <strong class="text-muted">Assigned Artisan</strong>
+          <p class="mb-0">{{ data.artisanName }}</p>
+        </div>
+      </div>
+    </div>
+
+
+    <hr>
+
+    <form>
+      <div class="mb-3">
+        <label class="form-label">Preferred Time</label>
+        <input
+          type="datetime-local"
+          class="form-control"
+          [(ngModel)]="data.preferredTime"
+          name="preferredTime"
+          required
+        />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Payment Method</label>
+        <select
+          class="form-select"
+          [(ngModel)]="data.paymentMethod"
+          name="paymentMethod"
+          required
+        >
+          <option>Cash</option>
+          <option>Credit Card</option>
+          <option>Fawry</option>
+        </select>
+      </div>
+
+      <div class="d-flex gap-3 mt-4">
+        <button type="button" class="btn btn-outline-danger flex-fill" (click)="cancelRequest()">Cancel</button>
+        <button type="submit" class="btn btn-primary flex-fill">Confirm Request</button>
+      </div>
+    </form>
+  </div>
+</div>

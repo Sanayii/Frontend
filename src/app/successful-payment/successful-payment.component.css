@@ -1,0 +1,25 @@
+.success {
+  text-align: center;
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+}
+.success h2 {
+  color: #28a745;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+.success-icon {
+  color: #28a745;
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.order-number {
+  font-weight: bold;
+  margin: 1rem 0;
+}
+.btn-successd{
+  background-color: #28a745;
+  color: white;
+}
