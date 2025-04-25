@@ -1,9 +1,11 @@
 import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import Swiper from 'swiper';
 import 'swiper/swiper-bundle.css';
+import { CategoriesComponent } from '../categories/categories.component';
 
 @Component({
   selector: 'app-home',
+  imports: [CategoriesComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
