@@ -22,7 +22,9 @@ export class CategoriesComponent {
     lastName: '',
     contact: '',
     address: '',
-    details: ''
+    details: '',
+    data:'',
+    paymentMethod:''
   };
 
   constructor(private router: Router) {}

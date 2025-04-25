@@ -23,7 +23,7 @@
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 50;
+  z-index: 1150;
   padding:10px 15px;
   justify-content: space-between;
 }

@@ -1,74 +1,83 @@
-
 <section>
-<div class="container py-4">
-  <h2 class="text-center mb-4">Categories</h2>
-  <div class="row">
-    <div class="col-6 col-md-4 mb-4" *ngFor="let service of visibleCategories">
-      <div class="card text-center shadow-sm h-100" (click)="handleCategoryClick(service.name, service.artisan)">
-        <div class="card-body">
-          <img [src]="service.image" alt="{{service.name}}" class="img-fluid mb-3" style="height: 150px;">
-          <h6 class="card-title">{{ service.name }}</h6>
+  <div class="container py-4">
+    <h2 class="text-center mb-4">Categories</h2>
+    <div class="row">
+      <div class="col-6 col-md-4 mb-4" *ngFor="let service of visibleCategories">
+        <div class="card text-center shadow-sm h-100" (click)="handleCategoryClick(service.name, service.artisan)">
+          <div class="card-body">
+            <img [src]="service.image" alt="{{service.name}}" class="img-fluid mb-3" style="height: 150px;">
+            <h6 class="card-title">{{ service.name }}</h6>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-</div>
-<div class="text-center mt-3 pb-3" *ngIf="categories.length > 6">
-  <button class="btn btn-outline btn__primary btn-more" (click)="toggleShowAll()">
-    {{ showAll ? 'Show Less' : 'Show More' }}
-  </button>
-</div>
+  <div class="text-center mt-3 pb-3" *ngIf="categories.length > 6">
+    <button class="btn btn-outline btn__primary btn-more" (click)="toggleShowAll()">
+      {{ showAll ? 'Show Less' : 'Show More' }}
+    </button>
+  </div>
 </section>
 
-<div class="modal fade " id="serviceModal" tabindex="-1" aria-labelledby="serviceModalLabel" aria-hidden="true">
+<!-- Modal -->
+<div class="modal fade" id="serviceModal" tabindex="-1" aria-labelledby="serviceModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
+
       <form (ngSubmit)="submitRequestForm()" #requestForm="ngForm" class="contact-container">
+
         <div class="modal-header">
           <h5 class="modal-title" id="serviceModalLabel"><span>Request</span> {{ selectedCategory }}</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
+
         <div class="modal-body">
+          <div class="mb-3">
+            <input type="text" class="form-control" id="name" name="firstName" [(ngModel)]="formData.firstName" required placeholder="First Name">
+          </div>
 
           <div class="mb-3">
-            <input type="text" class="form-control" id="name" name="firstName" [(ngModel)]="formData.firstName"  required placeholder="First Name">
+            <input type="text" class="form-control" id="lastName" name="lastName" [(ngModel)]="formData.lastName" required placeholder="Last Name">
           </div>
+
           <div class="mb-3">
-            <input type="text" class="form-control" id="address" name="lastName" [(ngModel)]="formData.lastName"  required placeholder="Last Name">
+            <input type="text" class="form-control" id="contact" name="contact" [(ngModel)]="formData.contact" required placeholder="Email / Phone Number">
           </div>
+
           <div class="mb-3">
-            <input type="text" class="form-control" id="address" name="contact" [(ngModel)]="formData.contact"  required placeholder="Email / Phone Number">
+            <input type="text" class="form-control" id="address" name="address" [(ngModel)]="formData.address" required placeholder="Your Address">
           </div>
+
           <div class="mb-3">
-            <input type="text" class="form-control" id="address" name="address" [(ngModel)]="formData.address"  required placeholder="Your Address">
+            <textarea class="form-control" id="details" rows="2" name="details" [(ngModel)]="formData.details" required placeholder="Service Details"></textarea>
           </div>
+
           <div class="mb-3">
-            <textarea class="form-control" id="details" rows="4" name="details" [(ngModel)]="formData.details"  required placeholder="Service Details"></textarea>
+            <label class="form-label">Preferred Time</label>
+            <input type="date" class="form-control sm" id="requestDate" name="requestDate" [(ngModel)]="formData.data" required>
           </div>
-          
-           <div class="mb-3">
-            <label for="requestDate" class="form-label">Request Date</label>
-            <input type="date" class="form-control sm" id="requestDate" name="requestDate" ngModel required>
-          </div>
-          
+
           <div class="mb-3">
-            <label for="paymentMethod" class="form-label">Payment Method</label>
-            <select class="form-select sm" id="paymentMethod" name="paymentMethod" ngModel required>
+            <select class="form-select sm" id="paymentMethod" name="paymentMethod"  [(ngModel)]="formData.paymentMethod" required>
               <option value="" disabled selected>Select payment method</option>
               <option value="cash">Cash</option>
               <option value="credit_card">Credit Card</option>
               <option value="bank_transfer">Bank Transfer</option>
               <option value="mobile_payment">Mobile Payment</option>
             </select>
+          </div>
+
         </div>
 
+        <div class="modal-footer">
           <button type="submit" class="btn btn-submit">Submit Request</button>
+        </div>
 
       </form>
+
     </div>
   </div>
 </div>
 
 <app-chat></app-chat>
-

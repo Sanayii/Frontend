@@ -1,15 +1,12 @@
 import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import Swiper from 'swiper';
 import 'swiper/swiper-bundle.css';
-
-import { ChatComponent } from '../chat/chat.component';
 import { RouterLink } from '@angular/router';
-
+import { CategoriesComponent } from '../categories/categories.component';
 
 @Component({
-  imports:[ChatComponent,RouterLink],
+  imports:[RouterLink,CategoriesComponent],
   selector: 'app-home',
-  imports: [CategoriesComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })

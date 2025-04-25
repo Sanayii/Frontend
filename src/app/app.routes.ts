@@ -15,9 +15,11 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { ServicePaymentComponent } from './service-payment/service-payment.component';
 import { SuccessfulPaymentComponent } from './successful-payment/successful-payment.component';
 import { FailedPaymentComponent } from './failed-payment/failed-payment.component';
+import { ChatComponent } from './chat/chat.component';
+import { ArtsinComponent } from './artsin/artsin.component';
 
 export const routes: Routes = [
-
+  {path:'',component:HomeComponent},
   {path: 'home', component: HomeComponent },
   {path:'register', component: RegisterComponent},
   {path:'login',component:LoginComponent},
@@ -31,15 +33,16 @@ export const routes: Routes = [
   {path: 'notify', component: NotificationComponent},
   {path: 'user-profile', component: UserProfileComponent},
   {path: 'edit-profile', component: EditProfileComponent},
+  {path: 'artsin', component:ArtsinComponent},
 
   {path:'notFound', component: NotFoundComponent},
 
-
-  { path: 'service-payment', component: ServicePaymentComponent },
+  {path:'service-payment', component: ServicePaymentComponent },
   {path:'payment-success',component: SuccessfulPaymentComponent},
   {path:'payment-failed',component: FailedPaymentComponent},
 
-  {path:'**', redirectTo: 'home'}
+  {path:'**', redirectTo: 'notFound'}
+
 ];
 
 
