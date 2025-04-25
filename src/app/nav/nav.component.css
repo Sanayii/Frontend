@@ -1,32 +1,46 @@
+*{
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+.notification-icon {
+  position: relative;
+}
+
+.badge {
+  position: absolute;
+  top: -5px;
+  right: -10px;
+  background: crimson;
+  color: white;
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 50%;
+}
 
 /* start nav */
 .head{
-  background-color: #0f172a;
   position: fixed;
   top: 0;
   width: 100%;
   z-index: 50;
+  padding:10px 15px;
+  justify-content: space-between;
 }
 
-.logo a span{
-  letter-spacing: 3px;
-  font-size: 20px;
-  font-weight: 800;
-}
 .logoImg{
   width: 50px;
   height: 50px;
   border-radius: 40%;
-  margin-left: 10px;
 }
 .head a{
   text-decoration: none;
   color: black;
-  padding: 5px 18px;
+  padding: 5px 15px;
   border-radius: 3px;
 
 }
-.head .links a:hover{
+.head .link:hover{
   color: black;
   background-color: lightgray;
 }
@@ -35,17 +49,18 @@
   color: black;
   background-color: lightgray;
 }
-
+.auth-buttons{
+  display: flex;
+}
 .auth-buttons .btn {
   background-color: #2980b9;
   border: 2px solid white;
   color: #fff;
   border-radius: 5px;
-
-  margin-left: 1rem;
-  padding: 10px 15px;
+  margin-left: 4px;
+  padding: 5px 15px;
   text-decoration: none;
-  border-radius: 8px;
+  border-radius: 9px;
   font-weight: bold;
   transition: all 0.3s ease;
 }
@@ -58,8 +73,7 @@
 
 
 @media (max-width: 808px) {
-  .links{
+  /* .links{
       display: none !important;
-  }
-
+  } */
 }

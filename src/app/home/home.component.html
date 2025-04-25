@@ -1,8 +1,10 @@
 
+<head>
   <link
   href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css"
-  rel="stylesheet"
-  />
+  rel="stylesheet"/>
+</head>
+
 
 
   <!-- start banner  -->
@@ -12,7 +14,7 @@
       <h3>Connecting You with Trusted Artisans</h3>
       <p>Plumbers, electricians, carpenters — all in one place.</p>
       <div class="banner-button">
-        <a href="#services" class="btn btn-outline btn__primary">Explore Services</a>
+        <a routerLink="/categories" class="btn btn-outline btn__primary">Explore Services</a>
       </div>
     </div>
   </section>
@@ -69,6 +71,8 @@
 
     </div>
   </section>
+
+<!-- start service -->
   <section class="services" id="services">
     <h2 class="section__header para"><span>Services</span> We Offer</h2>
     <div class="swiper" #servicesSwiper>
@@ -124,10 +128,7 @@
     </div>
   </section>
 
-
-
-
-  <!-- start services  -->
+  <!-- start Review  -->
   <section class="customer">
     <div class="section__container customer__container">
       <p class="para section__header ms-5 mb-5" id="Reviews">
@@ -224,5 +225,4 @@
       </form>
     </div>
   </section>
-  <app-categories></app-categories>
 

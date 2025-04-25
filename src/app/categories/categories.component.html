@@ -30,8 +30,8 @@
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
-          <div class="mb-3">
 
+          <div class="mb-3">
             <input type="text" class="form-control" id="name" name="firstName" [(ngModel)]="formData.firstName"  required placeholder="First Name">
           </div>
           <div class="mb-3">
@@ -46,6 +46,21 @@
           <div class="mb-3">
             <textarea class="form-control" id="details" rows="4" name="details" [(ngModel)]="formData.details"  required placeholder="Service Details"></textarea>
           </div>
+          
+           <div class="mb-3">
+            <label for="requestDate" class="form-label">Request Date</label>
+            <input type="date" class="form-control sm" id="requestDate" name="requestDate" ngModel required>
+          </div>
+          
+          <div class="mb-3">
+            <label for="paymentMethod" class="form-label">Payment Method</label>
+            <select class="form-select sm" id="paymentMethod" name="paymentMethod" ngModel required>
+              <option value="" disabled selected>Select payment method</option>
+              <option value="cash">Cash</option>
+              <option value="credit_card">Credit Card</option>
+              <option value="bank_transfer">Bank Transfer</option>
+              <option value="mobile_payment">Mobile Payment</option>
+            </select>
         </div>
 
           <button type="submit" class="btn btn-submit">Submit Request</button>
@@ -54,4 +69,6 @@
     </div>
   </div>
 </div>
+
+<app-chat></app-chat>
 

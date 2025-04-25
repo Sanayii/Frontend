@@ -1,14 +1,19 @@
 import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import Swiper from 'swiper';
 import 'swiper/swiper-bundle.css';
-import { CategoriesComponent } from '../categories/categories.component';
+
+import { ChatComponent } from '../chat/chat.component';
+import { RouterLink } from '@angular/router';
+
 
 @Component({
+  imports:[ChatComponent,RouterLink],
   selector: 'app-home',
   imports: [CategoriesComponent],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
+
 export class HomeComponent implements AfterViewInit {
   @ViewChild('servicesSwiper', { static: false }) servicesSwiper!: ElementRef;
   @ViewChild('ReviewSwiper', { static: false }) ReviewSwiper!: ElementRef;

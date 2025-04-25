@@ -1,23 +1,32 @@
   <!-- start nav  -->
-  <div class="head d-flex justify-content-between align-items-center shadow-sm p-2 bg-body-tertiary ">
+  <div class="head d-flex align-items-center  shadow-sm  bg-body-tertiary ">
+
     <div class="logo">
-        <img src="/assets/images/logo.png" alt="logo" class="logoImg">
+        <a href="#"><img src="/assets/images/logo.png" alt="logo" class="logoImg"></a>
     </div>
 
-    <ul class="nav d-flex align-items-center links">
-      <li><a href="/home" >Home</a></li>
-      <li><a href="/home#about" routerLinkActive="acyive">About Us</a></li>
-      <li><a href="/home#services">Services</a></li>
-      <li><a href="/home#Reviews">Reviews</a></li>
-      <li><a href="/home#Contact">Contact</a></li>
-      <li><a href="/categories">categories</a></li>
+    <ul class="nav d-flex  links">
+      <li><a href="/home" class="link">Home</a></li>
+
+      <li><a routerLink="/user-profile" class="link">user-profile</a></li>
+
+      <li class="notification-icon">
+        <a routerLink="/notify" style="position: relative;">
+          <fa-icon [icon]="faBell" style="color: #2980b9; font-size: 25px;"></fa-icon>
+          <span *ngIf="unreadCount > 0" class="badge">{{ unreadCount }}</span>
+        </a>
+      </li>
+
+
+
     </ul>
 
     <div class="auth-buttons">
-      <a routerLink="/login" class="btn btn-sm">Login</a>
-      <a routerLink="/register"  class="btn btn-sm">Register</a>
-
+      <a routerLink="/login" class="btn">Login</a>
+      <a routerLink="/register"  class="btn ">Register</a>
     </div>
+
+
 </div>
 
-<router-outlet></router-outlet>
+

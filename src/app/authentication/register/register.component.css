@@ -5,15 +5,13 @@ body {
 
 .register{
   width: 80%;
-  margin: 50px auto;
+  margin: 30px auto;
   background-color: #fff;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   border-radius: 15px;
-  overflow: hidden;
   display: flex;
   flex-wrap: wrap;
-  margin-top: 10%;
-  margin-bottom: 5%;
+  margin-top: 8%
 }
 
 .register-img {
@@ -66,7 +64,8 @@ body {
 @media (max-width: 768px) {
   .register {
     flex-direction: column;
-    width: 65%
+    width: 70%;
+    margin-top: 100px;
   }
 
   .register-img {
@@ -74,7 +73,7 @@ body {
   }
 
   .register-form {
-    flex: 50%;
+    flex: 65%;
     padding: 30px 20px;
   }
 }
