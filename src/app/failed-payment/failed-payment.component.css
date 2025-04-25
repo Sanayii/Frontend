@@ -1,0 +1,21 @@
+.failed {
+  text-align: center;
+  padding: 2rem;
+  display: flex;
+  justify-content: center;
+}
+.failed h2 {
+  color: #dc3545;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+.failed-icon {
+  color: #dc3545;
+  font-size: 4rem;
+  margin-bottom: 1rem;
+}
+
+.order-amount {
+  font-weight: bold;
+  margin: 1rem 0;
+}
