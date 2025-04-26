@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component ,ElementRef, ViewChild} from '@angular/core';
+import { Component ,ElementRef, EventEmitter, Output, ViewChild} from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 @Component({
@@ -18,14 +18,28 @@ export class ChatComponent {
 
   @ViewChild('chatContent') chatContent!: ElementRef;
 
+
+  @Output() chatboxOpened = new EventEmitter<boolean>(); // <-- هذا الجديد
+
   toggleChatbox() {
     this.isChatboxOpen = !this.isChatboxOpen;
+    this.chatboxOpened.emit(this.isChatboxOpen); // <-- نخبر الأب بالحالة الجديدة
   }
 
-  toggleDropdown(event: MouseEvent) {
-    this.dropdownOpen = !this.dropdownOpen;
-    event.stopPropagation();
+  openChat() {
+    this.isChatboxOpen = true;
+    this.chatboxOpened.emit(true);
   }
+
+  closeChat() {
+    this.isChatboxOpen = false;
+    this.chatboxOpened.emit(false);
+  }
+
+
+
+
+
 
   onInputChange() {
     const lineCount = this.messageText.split('\n').length;
@@ -79,4 +93,7 @@ export class ChatComponent {
   formatMessageText(text: string): string {
     return text.replace(/\n/g, '<br>');
   }
+
+  //
+
 }

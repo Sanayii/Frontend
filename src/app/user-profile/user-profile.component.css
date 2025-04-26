@@ -240,6 +240,14 @@
             border-radius: 8px;
             border: 1px solid #e2e8f0;
         }
+        .btns{
+          width: 600px;
+          display: flex;
+          gap: 10px;
+        }
+        .btns a{
+          padding: 10px 13px;
+        }
 
         @media (max-width: 768px) {
             .profile-card {

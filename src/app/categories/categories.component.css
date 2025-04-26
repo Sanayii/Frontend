@@ -63,3 +63,19 @@ section h2{
   background-color: #2282c2;
   border: #2282c2 2px solid;
 }
+
+
+/* Add styles for shrinking the width when chatbox is open */
+.shrink-width {
+  width: calc(100% - 350px); /* Reduces the width by 300px (width of chatbox) */
+  transition: width 0.3s ease-in-out;
+}
+
+/* Optionally, adjust the layout of the cards for responsiveness */
+.row {
+  transition: width 0.3s ease-in-out;
+}
+
+.with-chat-open {
+  margin-bottom: 120px; /* أو أي رقم يناسبك حسب ارتفاع الشات */
+}

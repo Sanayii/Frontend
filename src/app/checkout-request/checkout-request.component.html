@@ -3,7 +3,7 @@
   <div class="mt-5 pt-3"></div>
 
   <div class="text-center mb-5 pt-4">
-    <h1 class="text-primary mb-4">Checkout</h1>
+    <h1 class="mb-4" style="color: #2980b9;">Checkout</h1>
     <div class="d-flex justify-content-center">
       <div class="stepper">
         <div class="step completed">
@@ -27,7 +27,7 @@
     <div class="col-lg-8">
       <!-- Service Card with more spacing -->
       <div class="card border-0 shadow-sm rounded-3 mb-5">
-        <div class="card-header bg-primary text-white py-3 rounded-top-3">
+        <div class="card-header text-white py-3 rounded-top-3" style="background-color: #2980b9;">
           <h5 class="mb-0"><mat-icon>receipt</mat-icon> Order Summary</h5>
         </div>
         <div class="card-body">
@@ -72,7 +72,7 @@
               </div>
               <div class="col-md-6">
                 <div class="d-flex align-items-center bg-light p-3 rounded-2">
-                  <mat-icon class="text-primary me-2">access_time</mat-icon>
+                  <mat-icon class="me-2" style="color: #2980b9;">access_time</mat-icon>
                   <div>
                     <div class="small text-muted">Time</div>
                     <div class="fw-bold">9:00 AM - 1:00 PM</div>
@@ -104,13 +104,13 @@
 
       <!-- Payment Method with more spacing -->
       <div class="card border-0 shadow-sm rounded-3 mb-4">
-        <div class="card-header bg-primary text-white py-3 rounded-top-3">
+        <div class="card-header text-white py-3 rounded-top-3" style="background-color: #2980b9;">
           <h5 class="mb-0"><mat-icon>payment</mat-icon> Payment Method</h5>
         </div>
         <div class="card-body">
           <div class="mb-4">
             <div class="form-check">
-              <input class="form-check-input" type="radio" name="paymentMethod" id="creditCard" checked>
+              <!-- <input class="form-check-input" type="text" name="paymentMethod" id="creditCard" > -->
               <label class="form-check-label d-flex align-items-center" for="creditCard">
                 <mat-icon class="mx-2">credit_card</mat-icon>
                 Credit/Debit Card
@@ -140,29 +140,66 @@
             </div>
           </div>
 
-          <div class="form-check mb-4">
+          <!-- <div class="form-check mb-4">
             <input class="form-check-input" type="radio" name="paymentMethod" id="paypal">
             <label class="form-check-label d-flex align-items-center" for="paypal">
               <mat-icon class="mx-2">account_balance_wallet</mat-icon>
               PayPal
             </label>
-          </div>
+          </div> -->
 
-          <div class="form-check">
+          <!-- <div class="form-check">
             <input class="form-check-input" type="radio" name="paymentMethod" id="cash">
             <label class="form-check-label d-flex align-items-center" for="cash">
               <mat-icon class="mx-2">attach_money</mat-icon>
               Cash on Service Completion
             </label>
-          </div>
+          </div> -->
+
         </div>
       </div>
+
+      <!-- rating -->
+      <div class="card border-0 shadow-sm rounded-3 mb-4">
+
+        <div class="card-header text-white py-3 rounded-top-3" style="background-color: #2980b9;">
+          <h5 class="mb-0"><mat-icon>star</mat-icon>Rating Service</h5>
+        </div>
+
+        <div class="card-body">
+
+          <div class="mb-4 p-3 bg-light rounded-2">
+            <div class="row g-3">
+              <div class="col-12">
+                <label for="cardNumber" class="form-label">Comment</label>
+                <input type="text" class="form-control" id="cardNumber" placeholder="your comment">
+              </div>
+              <div class="col-md-6">
+                <div class="stars">
+                  <i
+                    class="fa-solid fa-star"
+                    *ngFor="let star of [1,2,3,4,5]"
+                    [ngClass]="{ 'active': star <= selectedRating }"
+                    (click)="setRating(star)">
+                  </i>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
     </div>
+
+
+
 
     <!-- Right Column - Order Total -->
     <div class="col-lg-4">
       <div class="card border-0 shadow-sm rounded-3 sticky-md-top" style="top: 100px;">
-        <div class="card-header bg-primary text-white py-3 rounded-top-3">
+        <div class="card-header text-white py-3 rounded-top-3" style="background-color: #2980b9;">
           <h5 class="mb-0"><mat-icon>shopping_cart</mat-icon> Order Total</h5>
         </div>
         <div class="card-body">
