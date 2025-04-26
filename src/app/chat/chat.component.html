@@ -15,14 +15,6 @@
         </div>
       </div>
 
-      <div class="chatbox-message-dropdown" (click)="toggleDropdown($event)">
-        <i class='bx bx-dots-vertical-rounded chatbox-message-dropdown-toggle'></i>
-        <ul class="chatbox-message-dropdown-menu" [class.show]="dropdownOpen">
-          <li><a href="#">Search</a></li>
-          <li><a href="#">Report</a></li>
-        </ul>
-      </div>
-
     </div>
 
     <div class="chatbox-message-content" #chatContent>
@@ -45,6 +37,6 @@
         <button type="submit" class="chatbox-message-submit"><i class='bx bx-send'></i></button>
       </form>
     </div>
-    
+
   </div>
 </div>

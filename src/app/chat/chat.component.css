@@ -71,7 +71,7 @@ select {
 /* CHATBOX */
 .chatbox-wrapper {
 	position: fixed;
-	bottom:80px;
+	bottom:100px;
 	right: 20px;
 	width: 55px;
 	height: 55px;
@@ -96,7 +96,7 @@ select {
 	position: absolute;
 	bottom: calc(100% + 1rem);
 	right: 0;
-	width: 420px;
+	width: 450px;
 	border-radius: .5rem;
 	overflow: hidden;
 	box-shadow: .5rem .5rem 2rem rgba(0, 0, 0, .1);
@@ -133,51 +133,8 @@ select {
 	font-size: .875rem;
 	color: #888;
 }
-.chatbox-message-dropdown {
-	position: relative;
-}
-.chatbox-message-dropdown-toggle {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 2.5rem;
-	height: 2.5rem;
-	font-size: 1.25rem;
-	cursor: pointer;
-	border-radius: 50%;
-}
-.chatbox-message-dropdown-toggle:hover {
-	background: #F5F5F5;
-}
-.chatbox-message-dropdown-menu {
-	list-style: none;
-	margin: 0;
-	position: absolute;
-	top: 100%;
-	right: 0;
-	background:#FFF;
-	padding: .5rem 0;
-	width: 120px;
-	box-shadow: .25rem .25rem 1.5rem rgba(0, 0, 0, .1);
-	transform: scale(0);
-	transform-origin: top right;
-	transition: .2s;
-	border-radius: .5rem;
-}
-.chatbox-message-dropdown-menu.show {
-	transform: scale(1);
-}
-.chatbox-message-dropdown-menu a {
-	font-size: .875rem;
-	font-weight: 500;
-	color: #222;
-	text-decoration: none;
-	padding: .5rem 1rem;
-	display: block;
-}
-.chatbox-message-dropdown-menu a:hover {
-	background: #F5F5F5;
-}
+
+
 .chatbox-message-content {
 	background:#F5F5F5;
 	padding: 1.5rem;

@@ -1,11 +1,12 @@
-import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { CommonModule, ViewportScroller } from '@angular/common';
+import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import * as bootstrap from 'bootstrap';
 import { FormsModule } from '@angular/forms';
 
 import { ChatComponent } from '../chat/chat.component';
 
-import { Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { faL } from '@fortawesome/free-solid-svg-icons';
 
 
 
@@ -15,7 +16,10 @@ import { Router, RouterLink } from '@angular/router';
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.css'
 })
-export class CategoriesComponent {
+export class CategoriesComponent  implements AfterViewInit {
+
+
+  @ViewChild(ChatComponent) chatComponent!: ChatComponent;
 
   formData = {
     firstName: '',
@@ -27,7 +31,7 @@ export class CategoriesComponent {
     paymentMethod:''
   };
 
-  constructor(private router: Router) {}
+  constructor(private router: Router,  private scroller: ViewportScroller,private route: ActivatedRoute) {}
 
   categories = [
     {name: 'Plumbing',image: '/assets/images/plumbing.jpeg',artisan:'Ahmed Mohamed'},
@@ -77,5 +81,33 @@ export class CategoriesComponent {
 
   toggleShowAll() {
     this.showAll = !this.showAll;
+  }
+
+
+  //
+  ngAfterViewInit() {
+    this.route.fragment.subscribe(fragment => {
+      if (fragment === 'chat') {
+        setTimeout(() => {
+          this.scroller.scrollToAnchor(fragment);
+          this.openChat();
+        }, 100); // small delay for safety
+      }
+    });
+  }
+  isChatboxOpen:boolean=false;
+
+  openChat() {
+    if (this.chatComponent) {
+      this.chatComponent.openChat();
+      this.isChatboxOpen = true;
+    }
+    else{
+      this.isChatboxOpen=false;
+    }
+  }
+
+  onChatboxOpened(opened: boolean) {
+    this.isChatboxOpen = opened;
   }
 }

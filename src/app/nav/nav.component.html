@@ -2,16 +2,16 @@
   <div class="head d-flex align-items-center  shadow-sm  bg-body-tertiary ">
 
     <div class="logo">
-        <a href="#"><img src="/assets/images/logo.png" alt="logo" class="logoImg"></a>
+        <a href="#"><img src="/assets/images/logo1.jpg" alt="logo" class="logoImg"></a>
     </div>
 
     <ul class="nav d-flex  links">
       <li><a href="/home" class="link">Home</a></li>
 
-      <li><a routerLink="/categories" class="link">categories</a></li>
+      <li><a routerLink="/categories" class="link">Services</a></li>
       <li><a routerLink="/user-profile" class="link">user-profile</a></li>
 
-      <li><a class="link">Help</a></li>
+      <li><a [routerLink]="['/categories']" fragment="chat" class="link">Help</a></li>
 
       <li class="notification-icon">
         <a routerLink="/notify" style="position: relative;">

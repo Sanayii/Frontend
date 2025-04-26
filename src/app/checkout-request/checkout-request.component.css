@@ -26,7 +26,7 @@
   }
 
   .step.active .step-circle {
-    background-color: #0d6efd;
+    background-color: #2980b9;
     color: white;
   }
 
@@ -42,7 +42,7 @@
   }
 
   .step.active .step-label {
-    color: #0d6efd;
+    color: #2980b9;
     font-weight: 600;
   }
 
@@ -94,4 +94,20 @@
     .step-label {
       margin-top: 0;
     }
+  }
+
+  .stars {
+    display: flex;
+    align-items: center;
+  }
+
+  .stars i {
+    font-size: 25px;
+    margin: 0 2px;
+    color: #ccc;
+    transition: color 0.3s;
+  }
+
+  .stars i.active {
+    color: #ffc107;
   }
