@@ -1,49 +1,63 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import { CommonModule } from '@angular/common'; // Also need this for ngFor etc
 import { NotificationService } from '../_services/notification.service';
-import { NotificationDetailsComponent } from '../notification-details/notification-details.component';
+import { Notification } from '../_Models/notification';
+import { NotificationDetailsComponent } from '../notification-details/notification-details.component'; 
 
 @Component({
   selector: 'app-notification',
-  imports: [CommonModule,NotificationDetailsComponent],
+  standalone: true, 
+  imports: [CommonModule, NotificationDetailsComponent], 
   templateUrl: './notification.component.html',
-  styleUrl: './notification.component.css'
+  styleUrls: ['./notification.component.css']
 })
 export class NotificationComponent implements OnInit {
 
-  notifications: any[] = [];
-  selectedNotification: any = null;
+  notifications: Notification[] = [];
+  selectedNotification: Notification | null = null;
 
-  constructor(private notificationService: NotificationService) {}
+  constructor(private notificationService: NotificationService) {
+  }
 
   get unreadCount(): number {
     return this.notificationService.getUnreadCount();
   }
 
   ngOnInit(): void {
+    // Fetch notifications from the API initially
+    this.notificationService.getAll().subscribe(data => {
+      // Ensure you append API data to the existing notifications array
+      this.notifications = [...data];
+      console.log('Notifications from API:', this.notifications); // Log API notifications
+    });
+  
+    // Subscribe to the notifications observable from the service (for SignalR updates)
     this.notificationService.notifications$.subscribe(data => {
-      this.notifications = data;
+      // When data updates via SignalR, append new notifications to the list
+      this.notifications = [...data];  // Update the notifications array with both API and SignalR notifications
+      console.log('Updated notifications after SignalR push:', this.notifications); // Log updated notifications
     });
   }
+  
 
-  markAsRead(notification: any) {
+  markAsRead(notification: Notification): void {
     this.notificationService.markAsRead(notification);
   }
 
-  markAllAsRead() {
+  markAllAsRead(): void {
     this.notificationService.markAllAsRead();
   }
 
-  deleteNotification(index: number) {
+  deleteNotification(index: number): void {
     this.notificationService.deleteNotification(index);
   }
 
-  deleteAllNotifications() {
+  deleteAllNotifications(): void {
     this.notificationService.deleteAllNotifications();
   }
 
-  openDetailsPopup(notification: any) {
-    if (notification.unread) {
+  openDetailsPopup(notification: Notification): void {
+    if (notification.isRead) {
       this.markAsRead(notification);
     }
     this.selectedNotification = notification;

@@ -1,46 +1,97 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import * as signalR from '@microsoft/signalr';
+import { HttpClient } from '@angular/common/http';
+import { Notification } from '../_Models/notification';
 
 @Injectable({
   providedIn: 'root'
 })
 export class NotificationService {
 
-  constructor() { }
-  private notifications = [
-    { id: 1, text: "Notification 1 content", time: "1 min ago",details: "More details about this notification.", unread: true },
-    { id: 2, text: "Notification 2 content", time: "1 min ago",details: "More details about this notification.", unread: true },
-    { id: 3, text: "Notification 3 content", time: "1 min ago",details: "More details about this notification.", unread: true },
-    { id: 4, text: "Notification 4 content", time: "1 min ago",details: "More details about this notification.", unread: true },
-    { id: 5, text: "Notification 5 content", time: "1 min ago",details: "More details about this notification.", unread: false },
-    { id: 6, text: "Notification 6 content", time: "1 min ago",details: "More details about this notification.", unread: false },
-  ];
-
+  private notifications: Notification[] = [];
+  
   private _notifications$ = new BehaviorSubject(this.notifications);
   notifications$ = this._notifications$.asObservable();
 
+  private hubConnection: signalR.HubConnection;
+
+  constructor(private http: HttpClient) {
+    // Create SignalR connection to the Web API Hub
+    this.hubConnection = new signalR.HubConnectionBuilder()
+      .withUrl("https://localhost:7234/notificationHub")  // Replace with your Web API URL and Hub name
+      .build();
+    this.startConnection();
+    this.setupListeners();
+
+    this.getAll().subscribe(data => {
+      // Ensure you append API data to the existing notifications array
+      this.notifications = [...data];
+      console.log('Notifications from API:', this.notifications); // Log API notifications
+    });
+  }
+
+  private baseURL = "https://localhost:7234/api/Notification";
+
+  // HTTP request to get all notifications from the API
+  getAll() {
+    return this.http.get<Notification[]>(this.baseURL);
+  }
+
+  // Start SignalR connection
+  private async startConnection() {
+    try {
+      await this.hubConnection.start();
+      console.log('SignalR connection established');
+    } catch (err) {
+      console.error('Error establishing SignalR connection: ', err);
+      setTimeout(() => this.startConnection(), 5000);  // Retry if connection fails
+    }
+  }
+
+  // Setup SignalR listeners
+  private setupListeners() {
+    // Listen for incoming notifications from the SignalR hub
+    this.hubConnection.on('ReceiveNotification', (notification: Notification) => {
+      console.log("From Hub Listener:", notification);
+  
+      // Append the new notification to the existing notifications
+      this.notifications = [...this.notifications, notification]; // This merges the existing notifications with the new one
+  
+      // Emit the updated notifications array to the subscribers
+      this._notifications$.next(this.notifications);
+  
+      console.log("Updated notifications after SignalR:", this.notifications);
+    });
+  }
+  
+
+  // Get the count of unread notifications
   getUnreadCount(): number {
-    return this.notifications.filter(n => n.unread).length;
+    return this.notifications.filter(n => n.isRead==false).length;
   }
 
-  markAsRead(notification: any) {
-    notification.unread = false;
+  // Mark a notification as read
+  markAsRead(notification: Notification) {
+    notification.isRead = false;
     this._notifications$.next(this.notifications);
   }
 
+  // Mark all notifications as read
   markAllAsRead() {
-    this.notifications.forEach(n => n.unread = false);
+    this.notifications.forEach(n => n.isRead = false);
     this._notifications$.next(this.notifications);
   }
 
+  // Delete a specific notification
   deleteNotification(index: number) {
     this.notifications.splice(index, 1);
-    this._notifications$.next(this.notifications); // Update the observable stream
+    this._notifications$.next(this.notifications);
   }
 
+  // Delete all notifications
   deleteAllNotifications() {
     this.notifications = [];
-    this._notifications$.next(this.notifications); // Update the observable stream
+    this._notifications$.next(this.notifications);
   }
-
 }

@@ -1,23 +1,25 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { Notification } from '../_Models/notification';
 
 @Component({
   selector: 'app-notification-details',
-  imports: [CommonModule],
+  standalone: true, // ✅ Important: standalone: true
+  imports: [CommonModule], // ✅ Required for *ngIf inside HTML
   templateUrl: './notification-details.component.html',
-  styleUrl: './notification-details.component.css'
+  styleUrls: ['./notification-details.component.css']
 })
-export class NotificationDetailsComponent implements OnChanges{
-  @Input() notification: any;
+export class NotificationDetailsComponent implements OnChanges {
+  @Input() notification: Notification | null = null; // ✅ Input for 'notification'
   showPopup: boolean = false;
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['notification'] && this.notification) {
-      this.showPopup = true; // تفعيل الـ popup عند تلقي بيانات جديدة
+      this.showPopup = true;
     }
   }
 
   closePopup() {
-    this.showPopup = false; // إغلاق الـ popup
+    this.showPopup = false;
   }
 }
