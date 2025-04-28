@@ -1,42 +1,78 @@
 <div class="chatbox-wrapper">
+  <!-- Chat toggle button -->
   <div class="chatbox-toggle" (click)="toggleChatbox()">
     <i class='bx bx-message-dots'></i>
   </div>
 
+  <!-- Chatbox container (shown/hidden based on isChatboxOpen) -->
   <div class="chatbox-message-wrapper" [class.show]="isChatboxOpen">
+    <!-- Chat header with profile info -->
     <div class="chatbox-message-header">
-
       <div class="chatbox-message-profile">
         <img src="https://images.unsplash.com/photo-1570295999919-56ceb5ecca61?auto=format&fit=crop&w=500&q=60"
-            alt="" class="chatbox-message-image">
+             alt="Chat assistant" class="chatbox-message-image">
         <div>
-          <h4 class="chatbox-message-name">Jonathan Doe</h4>
+          <h4 class="chatbox-message-name">Sanayii Support</h4>
           <p class="chatbox-message-status">online</p>
         </div>
       </div>
-
     </div>
 
+    <!-- Chat message content area -->
     <div class="chatbox-message-content" #chatContent>
-      <h4 class="chatbox-message-no-message" *ngIf="messages.length === 0">You don't have message yet!</h4>
+      <!-- Empty state message -->
+      <h4 class="chatbox-message-no-message" *ngIf="messages.length === 0">
+        Start a conversation with our support team!
+      </h4>
+
+      <!-- Messages list -->
       <div *ngFor="let msg of messages" [ngClass]="['chatbox-message-item', msg.type]">
         <span class="chatbox-message-item-text" [innerHTML]="msg.text"></span>
         <span class="chatbox-message-item-time">{{ msg.time }}</span>
       </div>
+
+      <!-- Loading indicator -->
+      <div *ngIf="isLoading" class="chatbox-message-item received">
+        <span class="typing-indicator">
+          <span></span>
+          <span></span>
+          <span></span>
+        </span>
+      </div>
     </div>
 
+    <!-- Message input form -->
     <div class="chatbox-message-bottom">
-      <form class="chatbox-message-form" (submit)="onSubmit()" #formRef="ngForm"
+      <form class="chatbox-message-form"
+            (submit)="onSubmit()"
+            #formRef="ngForm"
             [ngStyle]="{ alignItems: textareaRows > 1 ? 'flex-end' : 'center' }">
+
         <textarea rows="{{textareaRows}}"
-                  placeholder="Type message..."
+                  placeholder="Type your message..."
                   class="chatbox-message-input"
                   [(ngModel)]="messageText"
                   name="message"
-                  (input)="onInputChange()"></textarea>
-        <button type="submit" class="chatbox-message-submit"><i class='bx bx-send'></i></button>
-      </form>
-    </div>
+                  [maxlength]="maxMessageLength"
+                  (input)="onInputChange()"
+                  required></textarea>
 
+                  <button type="submit"
+                  class="chatbox-message-submit"
+                  [disabled]="!messageText.trim()"
+                  aria-label="Send message"
+                  title="Send message"
+                  [attr.aria-disabled]="!messageText.trim()">
+            <i class='bx bx-send' aria-hidden="true"></i>
+            <span class="visually-hidden">Send message</span>
+          </button>
+
+      </form>
+
+      <!-- Character counter -->
+      <div class="char-counter" *ngIf="messageText.length > 0">
+        {{ messageText.length }}/{{ maxMessageLength }}
+      </div>
+    </div>
   </div>
 </div>
