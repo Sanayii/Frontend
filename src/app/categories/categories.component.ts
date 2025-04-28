@@ -7,18 +7,21 @@ import { ChatComponent } from '../chat/chat.component';
 
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { faL } from '@fortawesome/free-solid-svg-icons';
+import { Category } from '../_models/category';
+import { CategoryService } from '../_services/category.service';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
 @Component({
   selector: 'app-categories',
-  imports: [CommonModule,FormsModule,RouterLink,ChatComponent],
+  imports: [CommonModule,FormsModule,RouterLink,ChatComponent,HttpClientModule],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.css'
 })
 export class CategoriesComponent  implements AfterViewInit {
 
-
+  categories: Category[] = [];
   @ViewChild(ChatComponent) chatComponent!: ChatComponent;
 
   formData = {
@@ -31,9 +34,12 @@ export class CategoriesComponent  implements AfterViewInit {
     paymentMethod:''
   };
 
-  constructor(private router: Router,  private scroller: ViewportScroller,private route: ActivatedRoute) {}
+  constructor(private router: Router,
+      private scroller: ViewportScroller,
+      private route: ActivatedRoute,
+      private categoryService: CategoryService) {}
 
-  categories = [
+  /*categories = [
     {name: 'Plumbing',image: '/assets/images/plumbing.jpeg',artisan:'Ahmed Mohamed'},
     {name: 'Electricity',image: '/assets/images/electrical.jpeg',artisan:'Mohamed Hassan'},
     {name: 'Carpentry',image: '/assets/images/joiner.jpeg',artisan:'Ali Mohamed'},
@@ -43,7 +49,39 @@ export class CategoriesComponent  implements AfterViewInit {
     {name: 'House cleaning and maintenance',image:'/assets/images/cleaning.jpeg',artisan:'Samir sayed'},
     {name: 'Electrical appliance repair',image:'/assets/images/elec_repair.jpeg',artisan:'Alaa shaker'},
     {name: 'Air conditioning and refrigeration maintenance',image:'/assets/images/conditioning.jpeg',artisan:'Khaled mohamed'},
-  ];
+  ];*/
+  ngOnInit() {
+    this.loadCategories();
+  }
+  loadCategories() {
+    this.categoryService.getCategories().subscribe({
+      next: (data) => {
+        console.log(data);
+        this.categories = data.map(category => ({
+          ...category,
+          image: this.getImageForCategory(category.name!) // الصورة بس
+        }));
+      },
+      error: (error) => {
+        console.error('Error loading categories:', error);
+      }
+    });
+  }
+  getImageForCategory(categoryName: string): string {
+    const imageMap: { [key: string]: string } = {
+      'سباكة': '/assets/images/plumbing.jpeg',
+      'كهرباء': '/assets/images/electrical.jpeg',
+      'نجارة': '/assets/images/joiner.jpeg',
+      'دهانات ونقاشة': '/assets/images/debate.jpeg',
+      'تركيب سيراميك وبلاط': '/assets/images/maintenance.jpeg',
+      'حدادة وألمنيوم': '/assets/images/blacksmith.jpeg',
+      'تنظيف وصيانة منازل': '/assets/images/cleaning.jpeg',
+      'إصلاح أجهزة كهربائية': '/assets/images/elec_repair.jpeg',
+      'صيانة المكيفات والتبريد': '/assets/images/conditioning.jpeg',
+      'تصميم وحدات ديكور': '/assets/images/decor.jpeg'
+    };
+    return imageMap[categoryName] || '/assets/images/decor.jpeg';
+  }
 
   selectedCategory: string = "";
   selectedArtisan: string = "";
@@ -53,9 +91,9 @@ export class CategoriesComponent  implements AfterViewInit {
     return this.showAll ? this.categories : this.categories.slice(0, 6);
   }
 
-  handleCategoryClick(serviceName: string, artisanName: string) {
+  handleCategoryClick(serviceName: string) {
     this.selectedCategory = serviceName;
-    this.selectedArtisan = artisanName;
+    //this.selectedArtisan = artisanName;
     const modal = document.getElementById('serviceModal');
     if (modal) {
       const bootstrapModal = new bootstrap.Modal(modal);

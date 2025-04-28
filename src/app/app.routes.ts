@@ -17,6 +17,7 @@ import { SuccessfulPaymentComponent } from './successful-payment/successful-paym
 import { FailedPaymentComponent } from './failed-payment/failed-payment.component';
 import { ChatComponent } from './chat/chat.component';
 import { ArtsinComponent } from './artsin/artsin.component';
+import { PaymentHistoryComponent } from './payment-history/payment-history.component';
 
 export const routes: Routes = [
   {path:'',component:HomeComponent},
@@ -25,6 +26,7 @@ export const routes: Routes = [
   {path:'login',component:LoginComponent},
 
   {path:'services-requests-history', component: ServicesRequestsHistoryComponent},
+  {path:'payment-history', component: PaymentHistoryComponent},
   {path:'checkout-request', component: CheckoutRequestComponent},
   {path:'categories',component:CategoriesComponent},
 
