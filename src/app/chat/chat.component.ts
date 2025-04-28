@@ -1,73 +1,77 @@
 import { CommonModule } from '@angular/common';
-import { Component ,ElementRef, EventEmitter, Output, ViewChild} from '@angular/core';
+import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ChatService } from '../_services/chat.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-chat',
+  standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './chat.component.html',
-  styleUrl: './chat.component.css'
+  styleUrls: ['./chat.component.css']
 })
 export class ChatComponent {
+  // Component State
   isChatboxOpen = false;
-  dropdownOpen = false;
   messageText = '';
   textareaRows = 1;
+  isLoading = false;
+  maxMessageLength = 500;
+  isTyping = false
 
-  messages: { type: 'sent' | 'received',text: string, time: string }[] = [];
+  // Message History
+  messages: { type: 'sent' | 'received', text: string, time: string }[] = [];
 
+  // Template References
   @ViewChild('chatContent') chatContent!: ElementRef;
+  @Output() chatboxOpened = new EventEmitter<boolean>();
 
+  constructor(private chatService: ChatService) {}
 
-  @Output() chatboxOpened = new EventEmitter<boolean>(); // <-- هذا الجديد
-
-  toggleChatbox() {
-    this.isChatboxOpen = !this.isChatboxOpen;
-    this.chatboxOpened.emit(this.isChatboxOpen); // <-- نخبر الأب بالحالة الجديدة
-  }
-
-  openChat() {
-    this.isChatboxOpen = true;
-    this.chatboxOpened.emit(true);
-  }
-
-  closeChat() {
-    this.isChatboxOpen = false;
-    this.chatboxOpened.emit(false);
-  }
-
-
-
-
-
-
-  onInputChange() {
-    const lineCount = this.messageText.split('\n').length;
-    this.textareaRows = Math.min(6, lineCount);
-  }
-
-  onSubmit() {
-    if (this.isValid(this.messageText)) {
-      this.writeMessage();
-      setTimeout(() => this.autoReply(), 1000);
+  // Public Methods (called from parent)
+  public openChat(): void {
+    if (!this.isChatboxOpen) {
+      this.toggleChatbox();
     }
   }
 
-  isValid(value: string): boolean {
+  public closeChat(): void {
+    if (this.isChatboxOpen) {
+      this.toggleChatbox();
+    }
+  }
+
+  // UI Handlers
+  toggleChatbox(): void {
+    this.isChatboxOpen = !this.isChatboxOpen;
+    this.chatboxOpened.emit(this.isChatboxOpen);
+    if (this.isChatboxOpen) {
+      this.scrollBottom();
+    }
+  }
+
+  onInputChange(): void {
+    this.textareaRows = Math.min(6, Math.max(1, this.messageText.split('\n').length));
+  }
+
+  onSubmit(): void {
+    if (this.isValid(this.messageText)) {
+      this.writeMessage();
+      this.sendToApi();
+    }
+  }
+
+  // Core Logic
+  private isValid(value: string): boolean {
     const trimmed = value.replace(/\n/g, '').replace(/\s/g, '');
-    return trimmed.length > 0;
+    return trimmed.length > 0 && trimmed.length <= this.maxMessageLength;
   }
 
-  getCurrentTime(): string {
-    const now = new Date();
-    const pad = (num: number) => (num < 10 ? '0' + num : num);
-    return `${pad(now.getHours())}:${pad(now.getMinutes())}`;
-  }
-
-  writeMessage() {
+  private writeMessage(): void {
     this.messages.push({
       type: 'sent',
-      text: this.messageText.trim().replace(/\n/g, '<br>'),
+      text: this.formatMessageText(this.messageText.trim()),
       time: this.getCurrentTime()
     });
     this.messageText = '';
@@ -75,25 +79,63 @@ export class ChatComponent {
     this.scrollBottom();
   }
 
-  autoReply() {
-    this.messages.push({
-      type: 'received',
-      text: 'Thank you for your awesome support!',
-      time: this.getCurrentTime()
-    });
-    this.scrollBottom();
-  }
+  private sendToApi(): void {
+    this.isLoading = true;
 
-  scrollBottom() {
-    setTimeout(() => {
-      this.chatContent.nativeElement.scrollTop = this.chatContent.nativeElement.scrollHeight;
+    this.chatService.sendMessage(this.messages[this.messages.length - 1].text).subscribe({
+      next: (response) => this.handleApiSuccess(response),
+      error: (error) => this.handleApiError(error),
+      complete: () => this.isLoading = false
     });
   }
 
-  formatMessageText(text: string): string {
+  // Helpers
+  private getCurrentTime(): string {
+    return new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  }
+
+  private formatMessageText(text: string): string {
     return text.replace(/\n/g, '<br>');
   }
 
-  //
+  private scrollBottom(): void {
+    setTimeout(() => {
+      this.chatContent.nativeElement.scrollTop = this.chatContent.nativeElement.scrollHeight;
+    }, 50);
+  }
 
+  // Response Handlers
+  private handleApiSuccess(response: { status: string, response: string }): void {
+    this.isTyping = true;
+
+    setTimeout(() => {
+      const responseText = response?.response || 'Thank you for your message!';
+
+      this.messages.push({
+        type: 'received',
+        text: this.formatMessageText(responseText),
+        time: this.getCurrentTime()
+      });
+
+      this.isTyping = false;
+      this.scrollBottom();
+    }, 1000);
+  }
+
+
+  private handleApiError(error: HttpErrorResponse): void {
+    let errorMessage = 'Sorry, we encountered an error. Please try again later.';
+
+    if (error.status === 400) {
+      errorMessage = error.error?.message || 'Please check your message and try again.';
+    } else if (error.status === 0) {
+      errorMessage = 'Network error. Please check your internet connection.';
+    }
+
+    this.messages.push({
+      type: 'received',
+      text: errorMessage,
+      time: this.getCurrentTime()
+    });
+  }
 }

@@ -1,81 +1,55 @@
-.card {
-  border-radius: 1rem;
-  transition: transform 0.2s;
-}
-.card:hover {
-  transform: scale(1.06);
-  cursor: pointer;
-}
-
-section{
-  background-color: #e6e8e9;
-  padding: 50px;
-}
-section h2{
-  font-size: 30px;
-  font-weight: 700;
-    margin-bottom: 20px;
-}
-.contact-container {
-  background-color: #f8f9fa;
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  max-width: 600px;
-  width: 100%;
-}
-.contact-container h5 span{
-  color: #2980b9;
-
-}
-.btn-submit{
-  display: inline-block;
-    background-color: #3498db;
-    color: white;
-    padding: 12px 30px;
-    border: none;
-    border-radius: 8px;
-    font-size: 16px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
-.btn-submit:hover {
-  background-color: #2980b9;
-}
-.btn-more{
-  display: inline-block;
-  padding: 12px;
-  font-size: 19px;
-  text-decoration: none;
-  border-radius: 5px;
-  transition: 0.3s ease;
-}
-.btn-outline {
-  background: transparent;
-  border: 2px solid white;
-  color: white;
-}
-.btn-outline:hover {
-  background-color: white;
-  color: black;
-}
-.btn__primary {
-  background-color: #2282c2;
-  border: #2282c2 2px solid;
+/* Typing indicator animation */
+.typing-indicator {
+  display: inline-flex;
+  gap: 3px;
+  padding: 8px 12px;
+  background: #f1f1f1;
+  border-radius: 18px;
 }
 
-
-/* Add styles for shrinking the width when chatbox is open */
-.shrink-width {
-  width: calc(100% - 350px); /* Reduces the width by 300px (width of chatbox) */
-  transition: width 0.3s ease-in-out;
+.typing-indicator span {
+  width: 8px;
+  height: 8px;
+  background: #666;
+  border-radius: 50%;
+  animation: typing 1s infinite ease-in-out;
 }
 
-/* Optionally, adjust the layout of the cards for responsiveness */
-.row {
-  transition: width 0.3s ease-in-out;
+.typing-indicator span:nth-child(2) {
+  animation-delay: 0.2s;
 }
 
-.with-chat-open {
-  margin-bottom: 120px; /* أو أي رقم يناسبك حسب ارتفاع الشات */
+.typing-indicator span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes typing {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+/* Character counter */
+.char-counter {
+  text-align: right;
+  font-size: 0.8rem;
+  color: #666;
+  padding: 0 10px;
+}
+
+/* Disabled button state */
+.chatbox-message-submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+/* For screen readers only */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }
