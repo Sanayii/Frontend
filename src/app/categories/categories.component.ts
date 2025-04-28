@@ -2,7 +2,9 @@ import { CommonModule, ViewportScroller } from '@angular/common';
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import * as bootstrap from 'bootstrap';
 import { FormsModule } from '@angular/forms';
+
 import { ChatComponent } from '../chat/chat.component';
+
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { faL } from '@fortawesome/free-solid-svg-icons';
 import { Category } from '../_models/category';
@@ -15,24 +17,21 @@ import { HttpClientModule } from '@angular/common/http';
   selector: 'app-categories',
   imports: [CommonModule,FormsModule,RouterLink,ChatComponent,HttpClientModule],
   templateUrl: './categories.component.html',
-  styleUrls: ['./categories.component.css']
+  styleUrl: './categories.component.css'
 })
 export class CategoriesComponent  implements AfterViewInit {
 
   categories: Category[] = [];
   @ViewChild(ChatComponent) chatComponent!: ChatComponent;
 
-
-
-  // Form data model
   formData = {
     firstName: '',
     lastName: '',
     contact: '',
     address: '',
     details: '',
-    data: '',
-    paymentMethod: ''
+    data:'',
+    paymentMethod:''
   };
 
   constructor(private router: Router,
@@ -60,7 +59,7 @@ export class CategoriesComponent  implements AfterViewInit {
         console.log(data);
         this.categories = data.map(category => ({
           ...category,
-          image: this.getImageForCategory(category.name!) // الصورة بس
+          image: this.getImageForCategory(category.name!) 
         }));
       },
       error: (error) => {
@@ -87,11 +86,7 @@ export class CategoriesComponent  implements AfterViewInit {
   selectedCategory: string = "";
   selectedArtisan: string = "";
   showAll = false;
-  isChatboxOpen: boolean = false;
 
-
-
-  // Get visible categories based on showAll state
   get visibleCategories() {
     return this.showAll ? this.categories : this.categories.slice(0, 6);
   }
@@ -101,17 +96,17 @@ export class CategoriesComponent  implements AfterViewInit {
     //this.selectedArtisan = artisanName;
     const modal = document.getElementById('serviceModal');
     if (modal) {
-      new bootstrap.Modal(modal).show();
+      const bootstrapModal = new bootstrap.Modal(modal);
+      bootstrapModal.show();
     }
   }
-
-  // Submit service request form
-  submitRequestForm(): void {
+  submitRequestForm() {
+    console.log('Submit button clicked!');
     const modal = document.getElementById('serviceModal');
-    if (modal) {
-      bootstrap.Modal.getInstance(modal)?.hide();
-    }
-
+  if (modal) {
+    const bootstrapModal = bootstrap.Modal.getInstance(modal);
+    bootstrapModal?.hide();
+  }
     this.router.navigate(['/service-payment'], {
       state: {
         ...this.formData,
@@ -121,35 +116,36 @@ export class CategoriesComponent  implements AfterViewInit {
     });
   }
 
-  // Toggle show all categories
-  toggleShowAll(): void {
+
+  toggleShowAll() {
     this.showAll = !this.showAll;
   }
 
-  // After view initialization
-  ngAfterViewInit(): void {
+
+  //
+  ngAfterViewInit() {
     this.route.fragment.subscribe(fragment => {
       if (fragment === 'chat') {
         setTimeout(() => {
-          this.scroller.scrollToAnchor('chat');
+          this.scroller.scrollToAnchor(fragment);
           this.openChat();
-        }, 100);
+        }, 100); // small delay for safety
       }
     });
   }
+  isChatboxOpen:boolean=false;
 
-  // Open chat programmatically
-  openChat(): void {
+  openChat() {
     if (this.chatComponent) {
       this.chatComponent.openChat();
       this.isChatboxOpen = true;
-    } else {
-      this.isChatboxOpen = false;
+    }
+    else{
+      this.isChatboxOpen=false;
     }
   }
 
-  // Handle chatbox opened/closed events
-  onChatboxOpened(opened: boolean): void {
+  onChatboxOpened(opened: boolean) {
     this.isChatboxOpen = opened;
   }
 }
