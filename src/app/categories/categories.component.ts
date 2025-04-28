@@ -2,9 +2,7 @@ import { CommonModule, ViewportScroller } from '@angular/common';
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import * as bootstrap from 'bootstrap';
 import { FormsModule } from '@angular/forms';
-
 import { ChatComponent } from '../chat/chat.component';
-
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { faL } from '@fortawesome/free-solid-svg-icons';
 import { Category } from '../_models/category';
@@ -17,21 +15,24 @@ import { HttpClientModule } from '@angular/common/http';
   selector: 'app-categories',
   imports: [CommonModule,FormsModule,RouterLink,ChatComponent,HttpClientModule],
   templateUrl: './categories.component.html',
-  styleUrl: './categories.component.css'
+  styleUrls: ['./categories.component.css']
 })
 export class CategoriesComponent  implements AfterViewInit {
 
   categories: Category[] = [];
   @ViewChild(ChatComponent) chatComponent!: ChatComponent;
 
+
+
+  // Form data model
   formData = {
     firstName: '',
     lastName: '',
     contact: '',
     address: '',
     details: '',
-    data:'',
-    paymentMethod:''
+    data: '',
+    paymentMethod: ''
   };
 
   constructor(private router: Router,
@@ -86,7 +87,15 @@ export class CategoriesComponent  implements AfterViewInit {
   selectedCategory: string = "";
   selectedArtisan: string = "";
   showAll = false;
+  isChatboxOpen: boolean = false;
 
+  constructor(
+    private router: Router,
+    private scroller: ViewportScroller,
+    private route: ActivatedRoute
+  ) {}
+
+  // Get visible categories based on showAll state
   get visibleCategories() {
     return this.showAll ? this.categories : this.categories.slice(0, 6);
   }
@@ -96,17 +105,17 @@ export class CategoriesComponent  implements AfterViewInit {
     //this.selectedArtisan = artisanName;
     const modal = document.getElementById('serviceModal');
     if (modal) {
-      const bootstrapModal = new bootstrap.Modal(modal);
-      bootstrapModal.show();
+      new bootstrap.Modal(modal).show();
     }
   }
-  submitRequestForm() {
-    console.log('Submit button clicked!');
+
+  // Submit service request form
+  submitRequestForm(): void {
     const modal = document.getElementById('serviceModal');
-  if (modal) {
-    const bootstrapModal = bootstrap.Modal.getInstance(modal);
-    bootstrapModal?.hide();
-  }
+    if (modal) {
+      bootstrap.Modal.getInstance(modal)?.hide();
+    }
+
     this.router.navigate(['/service-payment'], {
       state: {
         ...this.formData,
@@ -116,36 +125,35 @@ export class CategoriesComponent  implements AfterViewInit {
     });
   }
 
-
-  toggleShowAll() {
+  // Toggle show all categories
+  toggleShowAll(): void {
     this.showAll = !this.showAll;
   }
 
-
-  //
-  ngAfterViewInit() {
+  // After view initialization
+  ngAfterViewInit(): void {
     this.route.fragment.subscribe(fragment => {
       if (fragment === 'chat') {
         setTimeout(() => {
-          this.scroller.scrollToAnchor(fragment);
+          this.scroller.scrollToAnchor('chat');
           this.openChat();
-        }, 100); // small delay for safety
+        }, 100);
       }
     });
   }
-  isChatboxOpen:boolean=false;
 
-  openChat() {
+  // Open chat programmatically
+  openChat(): void {
     if (this.chatComponent) {
       this.chatComponent.openChat();
       this.isChatboxOpen = true;
-    }
-    else{
-      this.isChatboxOpen=false;
+    } else {
+      this.isChatboxOpen = false;
     }
   }
 
-  onChatboxOpened(opened: boolean) {
+  // Handle chatbox opened/closed events
+  onChatboxOpened(opened: boolean): void {
     this.isChatboxOpen = opened;
   }
 }

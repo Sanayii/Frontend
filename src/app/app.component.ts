@@ -9,11 +9,13 @@ import { FooterComponent } from './footer/footer.component';
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet,NavComponent,FooterComponent,
-    ServicesRequestsHistoryComponent,CategoriesComponent,CheckoutRequestComponent],
+    CheckoutRequestComponent,NotificationComponent,NotificationDetailsComponent],
   standalone: true,
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
 export class AppComponent {
   title = 'Sanayii';
-}
+}import { NotificationComponent } from './notification/notification.component';
+import { NotificationDetailsComponent } from './notification-details/notification-details.component';
+
