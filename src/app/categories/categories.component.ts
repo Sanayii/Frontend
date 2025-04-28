@@ -59,7 +59,7 @@ export class CategoriesComponent  implements AfterViewInit {
         console.log(data);
         this.categories = data.map(category => ({
           ...category,
-          image: this.getImageForCategory(category.name!) // الصورة بس
+          image: this.getImageForCategory(category.name!) 
         }));
       },
       error: (error) => {

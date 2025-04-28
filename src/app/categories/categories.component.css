@@ -65,17 +65,17 @@ section h2{
 }
 
 
-/* Add styles for shrinking the width when chatbox is open */
+
 .shrink-width {
-  width: calc(100% - 350px); /* Reduces the width by 300px (width of chatbox) */
+  width: calc(100% - 350px);
   transition: width 0.3s ease-in-out;
 }
 
-/* Optionally, adjust the layout of the cards for responsiveness */
+
 .row {
   transition: width 0.3s ease-in-out;
 }
 
 .with-chat-open {
-  margin-bottom: 120px; /* أو أي رقم يناسبك حسب ارتفاع الشات */
+  margin-bottom: 120px; 
 }
