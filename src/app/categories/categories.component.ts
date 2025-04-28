@@ -89,11 +89,7 @@ export class CategoriesComponent  implements AfterViewInit {
   showAll = false;
   isChatboxOpen: boolean = false;
 
-  constructor(
-    private router: Router,
-    private scroller: ViewportScroller,
-    private route: ActivatedRoute
-  ) {}
+
 
   // Get visible categories based on showAll state
   get visibleCategories() {
