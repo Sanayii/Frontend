@@ -1,4 +1,3 @@
-
 <div class="container">
   <!-- Profile Header -->
   <div class="profile-header">
@@ -6,14 +5,15 @@
       <img src="assets/images/not.jpg" alt="Customer Photo">
     </div>
     <div class="profile-info">
-      <h1>Mohamed Ahmed Ali</h1>
+      <h1>{{Artisan.fName}} {{Artisan.lName}}</h1>
       <div class="profile-stats">
         <div class="stat">
-          <span class="stat-value">12</span>
+          <span class="stat-value">{{ArtisanServices.length}}</span>
           <span class="stat-label">Services</span>
+          
         </div>
         <div class="stat">
-          <span class="stat-value">4.8</span>
+          <span class="stat-value">{{Artisan.rating}}</span>
           <span class="stat-label">Avg Rating</span>
         </div>
         <div class="stat">
@@ -29,15 +29,17 @@
     <h2 class="section-title"><i class="fas fa-user-circle"></i> Personal Information</h2>
     <div class="details-grid">
       <!-- Replace this static data with bindings later if needed -->
-      <div class="detail-item"><label>First Name</label><p>Mohamed</p></div>
-      <div class="detail-item"><label>Last Name</label><p>Ali</p></div>
-      <div class="detail-item"><label>Username</label><p>mohamed.ali</p></div>
-      <div class="detail-item"><label>Email</label><p>mohamed.ali&#64;example.com</p></div>
-      <div class="detail-item"><label>Phone 1</label><p>+201012345678</p></div>
-      <div class="detail-item"><label>Phone 2</label><p>+201098765432</p></div>
-      <div class="detail-item"><label>Government</label><p>Cairo</p></div>
-      <div class="detail-item"><label>City</label><p>Nasr City</p></div>
-      <div class="detail-item"><label>Street</label><p>23 Makram Ebeid St.</p></div>
+      <div class="detail-item"><label>First Name</label><p>{{Artisan.fName}}</p></div>
+      <div class="detail-item"><label>Last Name</label><p>{{Artisan.lName}}</p></div>
+      <div class="detail-item"><label>Username</label><p>{{Artisan.userName}}</p></div>
+      <div class="detail-item"><label>Email</label><p>{{Artisan.email}}</p></div>
+      <div *ngFor="let num of Artisan.userPhones; let i = index" class="detail-item">
+        <label>Phone {{ i + 1 }}</label>
+        <p>{{ num }}</p>
+    </div>
+      <div class="detail-item"><label>Government</label><p>{{Artisan.government}}</p></div>
+      <div class="detail-item"><label>City</label><p>{{Artisan.city}}</p></div>
+      <div class="detail-item"><label>Street</label><p>{{Artisan.street}}</p></div>
     </div>
   </div>
 
@@ -63,38 +65,24 @@
       <table class="services-table">
         <thead>
           <tr>
-            <th style="width: 25%;">Service Type</th>
-            <th style="width: 15%;">Date</th>
-            <th style="width: 20%;">Technician</th>
-            <th style="width: 15%;">Status</th>
-            <th style="width: 10%;">Rating</th>
-            <th style="width: 15%;">Amount</th>
+            <th style="width: 20%;">Service Type</th>
+            <th style="width: 20%;">Date</th>
+            <th style="width: 20%;">Customer</th>
+            <th style="width: 20%;">Status</th>
+            <th style="width: 20%;">Rating</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td>AC Maintenance</td>
-            <td>17 Jun 2023</td>
-            <td>Ahmed Mohamed</td>
-            <td><span class="status completed">Completed</span></td>
-            <td><div class="rating-stars">★★★★☆</div></td>
-            <td>EGP 450</td>
-          </tr>
-          <tr>
-            <td>Plumbing Repair</td>
-            <td>02 Jul 2023</td>
-            <td>Mahmoud Hassan</td>
-            <td><span class="status in-progress">In Progress</span></td>
-            <td>-</td>
-            <td>EGP 320</td>
-          </tr>
-          <tr>
-            <td>Electrical Repair</td>
-            <td>15 May 2023</td>
-            <td>Ali Ahmed</td>
-            <td><span class="status completed">Completed</span></td>
-            <td><div class="rating-stars">★★★★★</div></td>
-            <td>EGP 550</td>
+          <tr *ngFor="let serviceRequest of ArtisanServices">
+            <td>{{ serviceRequest.serviceName }}</td>
+            <td>{{ serviceRequest.createdAt | date: 'short' }}</td>
+            <td>{{ serviceRequest.customerName }}</td>
+            <td>{{ serviceRequest.status }}</td>
+            <td>
+              <span *ngFor="let star of getStars(serviceRequest.rating)">
+                <i class="fa rating-stars" [ngClass]="star"></i>
+              </span>
+            </td>
           </tr>
         </tbody>
       </table>

@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
-import { Customer } from '../_models/Customer';
 import { CustomerService } from '../_services/customer.service';
 
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { Customer } from '../_Models/customer';
+import { TokenService } from '../_services/token.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -17,14 +18,18 @@ export class UserProfileComponent {
   isLoading = true;
   error: string | null = null;
   customerId: any;
-  constructor(private customerService: CustomerService, private router: Router) { }
+  constructor(private customerService: CustomerService, private router: Router,private  test: TokenService) {
+    // console.log('token ' + localStorage.getItem('token'));
+    // console.log('ids: ' + this.test.getUserIdFromToken());
+    // this.customerId = this.test.getUserIdFromToken();
+    // console.log('customer id ' + this.customerId);
+    this.customerId= '18cfedce-4ea4-4685-8179-cc88f889dc90';
+   }
   ngOnInit(): void {
     this.loadCustomerData();
   }
   loadCustomerData(): void {
-    const customerId = '701b6ee7-b7f2-46e4-ad64-a4c8ea2098cd'; // Get from route params or auth service
-    
-    this.customerService.getCustomerById(customerId).subscribe({
+    this.customerService.getCustomerById(this.customerId).subscribe({
       next: (customer) => {
         this.customer = customer;
         this.isLoading = false;
@@ -42,8 +47,7 @@ export class UserProfileComponent {
 
   getPrimaryPhone(): string {
     if (!this.customer) return 'N/A';
-    return this.customer.phoneNumber || 
-          (this.customer.userPhones.length > 0 ? this.customer.userPhones[0] : 'N/A');
+    return (this.customer.phoneNumbers.length > 0 ? this.customer.phoneNumbers[0] : 'N/A');
   }
 
   navigateToEdit(): void {

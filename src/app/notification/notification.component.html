@@ -13,7 +13,7 @@
     </header>
 
     <main>
-      <div *ngFor="let noti of notifications; let i = index" 
+      <div *ngFor="let noti of notifications; let i = index"
      class="notContent" [ngClass]="{'unread': !noti.isRead}">
   <img src="/assets/images/not.jpg" alt="photo">
   <div class="content">
@@ -29,5 +29,3 @@
 
   <app-notification-details *ngIf="selectedNotification" [notification]="selectedNotification"></app-notification-details>
 </div>
-
-

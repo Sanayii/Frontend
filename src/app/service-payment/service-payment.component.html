@@ -1,4 +1,4 @@
-<div class="container mt-5 mb-5 pt-3" *ngIf="data">
+<div class="container mt-5 mb-5 pt-3" *ngIf="SerDTO">
   <div class="card shadow rounded-4 p-4 mt-5">
     <h3 class="mb-4 text-center text-primary">
       Service Request Details
@@ -7,56 +7,70 @@
       <div class="col-md-6">
         <div class="border rounded-3 p-3 bg-light h-100">
           <strong class="text-muted">Category</strong>
-          <p class="mb-0">{{ data.selectedCategory }}</p>
+          <p class="mb-0">{{ SerDTO?.categoryName }}</p>
         </div>
       </div>
 
       <div class="col-md-6">
         <div class="border rounded-3 p-3 bg-light h-100">
-          <strong class="text-muted">Name</strong>
-          <p class="mb-0">{{ data.firstName }} {{ data.lastName }}</p>
+          <strong class="text-muted">UserName</strong>
+          <p class="mb-0">{{ SerDTO?.customerName }} </p>
         </div>
       </div>
 
       <div class="col-md-6">
         <div class="border rounded-3 p-3 bg-light h-100">
           <strong class="text-muted">Contact</strong>
-          <p class="mb-0">{{ data.contact }}</p>
+          <div *ngFor="let phone of SerDTO?.customerPhoneNumbers">
+            <p class="mb-0">{{ phone }}</p>
+          </div>
         </div>
       </div>
 
       <div class="col-md-6">
         <div class="border rounded-3 p-3 bg-light h-100">
-          <strong class="text-muted">Address</strong>
-          <p class="mb-0">{{ data.address }}</p>
+          <strong class="text-muted">Government</strong>
+          <p class="mb-0">{{ SerDTO?.customerGovernment }}</p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="border rounded-3 p-3 bg-light h-100">
+          <strong class="text-muted">City</strong>
+          <p class="mb-0">{{ SerDTO?.customerCity }}</p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="border rounded-3 p-3 bg-light h-100">
+          <strong class="text-muted">Street</strong>
+          <p class="mb-0">{{ SerDTO?.customerStreet }}</p>
         </div>
       </div>
 
       <div class="col-12">
         <div class="border rounded-3 p-3 bg-light">
           <strong class="text-muted">Service Details</strong>
-          <p class="mb-0">{{ data.details }}</p>
+          <p class="mb-0">{{ SerDTO?.description }}</p>
         </div>
       </div>
 
       <div class="col-12">
         <div class="border rounded-3 p-3 bg-light" routerLink="/artsin" style="cursor: pointer;">
-          <strong class="text-muted">Assigned Artisan</strong>
-          <p class="mb-0">{{ data.artisanName }}</p>
+          <strong class="text-muted" class="link-underline-info"><a>Assigned Artisan</a></strong>
+          <p class="mb-0">{{ SerDTO?.artisanName }}</p>
         </div>
       </div>
 
       <div class="col-12">
         <div class="border rounded-3 p-3 bg-light">
           <strong class="text-muted">Date</strong>
-          <p class="mb-0">{{ data.data }}</p>
+          <p class="mb-0">{{ SerDTO?.requestDate | date:'medium' }}</p>
         </div>
       </div>
 
       <div class="col-12">
         <div class="border rounded-3 p-3 bg-light">
           <strong class="text-muted">Payment Method</strong>
-          <p class="mb-0">{{ data.paymentMethod }}</p>
+          <p class="mb-0">{{ paymentMethodEnum[SerDTO?.paymentMethod!] }}</p>
         </div>
       </div>
 

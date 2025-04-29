@@ -1,13 +1,15 @@
 import { CommonModule, ViewportScroller } from '@angular/common';
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import * as bootstrap from 'bootstrap';
-import { FormsModule } from '@angular/forms';
-
-import { ChatComponent } from '../chat/chat.component';
-
+import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
+import { SeriveRequesPaymentService } from '../_services/serive-reques-payment.service';
+import { ServiceRequestViewModel } from '../_Models/serive-request-view-model';
+import { DataServiceService } from '../_services/data-service.service';
+import { ServiceRequestDetailsDto } from '../_dtos/serive-reques-details-dto';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { faL } from '@fortawesome/free-solid-svg-icons';
-import { Category } from '../_models/category';
+import { PaymentMethod } from '../_enums/payment-method';
+import { ChatComponent } from '../chat/chat.component';
+import { Category } from '../_Models/category';
 import { CategoryService } from '../_services/category.service';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -15,12 +17,41 @@ import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-categories',
-  imports: [CommonModule,FormsModule,RouterLink,ChatComponent,HttpClientModule],
+  imports: [CommonModule,FormsModule,RouterLink,ChatComponent,ReactiveFormsModule,HttpClientModule],
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.css'
 })
 export class CategoriesComponent  implements AfterViewInit {
+  PayMethod: PaymentMethod = PaymentMethod.Cash;
+  paymentMethods: string[] = Object.keys(PaymentMethod).filter(key => isNaN(Number(key)));
+  static futureDateValidator(control: AbstractControl): ValidationErrors | null {
+    const selectedDate = new Date(control.value);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    selectedDate.setHours(0, 0, 0, 0);
 
+    if (selectedDate <= today) {
+      return { notFutureDate: true };
+    }
+    return null;
+  }
+
+  CatgForm: FormGroup = new FormGroup({
+    ServiceName: new FormControl('', Validators.required),
+    ServiceDetails: new FormControl('', Validators.required),
+    requestDate: new FormControl('', [Validators.required, CategoriesComponent.futureDateValidator]),
+    paymentMethod: new FormControl('', Validators.required),
+  });
+  serviceRequest: ServiceRequestViewModel = new ServiceRequestViewModel(
+    1,
+    '',
+    '',
+    '',
+    new Date(),
+    0,
+    PaymentMethod.Cash
+  );
+  Dto: ServiceRequestDetailsDto | null = null;
   categories: Category[] = [];
   @ViewChild(ChatComponent) chatComponent!: ChatComponent;
 
@@ -37,19 +68,12 @@ export class CategoriesComponent  implements AfterViewInit {
   constructor(private router: Router,
       private scroller: ViewportScroller,
       private route: ActivatedRoute,
-      private categoryService: CategoryService) {}
+      private categoryService: CategoryService,
+      public Ser: SeriveRequesPaymentService,
+      public dataService: DataServiceService) {
+        
+      }
 
-  /*categories = [
-    {name: 'Plumbing',image: '/assets/images/plumbing.jpeg',artisan:'Ahmed Mohamed'},
-    {name: 'Electricity',image: '/assets/images/electrical.jpeg',artisan:'Mohamed Hassan'},
-    {name: 'Carpentry',image: '/assets/images/joiner.jpeg',artisan:'Ali Mohamed'},
-    {name: 'Painting and Decorating',image:'/assets/images/debate.jpeg',artisan:'Ali Hassan'},
-    {name: 'Ceramic and tile installation',image:'/assets/images/maintenance.jpeg',artisan:'Mohsen Saber'},
-    {name: 'Blacksmithing and Aluminum',image:'/assets/images/blacksmith.jpeg',artisan:'Ali Saber'},
-    {name: 'House cleaning and maintenance',image:'/assets/images/cleaning.jpeg',artisan:'Samir sayed'},
-    {name: 'Electrical appliance repair',image:'/assets/images/elec_repair.jpeg',artisan:'Alaa shaker'},
-    {name: 'Air conditioning and refrigeration maintenance',image:'/assets/images/conditioning.jpeg',artisan:'Khaled mohamed'},
-  ];*/
   ngOnInit() {
     this.loadCategories();
   }
@@ -101,21 +125,35 @@ export class CategoriesComponent  implements AfterViewInit {
     }
   }
   submitRequestForm() {
-    console.log('Submit button clicked!');
-    const modal = document.getElementById('serviceModal');
-  if (modal) {
-    const bootstrapModal = bootstrap.Modal.getInstance(modal);
-    bootstrapModal?.hide();
-  }
-    this.router.navigate(['/service-payment'], {
-      state: {
-        ...this.formData,
-        selectedCategory: this.selectedCategory,
-        artisanName: this.selectedArtisan
-      }
-    });
-  }
+    if (this.CatgForm.valid) {
+      const formValues = this.CatgForm.value;
 
+      this.serviceRequest.CategoryId = 2;
+      this.serviceRequest.CustomerId = "7abce138-7173-49ed-a8bd-8e1519d5d653";
+      this.serviceRequest.Status = 1;
+      this.serviceRequest.ServiceName = formValues.ServiceName;
+      this.serviceRequest.Description = formValues.ServiceDetails;
+      this.serviceRequest.RequestDate = new Date(formValues.requestDate);
+
+      const modal = document.getElementById('serviceModal');
+      if (modal) {
+        const bootstrapModal = bootstrap.Modal.getInstance(modal);
+        bootstrapModal?.hide();
+      }
+
+      console.log(this.serviceRequest);
+
+      this.Ser.getRequsetdetails(this.serviceRequest).subscribe(
+        (a: ServiceRequestDetailsDto) => {
+          this.dataService.setServiceRequestDetails(a);
+          this.router.navigate(['/service-payment']);
+        }
+      );
+
+    } else {
+      this.CatgForm.markAllAsTouched();
+    }
+  }
 
   toggleShowAll() {
     this.showAll = !this.showAll;

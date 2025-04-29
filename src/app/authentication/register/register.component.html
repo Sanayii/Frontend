@@ -1,5 +1,4 @@
 
-
 <head>
   <title>Registration</title>
 </head>
@@ -8,38 +7,56 @@
 
     <div class="register-form">
       <h3>Create Account</h3>
-      <form>
+      <form [formGroup]="registerForm" (ngSubmit)="submit()">
         <div class="mb-3">
-          <input type="text" class="form-control" id="username" placeholder="Username" required>
+          <input type="text" class="form-control" formControlName="userName" id="username" placeholder="Username" >
+          <div *ngIf="userName?.touched && userName?.invalid" class="text-danger mt-1">
+            <div *ngIf="userName?.errors?.['required']">Username is required.</div>
+            <div *ngIf="userName?.errors?.['minlength']">Username must be at least 3 characters.</div>
+          </div>
         </div>
 
         <div class="row mb-3">
           <div class="col-md-6 mb-2 mb-md-0">
-            <input type="text" class="form-control" id="fname" placeholder="First Name" required>
+            <input type="text" class="form-control" formControlName="fName" id="fname" placeholder="First Name" required>
+            <div *ngIf="fName?.touched && fName?.invalid" class="text-danger mt-1">
+              <div *ngIf="fName?.errors?.['required']">fName is required.</div>
+              <div *ngIf="fName?.errors?.['minlength']">fName must be at least 3 characters.</div>
+            </div>
           </div>
           <div class="col-md-6">
-            <input type="text" class="form-control" id="lname" placeholder="Last Name" required>
+            <input type="text" class="form-control" formControlName="lName" id="lname" placeholder="Last Name" required>
+            <div *ngIf="lName?.touched && lName?.invalid" class="text-danger mt-1">
+              <div *ngIf="lName?.errors?.['required']">last name is required.</div>
+              <div *ngIf="lName?.errors?.['minlength']">last name must be at least 3 characters.</div>
+            </div>
           </div>
         </div>
 
-        <div class="row mb-3">
+        <div class="mb-3" formArrayName="phoneNumbers">
+          <button type="button" (click)="addPhoneNumber()" class="btn btn-secondary mb-2">Add Number</button>
+
+          <div *ngFor="let control of phoneNumbers.controls; let i = index">
+            <input type="text" class="form-control mb-2" [formControlName]="i" placeholder="Phone number {{i + 1}}" />
+          </div>
+
+        </div>
+
+        <!-- <div class="row mb-3">
           <div class="col-md-6 mb-2 mb-md-0">
             <input type="tel" class="form-control" id="phone" placeholder="Phone Number" required>
           </div>
-          <div class="col-md-6">
-            <input type="number" class="form-control" id="age" placeholder="Age" required>
-          </div>
-        </div>
+        </div> -->
 
         <div class="row mb-3">
           <div class="col-md-4 mb-2 mb-md-0">
-            <input type="text" class="form-control" id="street" placeholder="Street" required>
+            <input type="text" class="form-control" formControlName="street" id="street" placeholder="Street" required>
           </div>
           <div class="col-md-4 mb-2 mb-md-0">
-            <input type="text" class="form-control" id="city" placeholder="City" required>
+            <input type="text" class="form-control" formControlName="city" id="city" placeholder="City" required>
           </div>
           <div class="col-md-4">
-            <select id="governate" class="form-select" required>
+            <select id="governate" class="form-select" formControlName="government" required>
               <option value="" disabled selected>Government</option>
               <option>Alexandria</option>
               <option>Cairo</option>
@@ -53,14 +70,14 @@
         </div>
 
         <div class="mb-3">
-          <input type="email" class="form-control" id="email" placeholder="Email" required>
+          <input type="email" class="form-control" formControlName="email" id="email" placeholder="Email" required>
         </div>
 
         <div class="mb-3">
-          <input type="password" class="form-control" id="password" placeholder="Password" required>
+          <input type="password" class="form-control" formControlName="password" id="password" placeholder="Password" required>
         </div>
         <div class="mb-3">
-          <input type="password" class="form-control" id="Conpassword" placeholder="Confirm Password" required>
+          <input type="password" class="form-control" formControlName="confirmPassword" id="Conpassword" placeholder="Confirm Password" required>
         </div>
 
         <div class="d-grid">
@@ -72,4 +89,5 @@
         </div>
       </form>
     </div>
+
   </div>

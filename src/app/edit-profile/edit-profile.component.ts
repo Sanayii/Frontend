@@ -3,8 +3,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CustomerService } from '../_services/customer.service';
-import { EditCustomerDTO } from '../_models/edit-customer.dto';
-import { Customer } from '../_models/Customer';
+import { EditCustomerDTO } from '../_Models/edit-customer.dto';
+import { Customer } from '../_Models/customer';
 
 @Component({
   selector: 'app-edit-profile',
@@ -69,8 +69,8 @@ export class EditProfileComponent {
       street: customer.street,
       government: customer.government,
       email: customer.email,
-      phoneNumber: customer.phoneNumber || '',
-      userPhones: customer.userPhones.join(', ') || ''
+      phoneNumber: customer.phoneNumbers || '',
+      userPhones: customer.phoneNumbers.join(', ') || ''
     });
   }
   onSubmit(): void {

@@ -1,8 +1,8 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of, throwError } from 'rxjs';
-import { Customer } from '../_models/Customer';
-import { EditCustomerDTO } from '../_models/edit-customer.dto';
+import { Customer } from '../_Models/customer';
+import { EditCustomerDTO } from '../_Models/edit-customer.dto';
 
 /*export interface Customer {
   id: string;

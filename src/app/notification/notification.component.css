@@ -55,7 +55,7 @@
 }
 .btn{
   display: flex;
-  gap: 5px;
+  gap: 7px;
 }
 .mark-read, .delete-all  {
   color: white;

@@ -7,19 +7,28 @@
     <div class="login-img"></div>
     <div class="login-form">
       <h3>Login</h3>
-      <form>
+      <form [formGroup]="loginForm" (ngSubmit)="submit()">
         <div class="form-group">
           <i class="fas fa-user"></i>
-          <input type="text" class="form-control" placeholder="Your Name" required>
+          <input type="text" class="form-control" formControlName="username" placeholder="UserName" required>
+          <div *ngIf="username?.touched && username?.invalid" class="text-danger mt-1">
+            <div *ngIf="username?.errors?.['required']">Username is required.</div>
+            <div *ngIf="username?.errors?.['minlength']">Username must be at least 3 characters.</div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <i  class="fas fa-envelope"></i>
+          <input type="email" class="form-control" formControlName="email" placeholder="Email" >
         </div>
 
         <div class="form-group">
           <i class="fas fa-lock"></i>
-          <input type="password" class="form-control" placeholder="Password" required>
+          <input type="password" class="form-control" formControlName="password" placeholder="Password" >
         </div>
 
         <div class="mb-3 form-check">
-          <input type="checkbox" class="form-check-input" id="rememberMe">
+          <input type="checkbox" class="form-check-input" formControlName="rememberMe" id="rememberMe">
           <label class="form-check-label" for="rememberMe">Remember me</label>
         </div>
 

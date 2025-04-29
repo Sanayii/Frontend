@@ -1,13 +1,13 @@
-export interface Customer {
-  id: string;
-  fName: string;
-  lName: string;
-  age: number;
-  city: string;
-  street: string;
-  government: string;
-  userName: string;
-  email: string;
-  phoneNumber: string | null;
-  userPhones: string[];
+export class Customer {
+  userName: string = '';
+  fName: string = '';
+  lName: string = '';
+  city: string = '';
+  street: string = '';
+  government: string = '';
+  phoneNumbers: string[] = [];
+  email: string = '';
+  password: string = '';
+  confirmPassword: string = '';
+  age:number=0
 }

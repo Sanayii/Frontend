@@ -28,51 +28,50 @@
   <div class="modal-dialog">
     <div class="modal-content">
 
-      <form (ngSubmit)="submitRequestForm()" #requestForm="ngForm" class="contact-container">
-
+      <form (ngSubmit)="submitRequestForm()" #requestForm="ngForm" class="contact-container" [formGroup]="CatgForm" >
         <div class="modal-header">
-          <h5 class="modal-title" id="serviceModalLabel"><span>Request</span> {{ selectedCategory }}</h5>
+          <h5 class="modal-title" id="serviceModalLabel"><span>Request</span> Service</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-
         <div class="modal-body">
+          <!-- Service Name -->
           <div class="mb-3">
-            <input type="text" class="form-control" id="name" name="firstName" [(ngModel)]="formData.firstName" required placeholder="First Name">
+            <input type="text" class="form-control" id="serviceName" formControlName="ServiceName" placeholder="Service Name">
+            <div *ngIf="CatgForm.get('ServiceName')?.touched && CatgForm.get('ServiceName')?.invalid" class="text-danger">
+              Service Name is required.
+            </div>
           </div>
 
+          <!-- Service Details -->
           <div class="mb-3">
-            <input type="text" class="form-control" id="lastName" name="lastName" [(ngModel)]="formData.lastName" required placeholder="Last Name">
+            <textarea class="form-control" id="details" rows="2" formControlName="ServiceDetails" placeholder="Service Details"></textarea>
+            <div *ngIf="CatgForm.get('ServiceDetails')?.touched && CatgForm.get('ServiceDetails')?.invalid" class="text-danger">
+              Service Details are required.
+            </div>
           </div>
 
-          <div class="mb-3">
-            <input type="text" class="form-control" id="contact" name="contact" [(ngModel)]="formData.contact" required placeholder="Email / Phone Number">
-          </div>
-
-          <div class="mb-3">
-            <input type="text" class="form-control" id="address" name="address" [(ngModel)]="formData.address" required placeholder="Your Address">
-          </div>
-
-          <div class="mb-3">
-            <textarea class="form-control" id="details" rows="2" name="details" [(ngModel)]="formData.details" required placeholder="Service Details"></textarea>
-          </div>
-
+          <!-- Preferred Time -->
           <div class="mb-3">
             <label class="form-label">Preferred Time</label>
-            <input type="date" class="form-control sm" id="requestDate" name="requestDate" [(ngModel)]="formData.data" required>
+            <input type="date" class="form-control" id="requestDate" formControlName="requestDate">
+            <div *ngIf="CatgForm.get('requestDate')?.touched && CatgForm.get('requestDate')?.errors?.['notFutureDate']" class="text-danger">
+              Please select a future date.
+            </div>
           </div>
 
+          <!-- Payment Method -->
           <div class="mb-3">
-            <select class="form-select sm" id="paymentMethod" name="paymentMethod"  [(ngModel)]="formData.paymentMethod" required>
-              <option value="" disabled selected>Select payment method</option>
-              <option value="cash">Cash</option>
-              <option value="credit_card">Credit Card</option>
-              <option value="bank_transfer">Bank Transfer</option>
-              <option value="mobile_payment">Mobile Payment</option>
+            <label class="form-label">Payment Method</label>
+            <select class="form-select" id="paymentMethod" formControlName="paymentMethod">
+              <option value="" disabled>Select payment method</option>
+              <option *ngFor="let method of paymentMethods" [ngValue]="method">{{ method }}</option>
             </select>
+            <div *ngIf="CatgForm.get('paymentMethod')?.touched && CatgForm.get('paymentMethod')?.invalid" class="text-danger">
+              Payment method is required.
+            </div>
           </div>
 
         </div>
-
         <div class="modal-footer">
           <button type="submit" class="btn btn-submit">Submit Request</button>
         </div>
