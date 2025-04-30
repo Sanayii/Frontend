@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ServiceRequestDetailsDto } from '../_dtos/serive-reques-details-dto';
+import { ServiceRequestDetailsDto } from '../_dtos/serive-request-details-dto';
 
 @Injectable({
   providedIn: 'root'

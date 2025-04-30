@@ -5,7 +5,7 @@ import { AbstractControl, FormControl, FormGroup, FormsModule, ReactiveFormsModu
 import { SeriveRequesPaymentService } from '../_services/serive-reques-payment.service';
 import { ServiceRequestViewModel } from '../_Models/serive-request-view-model';
 import { DataServiceService } from '../_services/data-service.service';
-import { ServiceRequestDetailsDto } from '../_dtos/serive-reques-details-dto';
+import { ServiceRequestDetailsDto } from '../_dtos/serive-request-details-dto';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { PaymentMethod } from '../_enums/payment-method';
 import { ChatComponent } from '../chat/chat.component';
@@ -86,7 +86,7 @@ export class CategoriesComponent  implements AfterViewInit {
         console.log(data);
         this.categories = data.map(category => ({
           ...category,
-          image: this.getImageForCategory(category.name!) 
+          image: this.getImageForCategory(category.name!)
         }));
       },
       error: (error) => {
@@ -131,7 +131,7 @@ export class CategoriesComponent  implements AfterViewInit {
     if (this.CatgForm.valid) {
       const formValues = this.CatgForm.value;
 
-      
+
       this.serviceRequest.CustomerId = this.customerId!;
       this.serviceRequest.Status = 1;
       this.serviceRequest.ServiceName = formValues.ServiceName;

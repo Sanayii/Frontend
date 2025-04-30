@@ -1,107 +1,109 @@
 <div class="container mt-5 pt-5 request-history-container">
-
   <!-- Header Section -->
   <div class="d-flex justify-content-between align-items-center mb-5 p-4 bg-light rounded-3 shadow-sm">
-    <h2 class="m-0 text-primary">Service Requests History</h2>
-    
+    <h2 class="m-0 text-primary">
+      <mat-icon class="me-2">history</mat-icon>
+      Service Requests History
+    </h2>
   </div>
 
-  <!-- Filters Section 
-  <div class="row g-4 mb-5 p-4 bg-light rounded-3 shadow-sm">
-    <div class="col-md-4">
-      <mat-form-field class="w-100">
-        <mat-label>Status</mat-label>
-        <mat-select [(ngModel)]="statusFilter">
-          <mat-option value="">All Statuses</mat-option>
-          <mat-option value="Pending">Pending</mat-option>
-          <mat-option value="Completed">Completed</mat-option>
-          <mat-option value="Cancelled">Cancelled</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
+  <!-- Loading State -->
+  <div *ngIf="isLoading" class="text-center py-5">
+    <mat-spinner diameter="50" class="mx-auto"></mat-spinner>
+    <p class="mt-3 text-muted">
+      <mat-icon class="align-middle me-1">hourglass_top</mat-icon>
+      Loading your service requests...
+    </p>
+  </div>
 
-    <div class="col-md-4">
-      <label for="serviceTypeFilter" class="form-label fw-bold">Service Type:</label>
-      <select id="serviceTypeFilter" class="form-select">
-        <option value="">All Services</option>
-        <option value="Carpentry">Carpentry</option>
-        <option value="Plumbing">Plumbing</option>
-        <option value="Painting">Painting</option>
-        <option value="Home Services">Home Services</option>
-      </select>
-    </div>
-
-    <div class="col-md-4 d-flex align-items-end">
-      <button mat-raised-button color="primary" class="w-100">
-        <mat-icon>filter_alt</mat-icon> Apply Filters
-      </button>
-    </div>
-  </div>-->
-
-  <!-- Loading State 
-  <div class="text-center my-5 py-5 loading-state">
-    <mat-spinner diameter="50" color="primary"></mat-spinner>
-    <p class="mt-3 text-muted">Loading requests...</p>
-  </div>-->
-
-  <!-- Error State 
-  <div class="text-center my-5 py-5 error-state">
-    <mat-icon class="text-danger" style="font-size: 48px;">error_outline</mat-icon>
-    <h4 class="text-danger mt-3">Oops! Something went wrong</h4>
-    <p class="text-muted mb-4">We couldn't load your service requests</p>
-    <button mat-raised-button color="primary" class="px-4">
-      <mat-icon>refresh</mat-icon> Retry
+  <!-- Error State -->
+  <div *ngIf="error && !isLoading" class="alert alert-danger text-center">
+    <mat-icon class="align-middle me-1">error_outline</mat-icon>
+    {{ error }}
+    <button mat-stroked-button color="primary" (click)="loadRequests()" class="ms-2">
+      <mat-icon class="align-middle me-1">refresh</mat-icon>
+      Try Again
     </button>
-  </div>-->
+  </div>
 
-  <!-- Empty State 
-  <div class="text-center my-5 py-5 empty-state">
-    <mat-icon style="font-size: 48px;" class="text-primary">assignment</mat-icon>
-    <h4 class="mt-3">No service requests found</h4>
-    <p class="text-muted mb-4">Try adjusting your filters or create a new request</p>
-    <button mat-raised-button color="primary" class="px-4">
-      <mat-icon>add</mat-icon> Create Request
-    </button>
-  </div>-->
+  <!-- Empty State -->
+  <div *ngIf="showEmptyState && !isLoading && !error" class="text-center py-5">
+    <mat-icon class="display-4 text-muted mb-3" style="font-size: 4rem;">description</mat-icon>
+    <h4 class="text-muted">No Service Requests Found</h4>
+    <p class="text-muted">
+      <mat-icon class="align-middle me-1">info</mat-icon>
+      You haven't made any service requests yet.
+    </p>
+  </div>
 
   <!-- Request List -->
-  <div class="mb-5">
+  <div *ngIf="!isLoading && !error && !showEmptyState" class="mb-5">
     <div class="table-responsive rounded-3 overflow-hidden shadow-sm">
       <table class="table table-bordered table-hover align-middle text-center mb-0">
         <thead class="table-primary">
           <tr>
-            <th class="py-3">Service Name</th>
-            <th class="py-3">Date</th>
-            <th class="py-3">Status</th>
-            <th class="py-3">Payment Method</th>
-            
-            <th class="py-3">Artisian Name</th>
-            <th class="py-3">Actions</th>
+            <th class="py-3">
+              <mat-icon class="align-middle me-1">build</mat-icon>
+              Service
+            </th>
+            <th class="py-3">
+              <mat-icon class="align-middle me-1">event</mat-icon>
+              Date
+            </th>
+            <th class="py-3">
+              <mat-icon class="align-middle me-1">flag</mat-icon>
+              Status
+            </th>
+            <th class="py-3">
+              <mat-icon class="align-middle me-1">payments</mat-icon>
+              Payment
+            </th>
+            <th class="py-3">
+              <mat-icon class="align-middle me-1">attach_money</mat-icon>
+              Amount
+            </th>
+            <th class="py-3">
+              <mat-icon class="align-middle me-1">engineering</mat-icon>
+              Artisan
+            </th>
           </tr>
         </thead>
         <tbody class="bg-light">
           <tr *ngFor="let request of filteredRequests | slice: pageIndex * pageSize : (pageIndex + 1) * pageSize">
-            <td class="py-3">{{ request.serviceName || 'Unknown Service' }}</td>
-            <td class="py-3">{{ request.createdAt | date:'mediumDate' }}</td>
             <td class="py-3">
-              <span class="badge d-inline-flex align-items-center justify-content-center gap-1 py-2 px-3"
+              <mat-icon class="align-middle me-1">home_repair_service</mat-icon>
+              {{ request.serviceName || 'Unknown Service' }}
+            </td>
+            <td class="py-3">
+              <mat-icon class="align-middle me-1">calendar_today</mat-icon>
+              {{ request.createdAt | date:'mediumDate' }}
+            </td>
+            <td class="py-3">
+              <span class="status-badge d-inline-flex align-items-center justify-content-center gap-2 py-2 px-3 fw-bold"
                     [ngClass]="getStatusClass(request.status)">
-                <mat-icon style="font-size: 16px;">{{ getStatusIcon(request.status) }}</mat-icon>
-                {{ getStatusText(request.status) }}
+                <mat-icon class="status-icon">{{ getStatusIcon(request.status) }}</mat-icon>
+                <span class="status-text">{{ getStatusText(request.status) }}</span>
               </span>
             </td>
-            <td class="py-3">{{ request.paymentMethod || 'N/A' }}</td>
-
-            <td class="py-3">{{ request.paymentAmount ? '$' + request.paymentAmount : 'N/A' }}</td>
             <td class="py-3">
-              {{ request.artisanName || 'Not assigned' }}
+              <span *ngIf="request.paymentMethod !== null"
+                    class="payment-badge badge rounded-pill d-flex align-items-center gap-2 fw-bold p-2"
+                    [ngClass]="getPaymentMethodClass(request.paymentMethod)">
+                <mat-icon class="payment-icon">{{ getMethodIcon(request.paymentMethod) }}</mat-icon>
+                <span class="payment-text">{{ getMethodText(request.paymentMethod) }}</span>
+              </span>
+              <span *ngIf="!request.paymentMethod" class="text-muted fw-bold">
+                <mat-icon>help_outline</mat-icon>
+                <span>Not specified</span>
+              </span>
             </td>
-            
             <td class="py-3">
-              <button mat-icon-button color="primary" [routerLink]="['/request', request.paymentId]" matTooltip="View Details">
-                <mat-icon>visibility</mat-icon>
-              </button>
-              
+              <mat-icon class="align-middle me-1">paid</mat-icon>
+              {{ request.paymentAmount || 'Not specified' }} EGP
+            </td>
+            <td class="py-3">
+              <mat-icon class="align-middle me-1">person</mat-icon>
+              {{ request.artisanName || 'Not assigned' }}
             </td>
           </tr>
         </tbody>
@@ -110,9 +112,13 @@
 
     <!-- Pagination -->
     <div class="mt-5 d-flex justify-content-center">
-      <mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"
-                     color="primary" class="rounded-3 shadow-sm"></mat-paginator>
+      <mat-paginator [length]="filteredRequests.length"
+                     [pageSize]="pageSize"
+                     [pageSizeOptions]="[5, 10, 25, 100]"
+                     (page)="onPageChange($event)"
+                     color="primary"
+                     class="rounded-3 shadow-sm">
+      </mat-paginator>
     </div>
   </div>
-
-
+</div>

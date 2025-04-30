@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { ServiceRequestDetailsDto } from '../_dtos/serive-reques-details-dto';
+import { ServiceRequestDetailsDto } from '../_dtos/serive-request-details-dto';
 import { ActivatedRoute } from '@angular/router';
 import { DataServiceService } from '../_services/data-service.service';
 import { OnInit } from '@angular/core';

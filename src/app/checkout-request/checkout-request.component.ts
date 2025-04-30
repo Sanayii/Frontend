@@ -6,7 +6,7 @@ import {MatIcon, MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
-import { ServiceRequestDetailsDto } from '../_dtos/serive-reques-details-dto';
+import { ServiceRequestDetailsDto } from '../_dtos/serive-request-details-dto';
 import { ActivatedRoute } from '@angular/router';
 import { DataServiceService } from '../_services/data-service.service';
 import { OnInit } from '@angular/core';

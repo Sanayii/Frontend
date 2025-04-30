@@ -35,7 +35,7 @@ ngOnInit(): void {
   this.artisanService.getArtisanServic(this.id!).subscribe((d: ArtisanServiceRequest[]) => {
     this.ArtisanServices = d;
   });
-  
+
   }
 
 getRatingAvg()

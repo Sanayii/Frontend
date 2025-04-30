@@ -1,0 +1,45 @@
+/* حالة الطلب */
+.status-badge {
+  font-size: 1.1rem;
+  min-width: 120px;
+  letter-spacing: 0.5px;
+}
+
+.status-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.status-text {
+  margin-top: 2px;
+}
+
+/* طريقة الدفع */
+.payment-badge {
+  font-size: 1.1rem;
+  padding: 8px 12px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+}
+
+.payment-icon {
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+.payment-text {
+  margin-top: 2px;
+}
+.payment-badge {
+  font-size: 1rem;
+  min-width: 120px;
+  justify-content: center;
+}
+
+.payment-icon {
+  font-size: 18px;
+  width: 18px;
+  height: 18px;
+}
