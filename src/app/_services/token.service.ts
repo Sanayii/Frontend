@@ -14,7 +14,7 @@ export class TokenService {
 
     if (token) {
       const decodedToken: any = jwtDecode(token);  // Decode the token into a JavaScript object
-      return decodedToken['nameid'] || null;  // Use the 'sub' claim (or whatever claim holds the userId)
+      return decodedToken['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/nameidentifier'] || null;
     }
 
     return null;

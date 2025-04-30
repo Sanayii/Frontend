@@ -1,5 +1,5 @@
 export class Category {
   name?:string;
-  Id?:number;
+  id?:number;
   image?: string;
 }

@@ -12,6 +12,7 @@ import { ChatComponent } from '../chat/chat.component';
 import { Category } from '../_Models/category';
 import { CategoryService } from '../_services/category.service';
 import { HttpClientModule } from '@angular/common/http';
+import { TokenService } from '../_services/token.service';
 
 
 
@@ -64,16 +65,18 @@ export class CategoriesComponent  implements AfterViewInit {
     data:'',
     paymentMethod:''
   };
-
+  customerId: string|null = '';
   constructor(private router: Router,
       private scroller: ViewportScroller,
       private route: ActivatedRoute,
       private categoryService: CategoryService,
       public Ser: SeriveRequesPaymentService,
-      public dataService: DataServiceService) {
-        
+      public dataService: DataServiceService,private  test: TokenService) {
+        this.customerId = this.test.getUserIdFromToken();
       }
-
+  // constructor(private customerService: CustomerService, private router: Router,private  test: TokenService) {
+  //   this.customerId = this.test.getUserIdFromToken();
+  //  }
   ngOnInit() {
     this.loadCategories();
   }
@@ -115,9 +118,9 @@ export class CategoriesComponent  implements AfterViewInit {
     return this.showAll ? this.categories : this.categories.slice(0, 6);
   }
 
-  handleCategoryClick(serviceName: string) {
+  handleCategoryClick(serviceName: string,seriveId:number) {
     this.selectedCategory = serviceName;
-    //this.selectedArtisan = artisanName;
+    this.serviceRequest.CategoryId = seriveId;
     const modal = document.getElementById('serviceModal');
     if (modal) {
       const bootstrapModal = new bootstrap.Modal(modal);
@@ -128,8 +131,8 @@ export class CategoriesComponent  implements AfterViewInit {
     if (this.CatgForm.valid) {
       const formValues = this.CatgForm.value;
 
-      this.serviceRequest.CategoryId = 2;
-      this.serviceRequest.CustomerId = "7abce138-7173-49ed-a8bd-8e1519d5d653";
+      
+      this.serviceRequest.CustomerId = this.customerId!;
       this.serviceRequest.Status = 1;
       this.serviceRequest.ServiceName = formValues.ServiceName;
       this.serviceRequest.Description = formValues.ServiceDetails;
@@ -141,7 +144,6 @@ export class CategoriesComponent  implements AfterViewInit {
         bootstrapModal?.hide();
       }
 
-      console.log(this.serviceRequest);
 
       this.Ser.getRequsetdetails(this.serviceRequest).subscribe(
         (a: ServiceRequestDetailsDto) => {

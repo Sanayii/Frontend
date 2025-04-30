@@ -13,6 +13,7 @@ import { OnInit } from '@angular/core';
 import { CreatePaymentService } from '../_services/create-payment.service';
 import { loadStripe } from '@stripe/stripe-js';
 import { HttpClient } from '@angular/common/http';
+import { TokenService } from '../_services/token.service';
 @Component({
   selector: 'app-checkout-request',
   imports: [MatSort,RouterLink,MatIcon,MatIconModule,MatButtonModule,CommonModule],
@@ -23,14 +24,11 @@ import { HttpClient } from '@angular/common/http';
 export class CheckoutRequestComponent  implements OnInit {
   selectedRating = 0;
   SerDTO :ServiceRequestDetailsDto |null = null;
-
+  customerId: string|null;
   constructor(private router: Router,public ar:ActivatedRoute,public dataService: DataServiceService,
-    public paymentService: CreatePaymentService
-  ) {
+    public paymentService: CreatePaymentService,private  test: TokenService) {
+    this.customerId = this.test.getUserIdFromToken();
     this.SerDTO = this.dataService.getServiceRequestDetails();
-    console.log('Service ID:', this.SerDTO?.serviceId);  // Check if this is valid
-    console.log('Service DTO:', this.SerDTO);
-    // Fetch the price using the service ID
   }
 
  price : number = 3000;
@@ -76,7 +74,7 @@ export class CheckoutRequestComponent  implements OnInit {
       productName: this.SerDTO?.serviceName, // Product name
       successUrl: "http://localhost:4200/payment-success", // Redirection URL after success
       cancelUrl: "http://localhost:4200/payment-failed", // Redirection URL after cancellation
-      customerId: "30bb8db2-cb2e-44e3-88bf-0ec3f170a49d", // Customer ID
+      customerId: this.customerId, // Customer ID
       serviceId: this.SerDTO?.serviceId, // Your service ID (optional, based on your business logic)
     };
     this.paymentService.createCheckoutSession(request).subscribe(async res => {

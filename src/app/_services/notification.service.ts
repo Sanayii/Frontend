@@ -1,16 +1,15 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
-import * as signalR from '@microsoft/signalr';
-import { HttpClient } from '@angular/common/http';
-import { Notification } from '../_Models/notification';
+ import { BehaviorSubject } from 'rxjs';
+ import * as signalR from '@microsoft/signalr';
+ import { HttpClient } from '@angular/common/http';
+ import { Notification } from '../_Models/notification';
 
-@Injectable({
+ @Injectable({
   providedIn: 'root'
 })
 export class NotificationService {
-
   private notifications: Notification[] = [];
-  
+   
   private _notifications$ = new BehaviorSubject(this.notifications);
   notifications$ = this._notifications$.asObservable();
 
@@ -65,30 +64,22 @@ export class NotificationService {
     });
   }
   
-
-  // Get the count of unread notifications
   getUnreadCount(): number {
     return this.notifications.filter(n => n.isRead==false).length;
   }
-
-  // Mark a notification as read
-  markAsRead(notification: Notification) {
+   // Mark a notification as read
+   markAsRead(notification: Notification) {
     notification.isRead = false;
     this._notifications$.next(this.notifications);
   }
-
-  // Mark all notifications as read
   markAllAsRead() {
     this.notifications.forEach(n => n.isRead = false);
     this._notifications$.next(this.notifications);
   }
-
-  // Delete a specific notification
   deleteNotification(index: number) {
     this.notifications.splice(index, 1);
     this._notifications$.next(this.notifications);
   }
-
   // Delete all notifications
   deleteAllNotifications() {
     this.notifications = [];

@@ -11,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card';
 import { Payment, PaymentService } from '../_services/payment.service';
+import { TokenService } from '../_services/token.service';
 @Component({
   selector: 'app-payment-history',
   imports: [RouterLink,RouterOutlet,MatButtonModule,MatIconModule,
@@ -27,8 +28,10 @@ export class PaymentHistoryComponent {
   pageSize = 10;
   pageIndex = 0;
   totalPayments = 0;
-
-  constructor(private paymentService: PaymentService) {}
+  customerId: any;
+  constructor(private paymentService: PaymentService,private  test: TokenService) {
+    this.customerId = this.test.getUserIdFromToken();
+  }
 
   ngOnInit(): void {
     this.loadPayments();
@@ -38,10 +41,7 @@ export class PaymentHistoryComponent {
     this.isLoading = true;
     this.error = null;
 
-    // In a real app, you would get the customer ID from auth service or route params
-    const customerId = '701b6ee7-b7f2-46e4-ad64-a4c8ea2098cd'; // Replace with actual customer ID
-
-    this.paymentService.getCustomerPayments(customerId).subscribe({
+    this.paymentService.getCustomerPayments(this.customerId).subscribe({
       next: (data) => {
         this.payments = data;
         this.totalPayments = data.length;

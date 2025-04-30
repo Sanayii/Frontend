@@ -19,11 +19,7 @@ export class UserProfileComponent {
   error: string | null = null;
   customerId: any;
   constructor(private customerService: CustomerService, private router: Router,private  test: TokenService) {
-    // console.log('token ' + localStorage.getItem('token'));
-    // console.log('ids: ' + this.test.getUserIdFromToken());
-    // this.customerId = this.test.getUserIdFromToken();
-    // console.log('customer id ' + this.customerId);
-    this.customerId= '18cfedce-4ea4-4685-8179-cc88f889dc90';
+    this.customerId = this.test.getUserIdFromToken();
    }
   ngOnInit(): void {
     this.loadCustomerData();
@@ -47,6 +43,7 @@ export class UserProfileComponent {
 
   getPrimaryPhone(): string {
     if (!this.customer) return 'N/A';
+    console.log(this.customer.phoneNumbers);
     return (this.customer.phoneNumbers.length > 0 ? this.customer.phoneNumbers[0] : 'N/A');
   }
 

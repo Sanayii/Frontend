@@ -12,8 +12,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card';
-import { ServiceRequestWithDetails } from '../_models/service-request.model';
+import { ServiceRequestWithDetails } from '../_Models/service-request.model';
 import { RequestService } from '../_services/request.service';
+import { TokenService } from '../_services/token.service';
 @Component({
   selector: 'app-services-requests-history',
   imports: [RouterLink,RouterOutlet,MatButtonModule,MatIconModule,
@@ -36,8 +37,10 @@ export class ServicesRequestsHistoryComponent {
   // Filters
   statusFilter = '';
   serviceTypeFilter = '';
-
-  constructor(private requestService: RequestService) {}
+  customerId: string|null = '';
+  constructor(private requestService: RequestService,private  test: TokenService) {
+    this.customerId = this.test.getUserIdFromToken();
+  }
 
   ngOnInit(): void {
     this.loadRequests();
@@ -49,9 +52,8 @@ export class ServicesRequestsHistoryComponent {
     this.showEmptyState = false;
     
     // In a real app, you would get the customer ID from auth service or route params
-    const customerId = '701b6ee7-b7f2-46e4-ad64-a4c8ea2098cd'; // Replace with actual customer ID
-    
-    this.requestService.getCustomerRequests(customerId).subscribe({
++    
+    this.requestService.getCustomerRequests(this.customerId!).subscribe({
       next: (data:any) => {
         console.log('Data received:', data);
         

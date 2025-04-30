@@ -1,10 +1,9 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { CommonModule } from '@angular/common'; // Also need this for ngFor etc
-import { NotificationService } from '../_services/notification.service';
-import { Notification } from '../_Models/notification';
-import { NotificationDetailsComponent } from '../notification-details/notification-details.component'; 
-
-@Component({
+ import { CommonModule } from '@angular/common'; // Also need this for ngFor etc
+ import { Notification } from '../_Models/notification';
+ import { NotificationDetailsComponent } from '../notification-details/notification-details.component'; 
+ import { NotificationService } from '../_services/notification.service';
+ @Component({
   selector: 'app-notification',
   standalone: true, 
   imports: [CommonModule, NotificationDetailsComponent], 
@@ -12,13 +11,12 @@ import { NotificationDetailsComponent } from '../notification-details/notificati
   styleUrls: ['./notification.component.css']
 })
 export class NotificationComponent implements OnInit {
-
+ 
   notifications: Notification[] = [];
   selectedNotification: Notification | null = null;
 
   constructor(private notificationService: NotificationService) {
   }
-
   get unreadCount(): number {
     return this.notificationService.getUnreadCount();
   }
@@ -38,28 +36,26 @@ export class NotificationComponent implements OnInit {
       console.log('Updated notifications after SignalR push:', this.notifications); // Log updated notifications
     });
   }
-  
-
   markAsRead(notification: Notification): void {
     this.notificationService.markAsRead(notification);
   }
-
   markAllAsRead(): void {
     this.notificationService.markAllAsRead();
   }
-
   deleteNotification(index: number): void {
     this.notificationService.deleteNotification(index);
   }
-
   deleteAllNotifications(): void {
     this.notificationService.deleteAllNotifications();
   }
-
   openDetailsPopup(notification: Notification): void {
     if (notification.isRead) {
       this.markAsRead(notification);
     }
     this.selectedNotification = notification;
   }
+  closePopup(): void {
+    this.selectedNotification = null;
+  }
 }
+  

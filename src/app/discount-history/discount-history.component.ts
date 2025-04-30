@@ -46,10 +46,8 @@ export class DiscountHistoryComponent implements OnInit{
   ngOnInit(): void {
     // this.id = this.route.snapshot.paramMap.get('id');
     this.id = this.token.getUserIdFromToken();
-  
     this.discountService.getDiscount(this.id!).subscribe((d: Discount[]) => {
       this.discounts = d;
     });
-
     }
 }

@@ -4,52 +4,22 @@ import { PaymentService } from './payment.service';
 import { ServiceService } from './service.service';
 import { ArtisanService } from './artisan.service';
 import { catchError, forkJoin, map, mergeMap, Observable, switchMap, throwError } from 'rxjs';
-import { ServiceRequest, ServiceRequestWithDetails } from '../_models/service-request.model';
+import { ServiceRequest, ServiceRequestWithDetails } from '../_Models/service-request.model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class RequestService {
-  private apiUrl = 'https://localhost:7234/api';
+  private apiUrl = 'https://localhost:7234/api/ServiceRequestPayment/by-customer';
   constructor(
     private http: HttpClient,
     private paymentService: PaymentService,
     private serviceService: ServiceService,
     private artisanService: ArtisanService
   ) { }
-
-  /*getCustomerRequests(customerId: string): Observable<ServiceRequestWithDetails[]> {
-    const params = new HttpParams().set('cutomerid', customerId);
-    return this.http.get<ServiceRequest[]>(`${this.apiUrl}/ServiceRequestPayment/CustomerRequests`,
-      { params }).pipe(
-      map(requests => requests.map(request => ({
-        ...request,
-        createdAt: new Date(request.createdAt)
-      }))),
-      switchMap(requests => {
-        const requestsWithDetails$ = requests.map(request =>
-          forkJoin({
-            payment: this.paymentService.getPaymentById(request.paymentId),
-            service: this.serviceService.getServiceById(request.serviceId),
-            artisan: this.artisanService.getArtisanById(request.serviced.toString())
-          }).pipe(
-            map(({ payment, service, artisan }) => ({
-              ...request,
-              serviceName: service?.name,
-              artisanName: artisan?.name,
-              paymentMethod: payment ? this.getPaymentMethodText(payment.method) : 'Unknown',
-              paymentAmount: payment?.amount
-            }))
-          )
-        );
-        return forkJoin(requestsWithDetails$);
-      })
-    );
-  }*/
     getCustomerRequests(customerId: string): Observable<any[]> {
       return this.http.get<any[]>(
-        `${this.apiUrl}/ServiceRequestPayment/CustomerRequests`,
-        { params: { cutomerid: customerId } }
+        `${this.apiUrl}/${customerId}`
       ).pipe(
         map(requests => requests.map(request => ({
           ...request,

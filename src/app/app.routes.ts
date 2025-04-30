@@ -18,6 +18,7 @@ import { FailedPaymentComponent } from './failed-payment/failed-payment.componen
 import { ChatComponent } from './chat/chat.component';
 import { ArtsinComponent } from './artsin/artsin.component';
 import { PaymentHistoryComponent } from './payment-history/payment-history.component';
+import { DiscountHistoryComponent } from './discount-history/discount-history.component';
 
 export const routes: Routes = [
   {path:'',component:HomeComponent},
@@ -42,7 +43,8 @@ export const routes: Routes = [
   {path:'service-payment', component: ServicePaymentComponent },
   {path:'payment-success',component: SuccessfulPaymentComponent},
   {path:'payment-failed',component: FailedPaymentComponent},
-
+  {path: 'discount-history/:id', component:DiscountHistoryComponent},
+  {path: 'artsin/:id', component:ArtsinComponent},
   {path:'**', redirectTo: 'notFound'}
 
 ];
