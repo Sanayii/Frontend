@@ -5,3 +5,10 @@ export enum ServiceStatus {
   InProgress = 4,
   Failed = 5
 }
+export enum ServiceStatusText {
+  Pending = 'Pending',
+  Completed = 'Completed',
+  Rejected = 'Rejected',
+  InProgress = 'In Progress',
+  Failed = 'Failed'
+}

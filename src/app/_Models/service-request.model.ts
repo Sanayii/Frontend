@@ -1,4 +1,5 @@
 
+
 export interface ServiceRequest {
   createdAt: Date;
   executionTime: number;
@@ -12,6 +13,11 @@ export interface ServiceRequest {
 export interface ServiceRequestWithDetails extends ServiceRequest {
   serviceName?: string;
   artisanName?: string;
-  paymentMethod?: string;
+  paymentMethod?: number;
+  artisanId?: string;
   paymentAmount?: number;
+  createdAt: Date;
+  executionTime: number;
+  status: number;
+
 }

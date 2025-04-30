@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, Observable, of } from 'rxjs';
+import { artisan } from '../_Models/artsin';
+import { ArtisanServiceRequest } from '../_Models/artisan-service-request';
 
 @Injectable({
   providedIn: 'root'
@@ -16,4 +18,12 @@ export class ArtisanService {
       catchError(() => of(null)) // Return null if artisan not found
     );
   }
+   getById(id: string){
+      return this.http.get<artisan>(this.apiUrl  + id);
+    }
+
+    getArtisanServic(id:string)
+    {
+      return this.http.get<ArtisanServiceRequest[]>('https://localhost:7234/api/Artisan/getServiceRequest/' + id);
+    }
 }
