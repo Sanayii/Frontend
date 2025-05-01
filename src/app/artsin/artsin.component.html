@@ -1,70 +1,50 @@
-<div class="container p-3 p-md-4">
-  <!-- Profile Header -->
-  <div class="profile-header d-flex flex-column flex-md-row align-items-center align-items-md-start gap-4 mb-4 mb-md-5 p-3 bg-light rounded-3 shadow-sm">
-    <div class="profile-avatar">
-      <img src="assets/images/not.jpg" alt="Customer Photo" class="rounded-circle shadow" style="width: 120px; height: 120px; object-fit: cover;">
-    </div>
+<div class="container">
+ <!-- Profile Header -->
+ <div class="profile-header">
 
-    <div class="profile-info text-center text-md-start">
-      <h1 class="h3 mb-2">{{Artisan.fName}} {{Artisan.lName}}</h1>
-      <div class="profile-stats d-flex justify-content-center justify-content-md-start gap-3 gap-md-4">
-        <div class="stat">
-          <span class="stat-value d-block fw-bold">{{ArtisanServices.length}}</span>
-          <span class="stat-label small text-muted">Services</span>
-        </div>
-        <div class="stat">
-          <span class="stat-value d-block fw-bold">{{Artisan.rating}}</span>
-          <span class="stat-label small text-muted">Avg Rating</span>
-        </div>
-        <div class="stat">
-          <span class="stat-value d-block fw-bold">3</span>
-          <span class="stat-label small text-muted">Active</span>
-        </div>
+  <div class="profile-avatar">
+    <img src="assets/images/not.jpg" alt="Customer Photo">
+  </div>
+
+  <div class="profile-info">
+    <h1>{{Artisan.fName}} {{Artisan.lName}}</h1>
+    <div class="profile-stats">
+      <div class="stat">
+        <span class="stat-value">{{ArtisanServices.length}}</span>
+        <span class="stat-label">Services</span>
+
+      </div>
+      <div class="stat">
+        <span class="stat-value">{{Artisan.rating}}</span>
+        <span class="stat-label">Avg Rating</span>
+      </div>
+      <div class="stat">
+        <span class="stat-value">3</span>
+        <span class="stat-label">Active</span>
       </div>
     </div>
   </div>
 
-  <!-- Personal Details Section -->
-  <div class="details-section mb-4 mb-md-5 p-3 p-md-4 bg-light rounded-3 shadow-sm">
-    <h2 class="section-title h5 mb-3 mb-md-4">
-      <mat-icon class="align-middle me-2">person</mat-icon>
-      Personal Information
-    </h2>
-    <div class="details-grid row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
-      <div class="detail-item col">
-        <label class="small text-muted mb-1">First Name</label>
-        <p class="mb-0 fw-bold">{{Artisan.fName}}</p>
-      </div>
-      <div class="detail-item col">
-        <label class="small text-muted mb-1">Last Name</label>
-        <p class="mb-0 fw-bold">{{Artisan.lName}}</p>
-      </div>
-      <div class="detail-item col">
-        <label class="small text-muted mb-1">Username</label>
-        <p class="mb-0 fw-bold">{{Artisan.userName}}</p>
-      </div>
-      <div class="detail-item col">
-        <label class="small text-muted mb-1">Email</label>
-        <p class="mb-0 fw-bold">{{Artisan.email}}</p>
-      </div>
-      <div *ngFor="let num of Artisan.userPhones; let i = index" class="detail-item col">
-        <label class="small text-muted mb-1">Phone {{ i + 1 }}</label>
-        <p class="mb-0 fw-bold">{{ num }}</p>
-      </div>
-      <div class="detail-item col">
-        <label class="small text-muted mb-1">Government</label>
-        <p class="mb-0 fw-bold">{{Artisan.government}}</p>
-      </div>
-      <div class="detail-item col">
-        <label class="small text-muted mb-1">City</label>
-        <p class="mb-0 fw-bold">{{Artisan.city}}</p>
-      </div>
-      <div class="detail-item col">
-        <label class="small text-muted mb-1">Street</label>
-        <p class="mb-0 fw-bold">{{Artisan.street}}</p>
-      </div>
-    </div>
+</div>
+
+<!-- Personal Details Section -->
+<div class="details-section">
+  <h2 class="section-title"><i class="fas fa-user-circle"></i> Personal Information</h2>
+  <div class="details-grid">
+    <!-- Replace this static data with bindings later if needed -->
+    <div class="detail-item"><label>First Name</label><p>{{Artisan.fName}}</p></div>
+    <div class="detail-item"><label>Last Name</label><p>{{Artisan.lName}}</p></div>
+    <div class="detail-item"><label>Username</label><p>{{Artisan.userName}}</p></div>
+    <div class="detail-item"><label>Email</label><p>{{Artisan.email}}</p></div>
+    <div *ngFor="let num of Artisan.userPhones; let i = index" class="detail-item">
+      <label>Phone {{ i + 1 }}</label>
+      <p>{{ num }}</p>
   </div>
+    <div class="detail-item"><label>Government</label><p>{{Artisan.government}}</p></div>
+    <div class="detail-item"><label>City</label><p>{{Artisan.city}}</p></div>
+    <div class="detail-item"><label>Street</label><p>{{Artisan.street}}</p></div>
+  </div>
+</div>
 
   <!-- Services Section -->
   <div class="services-section p-3 p-md-4 bg-light rounded-3 shadow-sm">

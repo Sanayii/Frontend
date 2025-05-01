@@ -10,11 +10,14 @@ import { Customer } from '../_Models/Customer';
   providedIn: 'root'
 })
 export class AccountService {
+  isLogged = false;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    const token = localStorage.getItem('token');
+    this.isLogged = !!token;
+  }
   private apiUrl = 'https://localhost:7234/api/Account/Register';
 
-  isLogged = false;
 
   register(registerData: Customer) {
     return this.http.post<string>(this.apiUrl, registerData);
