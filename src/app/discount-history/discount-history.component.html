@@ -29,8 +29,13 @@
 
     <!-- Pagination -->
     <div class="mt-5 d-flex justify-content-center">
-      <mat-paginator [length]="100" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]"
-                    color="primary" class="rounded-3 shadow-sm"></mat-paginator>
+      <mat-paginator [length]="discounts.length"
+                     [pageSize]="pageSize"
+                     [pageSizeOptions]="[5, 10, 25, 100]"
+                     (page)="onPageChange($event)"
+                     color="primary"
+                     class="rounded-3 shadow-sm">
+      </mat-paginator>
     </div>
   </div>
 

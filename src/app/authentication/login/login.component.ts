@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
 })
 export class LoginComponent {
 
-  constructor(private registerService: AccountService, private router: Router) {}
+  constructor(private loginService: AccountService, private router: Router) {}
 
   loginForm : FormGroup = new FormGroup({
     username: new FormControl('',[Validators.required, Validators.minLength(3)]),
@@ -40,19 +40,19 @@ submit() {
 
     console.log(loginData);
 
-    this.registerService.login(loginData).subscribe({
+    this.loginService.login(loginData).subscribe({
       next: (response: any) => {
         localStorage.setItem("token", response.token);
 
-        alert('login Successfully'); 
+        this.loginService.isLogged = true;
 
-        this.router.navigate(['/categories']); 
+        this.router.navigate(['/home']);
       },
       error: err => {
         alert("Login failed! Please check your username and password.");
       }
     });
-    
+
   }
 
 }

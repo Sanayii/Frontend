@@ -2,8 +2,9 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
-import { Customer } from '../../_Models/customer';
+
 import { AccountService } from '../../_services/account.service';
+import { Customer } from '../../_Models/Customer';
 
 
 @Component({
@@ -34,6 +35,14 @@ export class RegisterComponent{
   get fName()    { return this.registerForm.get('fName'); }
   get lName()    { return this.registerForm.get('lName'); }
 
+  get street() { return this.registerForm.get('street'); }
+  get city()    { return this.registerForm.get('city'); }
+  get government()    { return this.registerForm.get('government'); }
+
+  get email()    { return this.registerForm.get('email'); }
+  get password()    { return this.registerForm.get('password'); }
+  get confirmPassword()    { return this.registerForm.get('confirmPassword'); }
+
   get phoneNumbers() {
     return this.registerForm.get('phoneNumbers') as FormArray;
   }
@@ -58,10 +67,9 @@ export class RegisterComponent{
         const token = response.token;
         localStorage.setItem('token', token);
 
+        this.registerService.isLogged=true;
+        this.router.navigate(['/home']);
 
-        alert('Registered Successfully'); 
-
-        this.router.navigate(['/categories']); 
       },
       error: (error) => {
         console.error('Registration failed', error);

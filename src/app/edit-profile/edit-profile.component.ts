@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CustomerService } from '../_services/customer.service';
 import { EditCustomerDTO } from '../_Models/edit-customer.dto';
-import { Customer } from '../_Models/customer';
+import { Customer } from '../_Models/Customer';
 
 @Component({
   selector: 'app-edit-profile',
@@ -69,8 +69,8 @@ export class EditProfileComponent {
       street: customer.street,
       government: customer.government,
       email: customer.email,
-      phoneNumber: customer.phoneNumbers || '',
-      userPhones: customer.phoneNumbers.join(', ') || ''
+      phoneNumber: customer.phoneNumbers?.[0] || '', // Set first phone number if exists, else empty string
+      userPhones: customer.phoneNumbers && customer.phoneNumbers.length > 0 ? customer.phoneNumbers.join(', ') : '' // Safely join the phone numbers
     });
   }
   onSubmit(): void {

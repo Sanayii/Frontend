@@ -1,25 +1,25 @@
-<div class="container mt-5 mb-5 pt-3" *ngIf="SerDTO">
+<div class="container mb-5 pt-3" *ngIf="SerDTO">
   <div class="card shadow rounded-4 p-4 mt-5">
-    <h3 class="mb-4 text-center text-primary">
+    <h3 class="mb-4 text-center">
       Service Request Details
     </h3>
-    <div class="row g-3 mb-4">
+    <div class="row g-2 mb-3">
       <div class="col-md-6">
-        <div class="border rounded-3 p-3 bg-light h-100">
+        <div class="border rounded-3 p-2 bg-light ">
           <strong class="text-muted">Category</strong>
           <p class="mb-0">{{ SerDTO?.categoryName }}</p>
         </div>
       </div>
 
       <div class="col-md-6">
-        <div class="border rounded-3 p-3 bg-light h-100">
+        <div class="border rounded-3 p-2 bg-light ">
           <strong class="text-muted">UserName</strong>
           <p class="mb-0">{{ SerDTO?.customerName }} </p>
         </div>
       </div>
 
       <div class="col-md-6">
-        <div class="border rounded-3 p-3 bg-light h-100">
+        <div class="border rounded-3 p-2 bg-light">
           <strong class="text-muted">Contact</strong>
           <div *ngFor="let phone of SerDTO?.customerPhoneNumbers">
             <p class="mb-0">{{ phone }}</p>
@@ -28,47 +28,50 @@
       </div>
 
       <div class="col-md-6">
-        <div class="border rounded-3 p-3 bg-light h-100">
+        <div class="border rounded-3 p-2 bg-light ">
           <strong class="text-muted">Government</strong>
           <p class="mb-0">{{ SerDTO?.customerGovernment }}</p>
         </div>
       </div>
       <div class="col-md-6">
-        <div class="border rounded-3 p-3 bg-light h-100">
+        <div class="border rounded-3 p-2 bg-light ">
           <strong class="text-muted">City</strong>
           <p class="mb-0">{{ SerDTO?.customerCity }}</p>
         </div>
       </div>
       <div class="col-md-6">
-        <div class="border rounded-3 p-3 bg-light h-100">
+        <div class="border rounded-3 p-2 bg-light ">
           <strong class="text-muted">Street</strong>
           <p class="mb-0">{{ SerDTO?.customerStreet }}</p>
         </div>
       </div>
 
       <div class="col-12">
-        <div class="border rounded-3 p-3 bg-light">
+        <div class="border rounded-3 p-2 bg-light">
           <strong class="text-muted">Service Details</strong>
           <p class="mb-0">{{ SerDTO?.description }}</p>
         </div>
       </div>
 
       <div class="col-12">
-        <div class="border rounded-3 p-3 bg-light" routerLink="/artsin" style="cursor: pointer;">
-          <strong class="text-muted" class="link-underline-info"><a>Assigned Artisan</a></strong>
-          <p class="mb-0">{{ SerDTO?.artisanName }}</p>
+        <div class="border rounded-3 p-2 bg-light d-flex align-items-center justify-content-between" >
+          <div>
+            <strong class="text-muted" class="link-underline-info"><a>Assigned Artisan</a></strong>
+            <p class="mb-0">{{ SerDTO?.artisanName }}</p>
+          </div>
+          <a routerLink="/artsin/{{SerDTO?.artisanId}}" class="btn show">Show details</a>
         </div>
       </div>
 
       <div class="col-12">
-        <div class="border rounded-3 p-3 bg-light">
+        <div class="border rounded-3 p-2 bg-light">
           <strong class="text-muted">Date</strong>
           <p class="mb-0">{{ SerDTO?.requestDate | date:'medium' }}</p>
         </div>
       </div>
 
       <div class="col-12">
-        <div class="border rounded-3 p-3 bg-light">
+        <div class="border rounded-3 p-2 bg-light">
           <strong class="text-muted">Payment Method</strong>
           <p class="mb-0">{{ paymentMethodEnum[SerDTO?.paymentMethod!] }}</p>
         </div>
@@ -81,7 +84,7 @@
 
     <form>
 
-      <div class="d-flex gap-3 mt-4">
+      <div class="d-flex gap-2 mt-3">
         <button type="button" class="btn btn-outline-danger flex-fill" (click)="cancelRequest()">Cancel</button>
         <button routerLink="/checkout-request" type="submit" class="btn btn-primary flex-fill">Confirm Request</button>
       </div>

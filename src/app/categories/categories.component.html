@@ -1,13 +1,14 @@
-<section>
+<section >
   <div class="container py-4" >
-    <h2 class="text-center mb-4">Services</h2>
-    <div class="row" [ngClass]="{'shrink-width': isChatboxOpen, 'with-chat-open': isChatboxOpen}">
+    <h2 class="text-center mb-4" style="color: #2980b9;">Services</h2>
+    <div class="row" [ngClass]="{'with-chat-open': isChatboxOpen}">
       <div class="col-12 col-sm-6 col-lg-4 mb-4" *ngFor="let service of visibleCategories">
         <div class="card text-center shadow-sm h-100" (click)="handleCategoryClick(service.name!,service.id!)">
           <div class="card-body">
             <img [src]="service.image" alt="{{service.name}}" class="img-fluid mb-3" style="height: 150px;">
             <h6 class="card-title">{{ service.name }}</h6>
           </div>
+
         </div>
       </div>
     </div>
@@ -24,7 +25,7 @@
 </section>
 
 <!-- Modal -->
-<div class="modal fade" id="serviceModal" tabindex="-1" aria-labelledby="serviceModalLabel" aria-hidden="true">
+<div class="modal fade" id="serviceModal" style="margin-top: 65px;" tabindex="-1" aria-labelledby="serviceModalLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
 
@@ -73,7 +74,7 @@
 
         </div>
         <div class="modal-footer">
-          <button type="submit" class="btn btn-submit">Submit Request</button>
+          <button type="submit" class="btn btn-submit" style="background-color: #2980b9;">Submit Request</button>
         </div>
       </form>
     </div>

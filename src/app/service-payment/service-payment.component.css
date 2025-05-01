@@ -1,11 +1,67 @@
-.container h3 {
-  color: #2282c2;
-    font-weight: bolder;
-}
-.container p{
-  font-size: 20px;
+/* Container width responsiveness */
+.container {
+  width: 90%;
+  max-width: 100%;
+  margin: auto;
+  margin-top: 80px;
 }
 
-.container{
-  width: 50%;
+@media (min-width: 768px) {
+  .container {
+    width: 70%;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    width: 50%;
+  }
+}
+
+/* Header style */
+.container h3 {
+  color: #2282c2;
+  font-weight: bolder;
+  font-size: 22px;
+}
+
+/* Paragraph size reduced */
+.container p {
+  font-size: 15px;
+  margin-bottom: 0.3rem;
+}
+
+/* Padding and spacing adjustments */
+.container .p-2,
+.container .p-3,
+.container .p-4 {
+  padding: 5px 15px !important;
+}
+
+/* Reduce card margin/padding */
+.container .card {
+  padding: 20px !important;
+  margin-top: 1rem !important;
+}
+
+/* Button adjustments */
+.show {
+  color: #2980b9;
+  border: 1px solid #2980b9;
+  border-radius: 8px;
+  transition: 0.3s ease;
+  font-size: 14px;
+  padding: 4px 12px;
+}
+
+.show:hover {
+  background-color: #2980b9;
+  color: white;
+}
+
+/* Button group spacing */
+.container .d-flex.gap-2.mt-3,
+.container .d-flex.gap-3.mt-4 {
+  gap: 0.5rem !important;
+  margin-top: 1rem !important;
 }

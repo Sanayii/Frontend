@@ -3,7 +3,7 @@ import { CustomerService } from '../_services/customer.service';
 
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Customer } from '../_Models/customer';
+import { Customer } from '../_Models/Customer';
 import { TokenService } from '../_services/token.service';
 
 @Component({
@@ -17,7 +17,8 @@ export class UserProfileComponent {
   customer: Customer | null = null;
   isLoading = true;
   error: string | null = null;
-  customerId: any;
+  customerId: string | any;
+
   constructor(private customerService: CustomerService, private router: Router,private  test: TokenService) {
     this.customerId = this.test.getUserIdFromToken();
    }
@@ -47,7 +48,4 @@ export class UserProfileComponent {
     return (this.customer.phoneNumbers.length > 0 ? this.customer.phoneNumbers[0] : 'N/A');
   }
 
-  navigateToEdit(): void {
-    this.router.navigate(['/edit-profile', '701b6ee7-b7f2-46e4-ad64-a4c8ea2098cd']);
-  }
 }

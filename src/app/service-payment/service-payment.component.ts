@@ -18,8 +18,6 @@ export class ServicePaymentComponent implements OnInit {
   SerDTO :ServiceRequestDetailsDto |null = null;
   paymentMethodEnum = PaymentMethod;
   constructor(private router: Router,public ar:ActivatedRoute,public dataService: DataServiceService) {
-
-
   }
   ngOnInit(): void {
     this.SerDTO = this.dataService.getServiceRequestDetails();

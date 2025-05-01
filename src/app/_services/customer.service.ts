@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { catchError, map, Observable, of, throwError } from 'rxjs';
-import { Customer } from '../_Models/customer';
+import { Customer } from '../_Models/Customer';
 import { EditCustomerDTO } from '../_Models/edit-customer.dto';
 
 /*export interface Customer {
@@ -37,7 +37,7 @@ export class CustomerService {
       }),
       responseType: 'json' as const
     };
-  
+
     return this.http.put(`${this.apiUrl}/${id}`, dto, httpOptions).pipe(
       catchError((error: HttpErrorResponse) => {
         // Handle empty but successful responses
@@ -62,15 +62,15 @@ export class CustomerService {
       errorMessage = error.message;
     }else {
       // Server-side error
-      errorMessage = error.error?.message || 
-                    error.error?.title || 
-                    error.message || 
+      errorMessage = error.error?.message ||
+                    error.error?.title ||
+                    error.message ||
                     `Server returned ${error.status}`;
     }
     console.error(errorMessage);
     return throwError(() => new Error(errorMessage));
   }
-  
+
 
 }
 

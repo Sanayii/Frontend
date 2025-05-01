@@ -1,16 +1,18 @@
 <div class="container">
   <!-- Profile Header -->
   <div class="profile-header">
+
     <div class="profile-avatar">
       <img src="assets/images/not.jpg" alt="Customer Photo">
     </div>
+
     <div class="profile-info">
       <h1>{{Artisan.fName}} {{Artisan.lName}}</h1>
       <div class="profile-stats">
         <div class="stat">
           <span class="stat-value">{{ArtisanServices.length}}</span>
           <span class="stat-label">Services</span>
-          
+
         </div>
         <div class="stat">
           <span class="stat-value">{{Artisan.rating}}</span>
@@ -22,6 +24,7 @@
         </div>
       </div>
     </div>
+
   </div>
 
   <!-- Personal Details Section -->
@@ -45,24 +48,13 @@
 
   <!-- Services Section -->
   <div class="services-section">
+
     <div class="section-header">
       <h2 class="section-title"><i class="fas fa-history"></i> Service History</h2>
-      <div class="table-actions">
-        <div class="search-box">
-          <i class="fas fa-search"></i>
-          <input type="text" placeholder="Search services...">
-        </div>
-        <select class="filter-select">
-          <option>All Status</option>
-          <option>Completed</option>
-          <option>In Progress</option>
-          <option>Cancelled</option>
-        </select>
-      </div>
     </div>
 
-    <div class="services-table-container">
-      <table class="services-table">
+    <div class="table-responsive rounded-3 overflow-hidden shadow-sm">
+      <table class="services-table table table-bordered align-middle text-center mb-0">
         <thead>
           <tr>
             <th style="width: 20%;">Service Type</th>
@@ -88,12 +80,23 @@
       </table>
     </div>
 
-    <div class="pagination">
+    <!-- <div class="pagination">
       <button class="page-btn prev-btn" disabled><i class="fas fa-chevron-left"></i></button>
       <span class="page-number active">1</span>
       <span class="page-number">2</span>
       <span class="page-number">3</span>
       <button class="page-btn next-btn"><i class="fas fa-chevron-right"></i></button>
+    </div> -->
+
+    <!-- Pagination -->
+    <div class="mt-5 d-flex justify-content-center">
+      <mat-paginator [length]="ArtisanServices.length"
+                     [pageSize]="pageSize"
+                     [pageSizeOptions]="[5, 10, 25, 100]"
+                     (page)="onPageChange($event)"
+                     color="primary"
+                     class="rounded-3 shadow-sm">
+      </mat-paginator>
     </div>
   </div>
 </div>

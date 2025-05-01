@@ -36,7 +36,6 @@ export const routes: Routes = [
   {path: 'notify', component: NotificationComponent},
   {path: 'user-profile', component: UserProfileComponent},
   {path: 'edit-profile/:id', component: EditProfileComponent},
-  {path: 'artsin', component:ArtsinComponent},
 
   {path:'notFound', component: NotFoundComponent},
 
