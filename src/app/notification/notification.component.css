@@ -9,7 +9,6 @@
   max-width: 100%;
   display: flex;
   justify-content:center;
-  background-color: rgb(235, 235, 235);
 }
 
 .notificationContainer{
@@ -151,4 +150,16 @@ main{
     font-size: 12px;
     padding: 2px 6px;
     border-radius: 50%;
+  }
+  .unread {
+    background-color: #eef6ff;
+    border-left: 4px solid #2980b9;
+  }
+
+  .notContent {
+    padding: 10px 15px;
+    margin-bottom: 10px;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
   }

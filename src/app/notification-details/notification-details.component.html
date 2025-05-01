@@ -1,12 +1,22 @@
 <div class="popup" *ngIf="showPopup">
-
   <div class="popup-content">
-    <button class="close-btn" (click)="closePopup()"> &#10006;</button>
-    <h3>{{ notification?.title }}</h3>
-    <p>{{ notification?.userId }}</p>
-    <p>{{ notification?.content }}</p>
-    <p>{{ notification?.createdAt }}</p>
+    <button class="close-btn" (click)="closePopup()">&#10006;</button>
 
+    <h3 class="popup-title">Notification Details</h3>
+
+    <div class="popup-item">
+      <label>Title</label>
+      <span>{{ notification?.title }}</span>
+    </div>
+
+    <div class="popup-item">
+      <label>Content</label>
+      <span>{{ notification?.content }}</span>
+    </div>
+
+    <div class="popup-item">
+      <label>Created At</label>
+      <span>{{ notification?.createdAt | date: 'medium' }}</span>
+    </div>
   </div>
-
 </div>

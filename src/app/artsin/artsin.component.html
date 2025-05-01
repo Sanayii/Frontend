@@ -53,15 +53,15 @@
       <h2 class="section-title"><i class="fas fa-history"></i> Service History</h2>
     </div>
 
-    <div class="table-responsive rounded-3 overflow-hidden shadow-sm">
+    <div class="responsive-table table-responsive rounded-3 shadow-sm">
       <table class="services-table table table-bordered align-middle text-center mb-0">
         <thead>
           <tr>
-            <th style="width: 20%;">Service Type</th>
-            <th style="width: 20%;">Date</th>
-            <th style="width: 20%;">Customer</th>
-            <th style="width: 20%;">Status</th>
-            <th style="width: 20%;">Rating</th>
+            <th style="text-align: center;">Service</th>
+            <th style="text-align: center;">Date</th>
+            <th style="text-align: center;">Customer</th>
+            <th style="text-align: center;">Status</th>
+            <th style="text-align: center;">Rating</th>
           </tr>
         </thead>
         <tbody>
@@ -69,7 +69,13 @@
             <td>{{ serviceRequest.serviceName }}</td>
             <td>{{ serviceRequest.createdAt | date: 'short' }}</td>
             <td>{{ serviceRequest.customerName }}</td>
-            <td>{{ serviceRequest.status }}</td>
+            <td>
+              <span class="d-inline-flex align-items-center justify-content-center gap-1 py-1 px-2 fw-bold"
+                [ngClass]="getStatusClass(serviceRequest.status)">
+                <mat-icon class="status-icon">{{ getStatusIcon(serviceRequest.status) }}</mat-icon>
+              {{ serviceRequest.status }}
+              </span>
+            </td>
             <td>
               <span *ngFor="let star of getStars(serviceRequest.rating)">
                 <i class="fa rating-stars" [ngClass]="star"></i>
@@ -80,13 +86,7 @@
       </table>
     </div>
 
-    <!-- <div class="pagination">
-      <button class="page-btn prev-btn" disabled><i class="fas fa-chevron-left"></i></button>
-      <span class="page-number active">1</span>
-      <span class="page-number">2</span>
-      <span class="page-number">3</span>
-      <button class="page-btn next-btn"><i class="fas fa-chevron-right"></i></button>
-    </div> -->
+
 
     <!-- Pagination -->
     <div class="mt-5 d-flex justify-content-center">
