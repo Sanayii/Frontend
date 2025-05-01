@@ -1,3 +1,8 @@
+.container{
+  margin: 100px auto;
+}
+
+
 /* حالة الطلب */
 .status-badge {
   font-size: 1.1rem;

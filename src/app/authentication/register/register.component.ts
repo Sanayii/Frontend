@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 
 import { AccountService } from '../../_services/account.service';
@@ -66,9 +66,9 @@ export class RegisterComponent{
         console.log('Registered successfully', response);
         const token = response.token;
         localStorage.setItem('token', token);
+        alert('Registered successfully.');
 
-        this.registerService.isLogged=true;
-        this.router.navigate(['/home']);
+        this.router.navigate(['/login']);
 
       },
       error: (error) => {
