@@ -106,7 +106,7 @@ getStatusText(status: number): string {
 }
   getStatusClass(status: number): string {
     switch (status) {
-      case ServiceStatus.Pending: return 'bg-warning text-dark';
+      case ServiceStatus.Pending: return 'bg-warning text-dark p-1';
       case ServiceStatus.Completed: return 'bg-success text-white';
       case ServiceStatus.Rejected: return 'bg-danger text-white';
       case ServiceStatus.InProgress: return 'bg-info text-dark';

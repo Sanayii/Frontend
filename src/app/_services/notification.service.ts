@@ -9,8 +9,8 @@ import { Injectable } from '@angular/core';
 })
 export class NotificationService {
   private notifications: Notification[] = [];
-   
-  private _notifications$ = new BehaviorSubject(this.notifications);
+
+  private _notifications$ = new BehaviorSubject<Notification[]>(this.notifications);
   notifications$ = this._notifications$.asObservable();
 
   private hubConnection: signalR.HubConnection;
@@ -23,9 +23,11 @@ export class NotificationService {
     this.startConnection();
     this.setupListeners();
 
+    // Fetch notifications from the API initially
     this.getAll().subscribe(data => {
-      // Ensure you append API data to the existing notifications array
-      this.notifications = [...data];
+      // Set the notifications array and emit the updated value to subscribers
+      this.notifications = data;
+      this._notifications$.next(this.notifications); // Emit to subscribers immediately
       console.log('Notifications from API:', this.notifications); // Log API notifications
     });
   }
@@ -53,33 +55,43 @@ export class NotificationService {
     // Listen for incoming notifications from the SignalR hub
     this.hubConnection.on('ReceiveNotification', (notification: Notification) => {
       console.log("From Hub Listener:", notification);
-  
-      // Append the new notification to the existing notifications
+
+      // Append the new notification to the existing notifications array
       this.notifications = [...this.notifications, notification]; // This merges the existing notifications with the new one
-  
+
       // Emit the updated notifications array to the subscribers
       this._notifications$.next(this.notifications);
-  
+
       console.log("Updated notifications after SignalR:", this.notifications);
     });
   }
-  
+
+  // Get the unread count
   getUnreadCount(): number {
-    return this.notifications.filter(n => n.isRead==false).length;
+    return this.notifications.filter(n => !n.isRead).length;
   }
-   // Mark a notification as read
-   markAsRead(notification: Notification) {
-    notification.isRead = false;
-    this._notifications$.next(this.notifications);
+
+  // Mark a notification as read
+  markAsRead(notification: Notification) {
+    const index = this.notifications.findIndex(n => n.id === notification.id);
+    if (index !== -1) {
+      this.notifications[index].isRead = true;
+      this._notifications$.next([...this.notifications]); // force update to subscribers
+    }
   }
+
+  // Mark all notifications as read
   markAllAsRead() {
-    this.notifications.forEach(n => n.isRead = false);
+    this.notifications.forEach(n => n.isRead = true); // ✅ all to true
     this._notifications$.next(this.notifications);
   }
+
+  // Delete a notification by index
   deleteNotification(index: number) {
     this.notifications.splice(index, 1);
     this._notifications$.next(this.notifications);
   }
+
   // Delete all notifications
   deleteAllNotifications() {
     this.notifications = [];

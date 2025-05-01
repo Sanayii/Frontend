@@ -1,7 +1,7 @@
 <div class="container mt-5 pt-5 request-history-container">
   <!-- Header Section -->
   <div class="d-flex justify-content-between align-items-center mb-5 p-4 bg-light rounded-3 shadow-sm">
-    <h2 class="m-0 text-primary">
+    <h2 class="m-0 " style="color: #2980b9;">
       <mat-icon class="me-2">history</mat-icon>
       Service Requests History
     </h2>
@@ -38,7 +38,7 @@
 
   <!-- Request List -->
   <div *ngIf="!isLoading && !error && !showEmptyState" class="mb-5">
-    <div class="table-responsive rounded-3 overflow-hidden shadow-sm">
+    <div class="table-responsive rounded-3 shadow-sm">
       <table class="table table-bordered table-hover align-middle text-center mb-0">
         <thead class="table-primary">
           <tr>

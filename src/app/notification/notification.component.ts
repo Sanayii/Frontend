@@ -1,17 +1,17 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
  import { CommonModule } from '@angular/common'; // Also need this for ngFor etc
  import { Notification } from '../_Models/notification';
- import { NotificationDetailsComponent } from '../notification-details/notification-details.component'; 
+ import { NotificationDetailsComponent } from '../notification-details/notification-details.component';
  import { NotificationService } from '../_services/notification.service';
  @Component({
   selector: 'app-notification',
-  standalone: true, 
-  imports: [CommonModule, NotificationDetailsComponent], 
+  standalone: true,
+  imports: [CommonModule, NotificationDetailsComponent],
   templateUrl: './notification.component.html',
   styleUrls: ['./notification.component.css']
 })
 export class NotificationComponent implements OnInit {
- 
+
   notifications: Notification[] = [];
   selectedNotification: Notification | null = null;
 
@@ -28,7 +28,7 @@ export class NotificationComponent implements OnInit {
       this.notifications = [...data];
       console.log('Notifications from API:', this.notifications); // Log API notifications
     });
-  
+
     // Subscribe to the notifications observable from the service (for SignalR updates)
     this.notificationService.notifications$.subscribe(data => {
       // When data updates via SignalR, append new notifications to the list
@@ -48,14 +48,17 @@ export class NotificationComponent implements OnInit {
   deleteAllNotifications(): void {
     this.notificationService.deleteAllNotifications();
   }
+
   openDetailsPopup(notification: Notification): void {
-    if (notification.isRead) {
-      this.markAsRead(notification);
+    if (!notification.isRead) {
+      this.notificationService.markAsRead(notification); // هذا سيعدل ويحدّث القائمة
     }
+
     this.selectedNotification = notification;
   }
+
+
   closePopup(): void {
     this.selectedNotification = null;
   }
 }
-  
