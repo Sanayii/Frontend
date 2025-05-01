@@ -5,29 +5,35 @@
         <a href="#"><img src="/assets/images/logo1.jpg" alt="logo" class="logoImg"></a>
     </div>
 
-    <ul class="nav d-flex  links">
+    @if(login.isLogged)
+    {
+      <ul class="nav d-flex  links">
       <li><a href="/home" class="link">Home</a></li>
 
       <li><a routerLink="/categories" class="link">Services</a></li>
-      <li><a routerLink="/user-profile" class="link">user-profile</a></li>
+
 
       <li><a [routerLink]="['/categories']" fragment="chat" class="link">Help</a></li>
 
+      <li><a class="link" (click)="logout()" style="cursor: pointer;">log out</a></li>
+      <li><a routerLink="/user-profile" class="pro"><img src="/assets/images/profile.webp" alt=""></a></li>
+
       <li class="notification-icon">
         <a routerLink="/notify" style="position: relative;">
-          <fa-icon [icon]="faBell" style="color: #2980b9; font-size: 25px;"></fa-icon>
+          <fa-icon [icon]="faBell" class="icon"></fa-icon>
           <span *ngIf="unreadCount > 0" class="badge">{{ unreadCount }}</span>
         </a>
       </li>
-
-
-
     </ul>
+    }
 
-    <div class="auth-buttons">
-      <a routerLink="/login" class="btn">Login</a>
-      <a routerLink="/register"  class="btn ">Register</a>
-    </div>
+    @else{
+      <div class="auth-buttons">
+        <a routerLink="/login" class="btn">Login</a>
+        <a routerLink="/register"  class="btn ">Register</a>
+      </div>
+    }
+
 
 
 </div>

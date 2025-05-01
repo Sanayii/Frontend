@@ -5,10 +5,19 @@ import { artisan } from '../_Models/artsin';
 import { ArtisanServiceRequest } from '../_Models/artisan-service-request';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { MatPaginator, PageEvent} from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatCardModule } from '@angular/material/card';
 
 @Component({
   selector: 'app-artsin',
-  imports: [CommonModule,FormsModule],
+
+  imports: [CommonModule,FormsModule,MatButtonModule,MatIconModule,
+    MatProgressSpinnerModule,MatCardModule,MatPaginator,MatSort,CommonModule],
   templateUrl: './artsin.component.html',
   styleUrl: './artsin.component.css'
 })
@@ -35,7 +44,7 @@ ngOnInit(): void {
   this.artisanService.getArtisanServic(this.id!).subscribe((d: ArtisanServiceRequest[]) => {
     this.ArtisanServices = d;
   });
-  
+
   }
 
 getRatingAvg()
@@ -66,5 +75,12 @@ getStars(rating: number): string[] {
 
   return starsArray;
 }
-
+// Pagination
+pageSize = 10;
+pageIndex = 0;
+totalRequests = 0;
+onPageChange(event: PageEvent) {
+  this.pageIndex = event.pageIndex;
+  this.pageSize = event.pageSize;
+}
 }

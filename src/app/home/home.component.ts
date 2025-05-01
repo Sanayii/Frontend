@@ -1,8 +1,9 @@
 import { Component, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import Swiper from 'swiper';
 import 'swiper/swiper-bundle.css';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { CategoriesComponent } from '../categories/categories.component';
+import { AccountService } from '../_services/account.service';
 
 @Component({
   imports:[RouterLink,CategoriesComponent],
@@ -15,7 +16,15 @@ export class HomeComponent implements AfterViewInit {
   @ViewChild('servicesSwiper', { static: false }) servicesSwiper!: ElementRef;
   @ViewChild('ReviewSwiper', { static: false }) ReviewSwiper!: ElementRef;
 
-  constructor() {}
+  constructor(public login:AccountService, private router : Router) {}
+
+  navigateToCategories() {
+    if (this.login.isLogged) {
+      this.router.navigate(['/categories']);
+    } else {
+      alert('Please login first.');
+    }
+  }
 
   ngAfterViewInit(): void {
     // Initialize Services Swiper

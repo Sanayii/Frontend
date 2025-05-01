@@ -14,67 +14,66 @@
       <h3>Connecting You with Trusted Artisans</h3>
       <p>Plumbers, electricians, carpenters — all in one place.</p>
       <div class="banner-button">
-        <a routerLink="/categories" class="btn btn-outline btn__primary">Explore Services</a>
+        <a (click)="navigateToCategories()" class="btn btn-outline btn__primary">Explore Services</a>
       </div>
     </div>
   </section>
 
   <!-- start about  -->
-  <section class="center" >
-    <div class="about__container" id="about">
-      <div class="about__content">
+  <div class="about-section">
+    <div class="container">
+      <div class="text-and-images">
 
-        <p class="section__subheader"><span>Sanayi</span> Team</p>
-        <h2 class="section__header">About US</h2>
-        <p class="para">
-          At <span>Sanayi </span>, we specialize in delivering high-quality industrial
-          solutions tailored to the needs of manufacturers, construction firms, and energy
-          sectors. With over 10 years of experience, we are committed to innovation, safety,
-          and sustainability in every project we take on.
-        </p>
-        <br>
-        <p>
-          Our team consists of industry professionals, engineers, and technicians dedicated to
-          providing efficient and cost-effective solutions—from machinery maintenance and
-          custom metalwork to automation and industrial software systems.
-        </p>
+        <div class="about-text">
+          <h4><span class="colorSpan">Sanayi</span> Team</h4>
+          <h2>About US</h2>
+          <p>
+            At <span class="brand">Sanayi</span>, we specialize in delivering high-quality industrial solutions tailored
+            to the needs of manufacturers, construction firms, and energy sectors. With over 10 years of experience,
+            we are committed to innovation, safety, and sustainability in every project we take on.
+          </p><br>
+          <p>
+            Our team consists of industry professionals, engineers, and technicians dedicated to providing efficient and
+            cost-effective solutions—from machinery maintenance and custom metalwork to automation and industrial software systems.
+          </p>
+        </div>
 
-        <div class="about__grid">
-          <div class="about__card">
-            <span><i class="ri-building-4-line blueIcon"></i></span>
-            <h4>1800</h4>
-            <p>Worldwide Branches</p>
-          </div>
-          <div class="about__card">
-            <span><i class="ri-user-fill blueIcon"></i></span>
-            <h4>1920</h4>
-            <p>Qualified Engineers</p>
-          </div>
-          <div class="about__card">
-            <span><i class="ri-user-smile-line blueIcon"></i></span>
-            <h4>1612</h4>
-            <p>Work Facilities</p>
-          </div>
-          <div class="about__card">
-            <span><i class="ri-trophy-fill blueIcon"></i></span>
-            <h4>1980</h4>
-            <p>Completed Projects</p>
-          </div>
+        <div class="about-images">
+          <img src="/assets/images/a2.jpeg" alt="" />
+          <img src="/assets/images/about.jpeg" alt="" />
         </div>
 
       </div>
 
-      <div class="about__image">
-        <img src="/assets/images/a2.jpeg" alt="" />
-        <img src="/assets/images/about.jpeg" alt="" />
+      <div class="stats">
+        <div class="stat-box">
+          <i class="ri-building-4-line blueIcon"></i>
+          <h3>1800</h3>
+          <p>Worldwide Branches</p>
+        </div>
+        <div class="stat-box">
+          <i class="ri-user-fill blueIcon"></i>
+          <h3>1920</h3>
+          <p>Qualified Artisans</p>
+        </div>
+        <div class="stat-box">
+          <i class="ri-user-smile-line blueIcon"></i>
+          <h3>1612</h3>
+          <p>Work Facilities</p>
+        </div>
+        <div class="stat-box">
+          <i class="fa fa-trophy"></i>
+          <h3>1980</h3>
+          <p>Completed Projects</p>
+        </div>
       </div>
-
     </div>
-  </section>
+  </div>
+
 
 <!-- start service -->
   <section class="services" id="services">
-    <h2 class="section__header para"><span>Services</span> We Offer</h2>
+    <h2 class="section__header para"><span class="colorSpan" style="margin-left: 30px;">Services</span> We Offer</h2>
     <div class="swiper" #servicesSwiper>
       <div class="swiper-wrapper">
 
@@ -132,7 +131,7 @@
   <section class="customer">
     <div class="section__container customer__container">
       <p class="para section__header ms-5 mb-5" id="Reviews">
-        What Our <span>Customers Say</span>
+        What Our <span class="colorSpan">Customers Say</span>
       </p>
       <div class="customer__review">
         <!-- Slider main container -->
