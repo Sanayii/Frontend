@@ -4,3 +4,9 @@ export enum PaymentMethod {
   PayPal = 3,
   BankTransfer = 4
 }
+export enum PaymentMethodText {
+  Cash = 'Cash',
+  CreditCard = 'Credit Card',
+  PayPal = 'PayPal',
+  BankTransfer = 'Bank Transfer'
+}

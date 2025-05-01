@@ -75,6 +75,7 @@ getStars(rating: number): string[] {
 
   return starsArray;
 }
+
 // Pagination
 pageSize = 10;
 pageIndex = 0;
@@ -83,4 +84,5 @@ onPageChange(event: PageEvent) {
   this.pageIndex = event.pageIndex;
   this.pageSize = event.pageSize;
 }
+
 }
