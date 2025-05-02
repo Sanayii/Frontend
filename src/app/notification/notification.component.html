@@ -21,7 +21,7 @@
             <p>{{ noti.content }}</p>
             <p id="noti-time">{{ noti.createdAt | date: 'short' }}</p>
           </div>
-          <p class="delete-noti" (click)="deleteNotification(i)">&#10006;</p>
+          <p class="delete-noti" (click)="deleteNotification(i,noti.id)">&#10006;</p>
         </div>
       </div>
     </main>

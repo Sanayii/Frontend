@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
  import * as signalR from '@microsoft/signalr';
  import { HttpClient } from '@angular/common/http';
  import { Notification } from '../_Models/notification';
+import { TokenService } from './token.service';
 
  @Injectable({
   providedIn: 'root'
@@ -14,8 +15,9 @@ export class NotificationService {
   notifications$ = this._notifications$.asObservable();
 
   private hubConnection: signalR.HubConnection;
-
-  constructor(private http: HttpClient) {
+  customerId: string|null=null;
+  constructor(private http: HttpClient,private tokenService: TokenService) {
+    this.customerId = this.tokenService.getUserIdFromToken();
     // Create SignalR connection to the Web API Hub
     this.hubConnection = new signalR.HubConnectionBuilder()
       .withUrl("https://localhost:7234/notificationHub")  // Replace with your Web API URL and Hub name
@@ -24,21 +26,20 @@ export class NotificationService {
     this.setupListeners();
 
     // Fetch notifications from the API initially
-    this.getAll().subscribe(data => {
+    this.getAll(this.customerId).subscribe(data => {
       // Set the notifications array and emit the updated value to subscribers
       this.notifications = data;
       this._notifications$.next(this.notifications); // Emit to subscribers immediately
-      console.log('Notifications from API:', this.notifications); // Log API notifications
     });
   }
 
   private baseURL = "https://localhost:7234/api/Notification";
 
   // HTTP request to get all notifications from the API
-  getAll() {
-    return this.http.get<Notification[]>(this.baseURL);
+  getAll(id: any) {
+    return this.http.get<Notification[]>(`${this.baseURL}/${id}`);
   }
-
+  
   // Start SignalR connection
   private async startConnection() {
     try {
@@ -54,8 +55,6 @@ export class NotificationService {
   private setupListeners() {
     // Listen for incoming notifications from the SignalR hub
     this.hubConnection.on('ReceiveNotification', (notification: Notification) => {
-      console.log("From Hub Listener:", notification);
-
       // Append the new notification to the existing notifications array
       this.notifications = [...this.notifications, notification]; // This merges the existing notifications with the new one
 
@@ -81,20 +80,27 @@ export class NotificationService {
   }
 
   // Mark all notifications as read
-  markAllAsRead() {
-    this.notifications.forEach(n => n.isRead = true); // ✅ all to true
+  markAllAsRead(id:string) {
+    this.notifications.forEach(n => n.isRead = true); 
     this._notifications$.next(this.notifications);
+    return this.http.get(`${this.baseURL}/MarkAsRead/${id}`);
   }
 
   // Delete a notification by index
-  deleteNotification(index: number) {
+  DeleteNotification(index: number,id:number) {
     this.notifications.splice(index, 1);
     this._notifications$.next(this.notifications);
+    return this.http.delete(`${this.baseURL}/${id}`);
+  }
+  MarkNotification(id:number) {
+    // Make the GET request and return the observable
+    return this.http.get(`${this.baseURL}/MarkNotification?customerid=${this.customerId}&id=${id}`);
   }
 
   // Delete all notifications
-  deleteAllNotifications() {
+  deleteAllNotifications(id:string) {
     this.notifications = [];
     this._notifications$.next(this.notifications);
+    return this.http.delete(`${this.baseURL}/DeleteCustomerNotification/${id}`);
   }
 }
