@@ -1,3 +1,4 @@
+import { Component } from '@angular/core';
 import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './authentication/register/register.component';
@@ -25,6 +26,8 @@ import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { ConfirmEmailRegisterComponent } from './confirm-email-register/confirm-email-register.component';
 import { ExternalLoginCallbackComponent } from './external-login-callback/external-login-callback.component';
+import { NotAvailableComponent } from './not-available/not-available.component';
+
 
 export const routes: Routes = [
   {path:'',component:HomeComponent},
@@ -37,6 +40,7 @@ export const routes: Routes = [
   {path:'reset-password',component:ResetPasswordComponent},
   {path:'confirm-email-register',component: ConfirmEmailRegisterComponent},
   { path: 'external-login-callback', component: ExternalLoginCallbackComponent },
+  {path:'not-available',component:NotAvailableComponent},
 
   {path:'services-requests-history', component: ServicesRequestsHistoryComponent},
   {path:'payment-history', component: PaymentHistoryComponent},
