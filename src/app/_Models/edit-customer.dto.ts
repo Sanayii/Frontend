@@ -7,6 +7,5 @@ export interface EditCustomerDTO {
   street: string;
   government: string;
   email: string;
-  phoneNumber: string;
-  userPhones: string[];
+  phoneNumber: string[];
 }

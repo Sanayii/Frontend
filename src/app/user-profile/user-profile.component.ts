@@ -28,6 +28,7 @@ export class UserProfileComponent {
   loadCustomerData(): void {
     this.customerService.getCustomerById(this.customerId).subscribe({
       next: (customer) => {
+        console.log('Customer loaded:', customer);
         this.customer = customer;
         this.isLoading = false;
       },
@@ -42,10 +43,9 @@ export class UserProfileComponent {
     return `${this.customer.fName.charAt(0)}${this.customer.lName.charAt(0)}`;
   }
 
-  getPrimaryPhone(): string {
-    if (!this.customer) return 'N/A';
-    console.log(this.customer.phoneNumbers);
-    return (this.customer.phoneNumbers.length > 0 ? this.customer.phoneNumbers[0] : 'N/A');
+  getPhoneNumbers(): string[] {
+    if (!this.customer || !this.customer.phoneNumbers) return [];
+    return this.customer.phoneNumbers;
   }
 
 }
