@@ -19,12 +19,24 @@ import { ChatComponent } from './chat/chat.component';
 import { ArtsinComponent } from './artsin/artsin.component';
 import { PaymentHistoryComponent } from './payment-history/payment-history.component';
 import { DiscountHistoryComponent } from './discount-history/discount-history.component';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { ForgetPasswordComponent } from './forget-password/forget-password.component';
+import { ConfirmEmailComponent } from './confirm-email/confirm-email.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ConfirmEmailRegisterComponent } from './confirm-email-register/confirm-email-register.component';
+import { ExternalLoginCallbackComponent } from './external-login-callback/external-login-callback.component';
 
 export const routes: Routes = [
   {path:'',component:HomeComponent},
   {path: 'home', component: HomeComponent },
   {path:'register', component: RegisterComponent},
   {path:'login',component:LoginComponent},
+  {path:'change-password',component:ChangePasswordComponent},
+  {path:'forgot-password',component:ForgetPasswordComponent},
+  {path:'confirm-email',component:ConfirmEmailComponent},
+  {path:'reset-password',component:ResetPasswordComponent},
+  {path:'confirm-email-register',component: ConfirmEmailRegisterComponent},
+  { path: 'external-login-callback', component: ExternalLoginCallbackComponent },
 
   {path:'services-requests-history', component: ServicesRequestsHistoryComponent},
   {path:'payment-history', component: PaymentHistoryComponent},
