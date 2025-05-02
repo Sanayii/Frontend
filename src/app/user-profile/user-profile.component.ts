@@ -38,14 +38,16 @@ export class UserProfileComponent {
       }
     });
   }
+  get userName(): string {
+    return this.customer?.userName || ''; // Note the 'userNamr' spelling
+  }
   getInitials(): string {
     if (!this.customer) return '';
     return `${this.customer.fName.charAt(0)}${this.customer.lName.charAt(0)}`;
   }
 
   getPhoneNumbers(): string[] {
-    if (!this.customer || !this.customer.phoneNumbers) return [];
-    return this.customer.phoneNumbers;
+    return this.customer?.phoneNumber || [];
   }
 
 }

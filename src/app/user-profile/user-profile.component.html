@@ -37,8 +37,13 @@
 
           <div class="detail-group">
               <span class="detail-label">Username</span>
-              <div class="detail-value">{{ customer.userName }}</div>
+              <div class="detail-value">{{ userName }}</div>
           </div>
+
+          <div class="detail-group">
+            <span class="detail-label">Age</span>
+            <div class="detail-value">{{ customer.age }}</div>
+        </div>
 
           <div class="detail-group">
               <span class="detail-label">City</span>
@@ -54,6 +59,13 @@
               <span class="detail-label">Government</span>
               <div class="detail-value">{{ customer.government }}</div>
           </div>
+
+          <div class="detail-group" *ngIf="getPhoneNumbers().length > 0">
+            <span class="detail-label">Phone Numbers</span>
+            <div class="detail-value">
+                <div *ngFor="let phone of getPhoneNumbers()">{{ phone }}</div>
+            </div>
+        </div>
 
 
       </div>
