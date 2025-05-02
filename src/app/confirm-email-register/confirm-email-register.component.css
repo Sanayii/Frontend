@@ -10,6 +10,7 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
+  padding: 40px;
 }
 
 .logo {
@@ -58,4 +59,29 @@
 }
 .resend-link:hover {
   color: #0056b3; /* لون أغمق عند الـ Hover */
+}
+.error-message {
+  color: #721c24; /* لون النص الأحمر الداكن */
+  background-color: #f8d7da; /* خلفية فاتحة */
+  border: 1px solid #f5c6cb; /* حدود خفيفة */
+  padding: 12px 20px;
+  border-radius: 6px; /* حواف دائرية */
+  font-size: 16px;
+  font-weight: 500;
+
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* تأثير ظل بسيط */
+  transition: all 0.3s ease-in-out; /* تأثير انتقال بسيط */
+  margin-bottom: 30px;
+}
+
+.error-message:hover {
+  background-color: #f5c6cb; /* الخلفية تصبح أفتح عند المرور عليها */
+  border-color: #f1a1a1; /* الحدود تتغير */
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* زيادة الظل عند المرور */
+}
+
+.error-message strong {
+  font-weight: 600; /* جعل النص الثقيل أكثر وضوحًا */
 }

@@ -10,8 +10,8 @@
     If this email address is registered, you'll receive instructions<br />
     on how to set a new password.
   </p>
-  <div *ngIf="confirmationStatus">
-    <p>{{ confirmationStatus }}</p>
+  <div *ngIf="invalidEmailMessage" class="error-message">
+    {{ invalidEmailMessage }}
   </div>
   <button type="button" class="resend-link" (click)="resendEmail()">Didn't get an email?</button>
 

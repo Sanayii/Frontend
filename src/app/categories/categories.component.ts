@@ -13,6 +13,7 @@ import { Category } from '../_Models/category';
 import { CategoryService } from '../_services/category.service';
 import { HttpClientModule } from '@angular/common/http';
 import { TokenService } from '../_services/token.service';
+import { PaymentMethodText } from '../_enums/payment-method';
 
 
 
@@ -23,8 +24,13 @@ import { TokenService } from '../_services/token.service';
   styleUrl: './categories.component.css'
 })
 export class CategoriesComponent  implements AfterViewInit {
-  PayMethod: PaymentMethod = PaymentMethod.Cash;
-  paymentMethods: string[] = Object.keys(PaymentMethod).filter(key => isNaN(Number(key)));
+  paymentOptions = [
+    { id: PaymentMethod.Cash, name: PaymentMethodText.Cash },
+    { id: PaymentMethod.CreditCard, name: PaymentMethodText.CreditCard },
+    { id: PaymentMethod.PayPal, name: PaymentMethodText.PayPal },
+    { id: PaymentMethod.BankTransfer, name: PaymentMethodText.BankTransfer }
+  ];
+
   static futureDateValidator(control: AbstractControl): ValidationErrors | null {
     const selectedDate = new Date(control.value);
     const today = new Date();
@@ -74,9 +80,7 @@ export class CategoriesComponent  implements AfterViewInit {
       public dataService: DataServiceService,private  test: TokenService) {
         this.customerId = this.test.getUserIdFromToken();
       }
-  // constructor(private customerService: CustomerService, private router: Router,private  test: TokenService) {
-  //   this.customerId = this.test.getUserIdFromToken();
-  //  }
+
   ngOnInit() {
     this.loadCategories();
   }
@@ -137,6 +141,7 @@ export class CategoriesComponent  implements AfterViewInit {
       this.serviceRequest.ServiceName = formValues.ServiceName;
       this.serviceRequest.Description = formValues.ServiceDetails;
       this.serviceRequest.RequestDate = new Date(formValues.requestDate);
+      this.serviceRequest.PaymentMethod = +formValues.paymentMethod;
 
       const modal = document.getElementById('serviceModal');
       if (modal) {
@@ -149,6 +154,10 @@ export class CategoriesComponent  implements AfterViewInit {
         (a: ServiceRequestDetailsDto) => {
           this.dataService.setServiceRequestDetails(a);
           this.router.navigate(['/service-payment']);
+        },
+        (error) => {
+          console.error('Error fetching service request details:', error);
+          this.router.navigate(['/not-available']);
         }
       );
 

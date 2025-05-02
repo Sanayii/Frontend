@@ -23,12 +23,15 @@ export class ExternalLoginCallbackComponent implements OnInit {
   }
 
   private handleExternalLoginCallback(): void {
+    // نحاول الحصول على التوكن من الـ queryParams
     this.route.queryParams.subscribe(params => {
       if (params['token']) {
+        // إذا كان هناك توكن في الرابط
         localStorage.setItem('token', params['token']);
         this.accountService.isLogged = true;
         this.router.navigate(['/home']);
       } else {
+        // لو مفيش توكن في الرابط، بنطلبه من الخادم
         this.accountService.externalLoginCallback().subscribe({
           next: (response) => {
             if (response?.token) {
