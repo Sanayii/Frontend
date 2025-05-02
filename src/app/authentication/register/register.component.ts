@@ -54,7 +54,7 @@ export class RegisterComponent{
 
   submit() {
     if (this.registerForm.invalid) {
-      return; // if form is invalid, do nothing
+      return;
     }
 
     const customer: Customer = this.registerForm.value as Customer;
@@ -64,11 +64,8 @@ export class RegisterComponent{
     this.registerService.register(customer).subscribe({
       next: (response: any) => {
         console.log('Registered successfully', response);
-        const token = response.token;
-        localStorage.setItem('token', token);
-
-        this.registerService.isLogged=true;
-        this.router.navigate(['/home']);
+        alert("Please check your email to verify your account.");
+        this.router.navigate(['/confirm-email-register']);
 
       },
       error: (error) => {

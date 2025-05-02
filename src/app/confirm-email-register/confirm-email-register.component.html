@@ -1,0 +1,18 @@
+<div class="container p-3">
+  <div class="logo">
+    <img src="assets/images/logo1.jpg" alt="Logo">
+  </div>
+
+  <h2 class="change-password-title">Email Sent</h2>
+
+  <p class="email-info">
+    An email has been sent to your address.<br />
+    If this email address is registered, you'll receive instructions<br />
+    on how to set a new password.
+  </p>
+  <div *ngIf="confirmationStatus">
+    <p>{{ confirmationStatus }}</p>
+  </div>
+  <button type="button" class="resend-link" (click)="resendEmail()">Didn't get an email?</button>
+
+</div>
