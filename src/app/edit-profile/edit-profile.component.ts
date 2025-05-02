@@ -1,65 +1,75 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
 import { CustomerService } from '../_services/customer.service';
-import { EditCustomerDTO } from '../_Models/edit-customer.dto';
 import { Customer } from '../_Models/Customer';
+import { EditCustomerDTO } from '../_Models/edit-customer.dto';
+import { TokenService } from '../_services/token.service';
+import { AbstractControl } from '@angular/forms';
+
 
 @Component({
   selector: 'app-edit-profile',
-  imports: [RouterLink,CommonModule,ReactiveFormsModule],
+  standalone: true,
+  imports: [RouterLink, CommonModule, ReactiveFormsModule],
   templateUrl: './edit-profile.component.html',
   styleUrl: './edit-profile.component.css'
 })
-export class EditProfileComponent {
+export class EditProfileComponent implements OnInit {
   editForm: FormGroup;
-  customerId: string = '';
+  customerId: string | null = null;
   isLoading = true;
   error: string | null = null;
+
+  get userPhones(): FormArray {
+    return this.editForm.get('userPhones') as FormArray;
+  }
 
   constructor(
     private fb: FormBuilder,
     private customerService: CustomerService,
-    private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private tokenService: TokenService
   ) {
     this.editForm = this.fb.group({
       fName: ['', Validators.required],
       lName: ['', Validators.required],
-      age: ['', [Validators.required, Validators.min(18)]],
+      age: [0, [Validators.required, Validators.min(18)]],
       city: ['', Validators.required],
       street: ['', Validators.required],
       government: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      phoneNumber: ['', Validators.required],
-      userPhones: ['']
+      userPhones: this.fb.array([]) // use FormArray for dynamic phone inputs
     });
   }
+
   ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
-      const id = params.get('id');
-      if (!id) {
-        this.error = 'No customer ID provided in URL';
-        this.isLoading = false;
-        return;
-      }
-      this.customerId = id;
-      this.loadCustomerData();
-    });
+    this.customerId = this.tokenService.getUserIdFromToken();
+
+    if (!this.customerId) {
+      this.error = 'User not authenticated.';
+      this.isLoading = false;
+      return;
+    }
+
+    this.loadCustomerData();
   }
+
   loadCustomerData(): void {
-    this.customerService.getCustomerById(this.customerId).subscribe({
-      next: (customer) => {
+    this.customerService.getCustomerById(this.customerId!).subscribe({
+      next: (customer: Customer) => {
+        console.log('Customer loaded:', customer);
         this.populateForm(customer);
         this.isLoading = false;
       },
       error: (err) => {
-        this.error = err.message;
+        this.error = 'Failed to load user data.';
         this.isLoading = false;
       }
     });
   }
+
   populateForm(customer: Customer): void {
     this.editForm.patchValue({
       fName: customer.fName,
@@ -68,19 +78,38 @@ export class EditProfileComponent {
       city: customer.city,
       street: customer.street,
       government: customer.government,
-      email: customer.email,
-      phoneNumber: customer.phoneNumbers?.[0] || '', // Set first phone number if exists, else empty string
-      userPhones: customer.phoneNumbers && customer.phoneNumbers.length > 0 ? customer.phoneNumbers.join(', ') : '' // Safely join the phone numbers
+      email: customer.email
+    });
+
+    /*const phoneArray = this.editForm.get('userPhones') as FormArray;
+    phoneArray.clear(); // remove any existing inputs
+
+    (customer.phoneNumbers ?? []).forEach(phone => {
+      phoneArray.push(new FormControl(phone, Validators.required));
+    });*/
+    (customer.phoneNumbers || []).forEach(phone => {
+      this.userPhones.push(this.fb.control(phone));
     });
   }
+
+  addPhoneInput(): void {
+    this.userPhones.push(new FormControl('', Validators.required));
+  }
+
+  removePhoneInput(index: number): void {
+    this.userPhones.removeAt(index);
+  }
+
   onSubmit(): void {
     if (this.editForm.invalid) {
       this.markFormGroupTouched(this.editForm);
       return;
     }
+
     const formValue = this.editForm.value;
+
     const dto: EditCustomerDTO = {
-      id: this.customerId,
+      id: this.customerId!,
       fName: formValue.fName,
       lName: formValue.lName,
       age: formValue.age,
@@ -88,33 +117,31 @@ export class EditProfileComponent {
       street: formValue.street,
       government: formValue.government,
       email: formValue.email,
-      phoneNumber: formValue.phoneNumber,
-      userPhones: formValue.userPhones ? formValue.userPhones.split(',').map((phone: string) => phone.trim()) : []
+      phoneNumber: formValue.userPhones
     };
+
     this.isLoading = true;
-    this.customerService.updateCustomer(this.customerId, dto).subscribe({
-      next: (response) => {
-        console.log('Update successful:', response);
+    this.customerService.updateCustomer(this.customerId!, dto).subscribe({
+      next: () => {
         this.router.navigate(['/user-profile']);
       },
       error: (err) => {
-        console.error('Update failed:', {
-          error: err,
-          status: err.status,
-          message: err.message,
-          url: err.url
-        });
-        this.error = err.message;
+        this.error = 'Failed to update profile.';
         this.isLoading = false;
       }
     });
   }
-  private markFormGroupTouched(formGroup: FormGroup): void {
-    Object.values(formGroup.controls).forEach(control => {
+
+  private markFormGroupTouched(control: AbstractControl): void {
+    if (control instanceof FormControl) {
       control.markAsTouched();
-      if (control instanceof FormGroup) {
-        this.markFormGroupTouched(control);
-      }
-    });
+    } else if (control instanceof FormGroup || control instanceof FormArray) {
+      const groupControls = (control instanceof FormGroup)
+        ? Object.values(control.controls)
+        : (control as FormArray).controls;
+
+      groupControls.forEach(ctrl => this.markFormGroupTouched(ctrl));
+    }
   }
+
 }
