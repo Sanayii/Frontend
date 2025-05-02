@@ -49,18 +49,23 @@
 
         <button type="submit" class="btn btn-primary w-100 btn-login" >Log in</button>
 
+        <div class="forgot-password mt-2 text-center">
+          <a routerLink="/forgot-password" style="text-decoration: none; color: #007bff;">Forgot Password?</a>
+        </div>
+
         <div class="create-account mt-3 d-flex align-items-center justify-content-center" >
           <p>Don't have account? <a routerLink="/register" style="text-align: center;">Create one</a></p>
         </div>
-        <div class="social-login ">
+
+        <div class="social-login">
           <p>Or log in with:</p>
-          <div class="social-icons" >
-            <a href="#" class="social-icon" title="Login with Google">
+          <div class="social-icons">
+            <button type="button" class="social-icon" title="Login with Google" (click)="loginWithGoogle()">
               <i class="fab fa-google fa-2x"></i>
-            </a>
-            <a href="#" class="social-icon" title="Login with Facebook">
+            </button>
+            <button type="button" class="social-icon" title="Login with Facebook" (click)="loginWithFacebook()">
               <i class="fab fa-facebook fa-2x"></i>
-            </a>
+            </button>
           </div>
         </div>
 

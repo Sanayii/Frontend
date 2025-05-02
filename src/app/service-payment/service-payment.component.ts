@@ -21,6 +21,7 @@ export class ServicePaymentComponent implements OnInit {
   }
   ngOnInit(): void {
     this.SerDTO = this.dataService.getServiceRequestDetails();
+
     }
 
 

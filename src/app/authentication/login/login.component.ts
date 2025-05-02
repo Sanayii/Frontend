@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { Router, RouterLink, ActivatedRoute } from '@angular/router';
 import { AccountService } from '../../_services/account.service';
 import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Login } from '../../_Models/login';
@@ -7,53 +7,67 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-login',
-  imports: [RouterLink,ReactiveFormsModule,CommonModule,FormsModule],
+  standalone: true,
+  imports: [RouterLink, ReactiveFormsModule, CommonModule, FormsModule],
   templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
+  styleUrls: ['./login.component.css']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
 
-  constructor(private loginService: AccountService, private router: Router) {}
+  constructor(
+    private loginService: AccountService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
-  loginForm : FormGroup = new FormGroup({
-    username: new FormControl('',[Validators.required, Validators.minLength(3)]),
+  loginForm: FormGroup = new FormGroup({
+    username: new FormControl('', [Validators.required, Validators.minLength(3)]),
     email: new FormControl('', [Validators.required, Validators.email]),
-    password: new FormControl('',[Validators.required]),
-
+    password: new FormControl('', [Validators.required]),
     rememberMe: new FormControl(false),
-
   });
 
   get username() { return this.loginForm.get('username'); }
-  get email()    { return this.loginForm.get('email'); }
-  get password()    { return this.loginForm.get('password'); }
-  get rememberMe(){return this.loginForm.get('rememberMe');}
+  get email() { return this.loginForm.get('email'); }
+  get password() { return this.loginForm.get('password'); }
+  get rememberMe() { return this.loginForm.get('rememberMe'); }
 
+  ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      if (params['token']) {
+        localStorage.setItem('token', params['token']);
+        this.loginService.isLogged = true;
+        this.router.navigate(['/home']);
+      }
+    });
+  }
 
-
-submit() {
+  submit() {
     if (this.loginForm.invalid) {
-      return; // if form is invalid, do nothing
+      return;
     }
 
     const loginData: Login = this.loginForm.value as Login;
 
-    console.log(loginData);
-
     this.loginService.login(loginData).subscribe({
       next: (response: any) => {
-        localStorage.setItem("token", response.token);
-
-        this.loginService.isLogged = true;
-
-        this.router.navigate(['/home']);
+        if (response?.token) {
+          localStorage.setItem('token', response.token);
+          this.loginService.isLogged = true;
+          this.router.navigate(['/home']);
+        }
       },
-      error: err => {
+      error: () => {
         alert("Login failed! Please check your username and password.");
       }
     });
-
   }
 
-}
+  loginWithGoogle() {
+    this.loginService.externalLogin('Google', '/external-login-callback');
+  }
 
+  loginWithFacebook() {
+    this.loginService.externalLogin('Facebook', '/external-login-callback');
+  }
+}

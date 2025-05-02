@@ -1,0 +1,60 @@
+.container.p-3 {
+  width: 92%;
+  max-width: 700px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  padding: 40px;
+  margin: 150px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.logo {
+  margin-bottom: 20px;
+}
+
+.logo img {
+  max-width: 120px;
+  height: auto;
+  display: block;
+}
+
+.change-password-title {
+  text-align: center;
+  color: #1e293b;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.email-info {
+  color: #64748b;
+  font-size: 1rem;
+  margin-bottom: 30px;
+  line-height: 1.6;
+}
+
+.resend-link {
+  color: #2980b9;
+  text-decoration: none;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.resend-link:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .container.p-3 {
+    padding: 30px 20px;
+    margin: 100px auto;
+  }
+
+  .change-password-title {
+    font-size: 1.5rem;
+  }
+}
