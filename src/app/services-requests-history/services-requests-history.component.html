@@ -1,7 +1,7 @@
-<div class="container mt-5 pt-5 request-history-container">
+<div class="container request-history-container">
   <!-- Header Section -->
-  <div class="d-flex justify-content-between align-items-center mb-5 p-4 bg-light rounded-3 shadow-sm">
-    <h2 class="m-0 text-primary">
+  <div class="d-flex justify-content-between align-items-center mb-4 mb-md-5 p-3 p-md-4 bg-light rounded-3 shadow-sm">
+    <h2 class="m-0 h5 h4-md" style="color: #2980b9;">
       <mat-icon class="me-2">history</mat-icon>
       Service Requests History
     </h2>
@@ -36,9 +36,9 @@
     </p>
   </div>
 
-  <!-- Request List -->
-  <div *ngIf="!isLoading && !error && !showEmptyState" class="mb-5">
-    <div class="table-responsive rounded-3 overflow-hidden shadow-sm">
+  <!-- Desktop Table View (shown on md screens and up) -->
+  <div *ngIf="!isLoading && !error && !showEmptyState" class="mb-5 d-none d-md-block">
+    <div class="table-responsive rounded-3 shadow-sm">
       <table class="table table-bordered table-hover align-middle text-center mb-0">
         <thead class="table-primary">
           <tr>
@@ -112,6 +112,113 @@
 
     <!-- Pagination -->
     <div class="mt-5 d-flex justify-content-center">
+      <mat-paginator [length]="filteredRequests.length"
+                     [pageSize]="pageSize"
+                     [pageSizeOptions]="[5, 10, 25, 100]"
+                     (page)="onPageChange($event)"
+                     color="primary"
+                     class="rounded-3 shadow-sm">
+      </mat-paginator>
+    </div>
+  </div>
+
+  <!-- Mobile Card View (shown on screens smaller than md) -->
+  <div *ngIf="!isLoading && !error && !showEmptyState" class="mb-5 d-block d-md-none">
+    <div class="row g-3">
+      <div *ngFor="let request of filteredRequests | slice: pageIndex * pageSize : (pageIndex + 1) * pageSize" class="col-12">
+        <div class="card shadow-sm mb-3">
+          <div class="card-body">
+            <div class="row">
+              <!-- Column 1 -->
+              <div class="col-6">
+                <div class="mb-3">
+                  <h6 class="text-muted mb-1">
+                    <mat-icon class="align-middle me-1">build</mat-icon>
+                    Service
+                  </h6>
+                  <p class="mb-0">
+                    <mat-icon class="align-middle me-1">home_repair_service</mat-icon>
+                    {{ request.serviceName || 'Unknown Service' }}
+                  </p>
+                </div>
+
+                <div class="mb-3">
+                  <h6 class="text-muted mb-1">
+                    <mat-icon class="align-middle me-1">event</mat-icon>
+                    Date
+                  </h6>
+                  <p class="mb-0">
+                    <mat-icon class="align-middle me-1">calendar_today</mat-icon>
+                    {{ request.createdAt | date:'mediumDate' }}
+                  </p>
+                </div>
+
+                <div class="mb-3">
+                  <h6 class="text-muted mb-1">
+                    <mat-icon class="align-middle me-1">flag</mat-icon>
+                    Status
+                  </h6>
+                  <p class="mb-0">
+                    <span class="status-badge d-inline-flex align-items-center justify-content-center gap-2 py-2 px-3 fw-bold"
+                          [ngClass]="getStatusClass(request.status)">
+                      <mat-icon class="status-icon">{{ getStatusIcon(request.status) }}</mat-icon>
+                      <span class="status-text">{{ getStatusText(request.status) }}</span>
+                    </span>
+                  </p>
+                </div>
+              </div>
+
+              <!-- Column 2 -->
+              <div class="col-6">
+                <div class="mb-3">
+                  <h6 class="text-muted mb-1">
+                    <mat-icon class="align-middle me-1">payments</mat-icon>
+                    Payment
+                  </h6>
+                  <p class="mb-0">
+                    <span *ngIf="request.paymentMethod !== null"
+                          class="payment-badge badge rounded-pill d-flex align-items-center gap-2 fw-bold p-2"
+                          [ngClass]="getPaymentMethodClass(request.paymentMethod)">
+                      <mat-icon class="payment-icon">{{ getMethodIcon(request.paymentMethod) }}</mat-icon>
+                      <span class="payment-text">{{ getMethodText(request.paymentMethod) }}</span>
+                    </span>
+                    <span *ngIf="!request.paymentMethod" class="text-muted fw-bold">
+                      <mat-icon>help_outline</mat-icon>
+                      <span>Not specified</span>
+                    </span>
+                  </p>
+                </div>
+
+                <div class="mb-3">
+                  <h6 class="text-muted mb-1">
+                    <mat-icon class="align-middle me-1">attach_money</mat-icon>
+                    Amount
+                  </h6>
+                  <p class="mb-0">
+                    <mat-icon class="align-middle me-1">paid</mat-icon>
+                    {{ request.paymentAmount || 'Not specified' }} EGP
+                  </p>
+                </div>
+
+                <div class="mb-3">
+                  <h6 class="text-muted mb-1">
+                    <mat-icon class="align-middle me-1">engineering</mat-icon>
+                    Artisan
+                  </h6>
+                  <p class="mb-0">
+                    <mat-icon class="align-middle me-1">person</mat-icon>
+                    {{ request.artisanName || 'Not assigned' }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pagination -->
+    <div class="mt-4 d-flex justify-content-center">
       <mat-paginator [length]="filteredRequests.length"
                      [pageSize]="pageSize"
                      [pageSizeOptions]="[5, 10, 25, 100]"

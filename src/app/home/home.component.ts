@@ -4,19 +4,40 @@ import 'swiper/swiper-bundle.css';
 import { Router, RouterLink } from '@angular/router';
 import { CategoriesComponent } from '../categories/categories.component';
 import { AccountService } from '../_services/account.service';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { HttpClient } from '@microsoft/signalr';
+import { ContactFormService } from '../_services/contact-form.service';
+import { ContactFormDto } from '../_Models/ContactForm';
+
 
 @Component({
-  imports:[RouterLink,CategoriesComponent],
+  imports:[RouterLink,CategoriesComponent,ReactiveFormsModule],
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
 
 export class HomeComponent implements AfterViewInit {
+  contactForm: FormGroup ;
+
   @ViewChild('servicesSwiper', { static: false }) servicesSwiper!: ElementRef;
   @ViewChild('ReviewSwiper', { static: false }) ReviewSwiper!: ElementRef;
 
-  constructor(public login:AccountService, private router : Router) {}
+  constructor(
+    public login:AccountService,
+    private router : Router,
+    private fb: FormBuilder,
+    //private http: HttpClient,
+    private contactService: ContactFormService
+  ) {
+    this.contactForm = this.fb.group({
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      message: ['', Validators.required],
+    });
+  }
+
 
   navigateToCategories() {
     if (this.login.isLogged) {
@@ -66,5 +87,19 @@ export class HomeComponent implements AfterViewInit {
         },
       });
     }, 0);
+  }
+
+  onSubmit() {
+    if (this.contactForm?.valid) {
+      const data: ContactFormDto = this.contactForm.value;
+
+      this.contactService.sendContactMessage(data).subscribe({
+        next: () => {
+          alert('Message sent successfully');
+          this.contactForm.reset();
+        },
+        error: err => alert('Error sending message: ' + err.message)
+      });
+    }
   }
 }

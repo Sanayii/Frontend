@@ -84,5 +84,26 @@ onPageChange(event: PageEvent) {
   this.pageIndex = event.pageIndex;
   this.pageSize = event.pageSize;
 }
+  getStatusClass(status: string): string {
+    switch (status) {
+      case 'Pending': return 'bg-warning text-dark';
+      case 'Completed': return 'bg-success text-white';
+      case 'Rejected': return 'bg-danger text-white';
+      case 'InProgress': return 'bg-info text-dark';
+      case 'Failed': return 'bg-secondary text-white';
+      default: return 'bg-light text-muted';
+    }
+  }
+
+   getStatusIcon(status: string): string {
+      switch (status) {
+        case 'Pending': return 'hourglass_empty';
+        case 'Completed': return 'check_circle';
+        case 'Rejected': return 'cancel';
+        case 'InProgress': return 'autorenew';
+        case 'Failed': return 'error_outline';
+        default: return 'help';
+      }
+    }
 
 }

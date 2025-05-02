@@ -13,12 +13,15 @@ import { HttpParams } from '@angular/common/http';
   providedIn: 'root'
 })
 export class AccountService {
+  isLogged = false;
+
 
   constructor(private http: HttpClient) {}
 
   private baseUrl = 'https://localhost:7234/api/Account';
 
-  isLogged = false;
+
+
 
   resetPassword(model: any) {
     return this.http.post(`${this.baseUrl}/ResetPassword`, model);
