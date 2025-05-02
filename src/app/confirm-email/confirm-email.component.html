@@ -10,6 +10,21 @@
     If this email address is registered, you'll receive instructions<br />
     on how to set a new password.
   </p>
+  <!-- Error Message -->
+  <div *ngIf="showError" class="alert alert-danger mt-3">
+    {{ errorMessage }}
+  </div>
 
-  <button class="resend-link" (click)="resendEmail()">Didn't get an email?</button>
+  <!-- Success Message -->
+  <div *ngIf="showSuccess" class="alert alert-success mt-3">
+    Reset email has been sent successfully!
+  </div>
+  
+  <button class="resend-link" (click)="resendEmail()" [disabled]="isLoading">
+    <span *ngIf="!isLoading">Didn't get an email?</span>
+    <span *ngIf="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+    <span *ngIf="isLoading"> Sending...</span>
+  </button>
+
+
 </div>

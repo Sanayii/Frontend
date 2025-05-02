@@ -149,6 +149,10 @@ export class CategoriesComponent  implements AfterViewInit {
         (a: ServiceRequestDetailsDto) => {
           this.dataService.setServiceRequestDetails(a);
           this.router.navigate(['/service-payment']);
+        },
+        (error) => {
+          console.error('Error fetching service request details:', error);
+          this.router.navigate(['/not-available']);
         }
       );
 

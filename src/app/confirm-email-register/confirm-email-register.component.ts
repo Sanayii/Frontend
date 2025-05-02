@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AccountService } from '../_services/account.service'; // تأكد من استيراد الخدمة بشكل صحيح
+import { AccountService } from '../_services/account.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-confirm-email-register',
+  imports: [CommonModule],
   templateUrl: './confirm-email-register.component.html',
   styleUrls: ['./confirm-email-register.component.css']
 })
@@ -33,9 +35,18 @@ export class ConfirmEmailRegisterComponent {
     }
   }
 
+  invalidEmailMessage: string | null = null;
+
   resendEmail(): void {
     const email = prompt('Please enter your email to resend the confirmation link:');
+
     if (email) {
+      if (!this.isValidEmail(email)) {
+        this.invalidEmailMessage = 'The email address you entered is invalid. Please try again.';
+        return;
+      }
+
+      this.invalidEmailMessage = null; // clear error if email is valid
       this.accountService.resendConfirmationEmail(email).subscribe({
         next: (response) => {
           console.log('Resend email response:', response); // For debugging
@@ -50,4 +61,10 @@ export class ConfirmEmailRegisterComponent {
       });
     }
   }
+
+  private isValidEmail(email: string): boolean {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  }
+
 }

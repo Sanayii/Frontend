@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-reset-password',
-  imports: [ReactiveFormsModule,CommonModule],
+  imports: [ReactiveFormsModule, CommonModule],
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.css']
 })
@@ -23,18 +23,22 @@ export class ResetPasswordComponent implements OnInit {
     private accountService: AccountService,
     private router: Router
   ) {
+    // Form with validation
     this.resetPasswordForm = this.fb.group({
       password: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required]]
     }, { validator: this.passwordsMatch });
   }
+
   ngOnInit(): void {
+    // Extract email and token from the query params
     this.route.queryParams.subscribe(params => {
-      this.email = params['email']; // lowercase 'email'
-      this.token = params['token']; // lowercase 'token'
+      this.email = params['email'];
+      this.token = params['token'];
     });
   }
 
+  // Custom validator to check that password and confirm password match
   passwordsMatch(formGroup: FormGroup) {
     const password = formGroup.get('password')?.value;
     const confirmPassword = formGroup.get('confirmPassword')?.value;
@@ -47,22 +51,19 @@ export class ResetPasswordComponent implements OnInit {
         email: this.email,
         password: this.resetPasswordForm.value.password,
         confirmPassword: this.resetPasswordForm.value.confirmPassword,
-        token: this.token, // encodeURIComponent(this.token)
+        token: this.token,
       };
 
       this.accountService.resetPassword(resetPasswordData).subscribe({
         next: (response: any) => {
           this.successMessage = response.message;
-
           this.errorMessage = '';
           alert(this.successMessage);
           this.router.navigate(['/login']);
-          console.log('Reset password response:', response);
         },
         error: (error) => {
           this.errorMessage = error.error?.errors?.join(', ') || 'Something went wrong';
           this.successMessage = '';
-          console.error('Reset password error:', error.error.errors);
         }
       });
     }
