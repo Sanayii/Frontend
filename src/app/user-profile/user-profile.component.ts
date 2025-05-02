@@ -1,3 +1,4 @@
+import { jwtDecode } from 'jwt-decode';
 import { Component } from '@angular/core';
 import { CustomerService } from '../_services/customer.service';
 
@@ -5,6 +6,7 @@ import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { Customer } from '../_Models/Customer';
 import { TokenService } from '../_services/token.service';
+
 
 @Component({
   selector: 'app-user-profile',
@@ -21,6 +23,8 @@ export class UserProfileComponent {
 
   constructor(private customerService: CustomerService, private router: Router,private  test: TokenService) {
     this.customerId = this.test.getUserIdFromToken();
+
+
    }
   ngOnInit(): void {
     this.loadCustomerData();
