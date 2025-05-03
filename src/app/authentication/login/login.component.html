@@ -46,7 +46,9 @@
           <input type="checkbox" class="form-check-input" formControlName="rememberMe" id="rememberMe">
           <label class="form-check-label" for="rememberMe">Remember me</label>
         </div>
-
+        <div *ngIf="errorMessage" class="error">
+          {{ errorMessage }}
+        </div>
         <button type="submit" class="btn btn-primary w-100 btn-login" >Log in</button>
 
         <div class="forgot-password mt-2 text-center">
