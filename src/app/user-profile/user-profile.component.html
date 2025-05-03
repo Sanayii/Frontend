@@ -62,10 +62,10 @@
 
           <div class="detail-group" *ngIf="getPhoneNumbers().length > 0">
             <span class="detail-label">Phone Numbers</span>
-            <div class="detail-value">
-                <div *ngFor="let phone of getPhoneNumbers()">{{ phone }}</div>
+            <div class="detail-value mt-2" *ngFor="let phone of getPhoneNumbers()">
+              {{ phone }}
             </div>
-        </div>
+          </div>
 
 
       </div>

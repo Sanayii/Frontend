@@ -82,7 +82,7 @@ body {
   box-shadow: 0 0 0 0.15rem rgba(59, 130, 246, 0.25);
 }
 
-.edit-form button {
+.edit-form .save {
   border-radius: 10px;
   background: #2980b9;
   border: none;
@@ -95,7 +95,7 @@ body {
   cursor: pointer;
 }
 
-.edit-form button:hover {
+.edit-form .save:hover {
   background: #2564ebd8;
 }
 
@@ -150,3 +150,4 @@ body {
     text-align: center;
   }
 }
+
