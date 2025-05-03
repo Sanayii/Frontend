@@ -1,50 +1,61 @@
-import { Component, OnInit, PipeTransform } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { RouterOutlet } from '@angular/router'
-import { NgModel } from '@angular/forms';
-import { CommonModule, NgIf } from '@angular/common';
-import { MatPaginator, PageEvent} from '@angular/material/paginator';
+import { RouterOutlet } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { PaymentMethod } from '../_enums/payment-method';
-import { ServiceRequest } from '../_Models/service-request.model';
-
-//UI Matrial import
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatCardModule } from '@angular/material/card';
+import * as bootstrap from 'bootstrap';
+
 import { ServiceRequestWithDetails } from '../_Models/service-request.model';
 import { RequestService } from '../_services/request.service';
 import { TokenService } from '../_services/token.service';
-import { ServiceStatus } from '../_enums/service-status';
-
+import { Review } from '../_Models/review';
+import { ReviewService } from '../_services/review.service';
+import { ServiceStatus, ServiceStatusText } from '../_enums/service-status';
+import { PaymentMethod } from '../_enums/payment-method';
 
 @Component({
   selector: 'app-services-requests-history',
-  imports: [RouterLink,RouterOutlet,MatButtonModule,MatIconModule,
-    MatProgressSpinnerModule,MatCardModule,MatPaginator,MatSort,CommonModule],
+  standalone: true,
+  imports: [
+    RouterLink,
+    RouterOutlet,
+    MatButtonModule,
+    MatIconModule,
+    MatProgressSpinnerModule,
+    MatCardModule,
+    MatPaginator,
+    MatSort,
+    CommonModule,
+    FormsModule
+  ],
   templateUrl: './services-requests-history.component.html',
   styleUrl: './services-requests-history.component.css'
 })
-export class ServicesRequestsHistoryComponent {
+export class ServicesRequestsHistoryComponent implements OnInit {
   requests: ServiceRequestWithDetails[] = [];
-  filteredRequests: ServiceRequestWithDetails[] = [];
-  isLoading = true;
-  error: string | null = null;
-  showEmptyState = false;
 
-  // Pagination
   pageSize = 10;
   pageIndex = 0;
   totalRequests = 0;
 
-  // Filters
-  statusFilter = '';
-  serviceTypeFilter = '';
-  customerId: string|null = '';
-  constructor(private requestService: RequestService,private  test: TokenService) {
-    this.customerId = this.test.getUserIdFromToken();
+  customerId: string | null = '';
+  selectedRequest: any = null;
+  Comment: string = '';
+  selectedRating: number = 0;
+  valid = false;
+
+  constructor(
+    private requestService: RequestService,
+    private tokenService: TokenService,
+    private reviewService: ReviewService
+  ) {
+    this.customerId = this.tokenService.getUserIdFromToken();
   }
 
   ngOnInit(): void {
@@ -52,82 +63,75 @@ export class ServicesRequestsHistoryComponent {
   }
 
   loadRequests(): void {
-    this.isLoading = true;
-    this.error = null;
-    this.showEmptyState = false;
-
-    // In a real app, you would get the customer ID from auth service or route params
-+
     this.requestService.getCustomerRequests(this.customerId!).subscribe({
-      next: (data:any) => {
-        console.log('Data received:', data);
-
+      next: (data: any) => {
         this.requests = data;
-        this.filteredRequests = [...data];
-        this.totalRequests = data.length;
-        this.isLoading = false;
-        this.showEmptyState = data.length === 0;
       },
-      error: (err:any) => {
-        console.error('Full error:', err);
-        this.error = 'Failed to load service requests. Please try again later.';
-        this.isLoading = false;
-        console.error('Error loading requests:', err);
-      }
     });
   }
 
-
-
-  applyFilters(): void {
-    this.filteredRequests = this.requests.filter(request => {
-      const statusMatch = !this.statusFilter ||
-        this.getStatusText(request.status) === this.statusFilter;
-      const serviceMatch = !this.serviceTypeFilter ||
-        (request.serviceName && request.serviceName.includes(this.serviceTypeFilter));
-      return statusMatch && serviceMatch;
-    });
-    this.totalRequests = this.filteredRequests.length;
-    this.pageIndex = 0;
-    this.showEmptyState = this.filteredRequests.length === 0;
+  onPageChange(event: PageEvent) {
+    this.pageIndex = event.pageIndex;
+    this.pageSize = event.pageSize;
   }
 
+  getStatusText(status: number): string {
+    const key = ServiceStatus[status] as keyof typeof ServiceStatusText;
+    return ServiceStatusText[key] ?? 'Unknown';
+  }
 
-
-onPageChange(event: PageEvent) {
-  this.pageIndex = event.pageIndex;
-  this.pageSize = event.pageSize;
-}
-
-
-
-getStatusText(status: number): string {
-  return ServiceStatus[status] ?? 'Unknown';
-}
   getStatusClass(status: number): string {
     switch (status) {
-      case ServiceStatus.Pending: return 'bg-warning text-dark p-1';
-      case ServiceStatus.Completed: return 'bg-success text-white';
-      case ServiceStatus.Rejected: return 'bg-danger text-white';
-      case ServiceStatus.InProgress: return 'bg-info text-dark';
-      case ServiceStatus.Failed: return 'bg-secondary text-white';
-      default: return 'bg-light text-muted';
-    }
-  }
-  getStatusIcon(status: number): string {
-    switch (status) {
-      case ServiceStatus.Pending: return 'hourglass_empty';
-      case ServiceStatus.Completed: return 'check_circle';
-      case ServiceStatus.Rejected: return 'cancel';
-      case ServiceStatus.InProgress: return 'autorenew';
-      case ServiceStatus.Failed: return 'error_outline';
-      default: return 'help';
+      case ServiceStatus.Service_Requested:
+      case ServiceStatus.Awaiting_Approval:
+        return 'bg-warning text-dark ';
+      case ServiceStatus.Service_Completed:
+      case ServiceStatus.Service_done_Successfully_and_payment_done_Successfully:
+        return 'bg-success text-white ';
+      case ServiceStatus.Service_Cancelled:
+      case ServiceStatus.Service_Failed:
+        return 'bg-danger text-white ';
+      case ServiceStatus.In_Progress:
+      case ServiceStatus.Artisan_On_The_Way:
+      case ServiceStatus.Artisan_Nearing_Location:
+      case ServiceStatus.Artisan_Arrived:
+      case ServiceStatus.Service_Undergoing:
+        return 'bg-info text-dark ';
+      case ServiceStatus.Artisan_Busy:
+        return 'bg-secondary text-white';
+      case ServiceStatus.Service_done_Successfully_you_Should_complete_payment_method:
+        return 'bg-primary text-white ';
+      default:
+        return 'bg-light text-muted ';
     }
   }
 
-  getMethodTextt(method: number): string {
-    return PaymentMethod[method] ?? 'Unknown';
+  getStatusIcon(status: number): string {
+    switch (status) {
+      case ServiceStatus.Service_Requested:
+      case ServiceStatus.Awaiting_Approval:
+        return 'hourglass_empty';
+      case ServiceStatus.Service_Completed:
+      case ServiceStatus.Service_done_Successfully_and_payment_done_Successfully:
+        return 'check_circle';
+      case ServiceStatus.Service_Cancelled:
+      case ServiceStatus.Service_Failed:
+        return 'cancel';
+      case ServiceStatus.In_Progress:
+      case ServiceStatus.Artisan_On_The_Way:
+      case ServiceStatus.Artisan_Nearing_Location:
+      case ServiceStatus.Artisan_Arrived:
+      case ServiceStatus.Service_Undergoing:
+        return 'directions_run';
+      case ServiceStatus.Artisan_Busy:
+        return 'schedule';
+      case ServiceStatus.Service_done_Successfully_you_Should_complete_payment_method:
+        return 'payment';
+      default:
+        return 'help_outline';
+    }
   }
+
   getMethodText(method: number | undefined): string {
     if (method === undefined || method === null) return 'Not specified';
     return PaymentMethod[method] ?? 'Unknown';
@@ -137,11 +141,16 @@ getStatusText(status: number): string {
     if (method === undefined) return 'help_outline';
 
     switch (method) {
-      case PaymentMethod.Cash: return 'attach_money';
-      case PaymentMethod.CreditCard: return 'credit_card';
-      case PaymentMethod.PayPal: return 'payment';
-      case PaymentMethod.BankTransfer: return 'account_balance';
-      default: return 'help_outline';
+      case PaymentMethod.Cash:
+        return 'attach_money';
+      case PaymentMethod.CreditCard:
+        return 'credit_card';
+      case PaymentMethod.PayPal:
+        return 'payment';
+      case PaymentMethod.BankTransfer:
+        return 'account_balance';
+      default:
+        return 'help_outline';
     }
   }
 
@@ -149,11 +158,58 @@ getStatusText(status: number): string {
     if (method === undefined) return 'text-muted';
 
     switch (method) {
-      case PaymentMethod.Cash: return 'bg-success text-white';
-      case PaymentMethod.CreditCard: return 'bg-primary text-white';
-      case PaymentMethod.PayPal: return 'bg-info text-dark';
-      case PaymentMethod.BankTransfer: return 'bg-warning text-dark';
-      default: return 'bg-secondary text-white';
+      case PaymentMethod.Cash:
+        return 'bg-success text-white';
+      case PaymentMethod.CreditCard:
+        return 'bg-primary text-white';
+      case PaymentMethod.PayPal:
+        return 'bg-info text-dark';
+      case PaymentMethod.BankTransfer:
+        return 'bg-warning text-dark';
+      default:
+        return 'bg-secondary text-white';
     }
+  }
+
+  openRatingDialog(request: any) {
+    this.selectedRequest = request;
+    this.Comment = '';
+    this.selectedRating = 0;
+
+    const modal = new bootstrap.Modal(document.getElementById('ratingModal')!);
+    modal.show();
+  }
+
+  setRating(star: number) {
+    this.selectedRating = star;
+  }
+
+  isRatingValid(): boolean | string {
+    return this.Comment && this.Comment.trim().length > 0 && this.selectedRating > 0;
+  }
+
+  submitRating() {
+    this.valid = true;
+    if (!this.isRatingValid()) {
+      return;
+    }
+
+    const review: Review = {
+      reviewDate: new Date(),
+      rating: this.selectedRating,
+      customerId: this.customerId,
+      artisanId: this.selectedRequest.artisanId,
+      serviceId: this.selectedRequest.serviceId,
+      comment: this.Comment
+    };
+
+    this.reviewService.addRating(review).subscribe({
+      next: (response: any) => {
+        alert("You rated this service successfully.");
+      }
+    });
+
+    const modal = bootstrap.Modal.getInstance(document.getElementById('ratingModal')!);
+    modal?.hide();
   }
 }

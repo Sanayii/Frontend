@@ -7,39 +7,24 @@
     </h2>
   </div>
 
-  <!-- Loading State -->
-  <div *ngIf="isLoading" class="text-center py-5">
-    <mat-spinner diameter="50" class="mx-auto"></mat-spinner>
-    <p class="mt-3 text-muted">
-      <mat-icon class="align-middle me-1">hourglass_top</mat-icon>
-      Loading your service requests...
-    </p>
-  </div>
-
-  <!-- Error State -->
-  <div *ngIf="error && !isLoading" class="alert alert-danger text-center">
-    <mat-icon class="align-middle me-1">error_outline</mat-icon>
-    {{ error }}
-    <button mat-stroked-button color="primary" (click)="loadRequests()" class="ms-2">
-      <mat-icon class="align-middle me-1">refresh</mat-icon>
-      Try Again
+  @if(requests.length == 0)
+  { <!-- Empty State -->
+  <div class="text-center my-5 py-5 empty-state">
+    <mat-icon style="font-size: 48px;" class="text-primary">assignment</mat-icon>
+    <h4 class="mt-3">No Service Requests Found</h4>
+    <p class="text-muted mb-4">Try create a new request</p>
+    <button mat-raised-button color="primary" class="px-4" routerLink="/categories">
+      <mat-icon>add</mat-icon> Create Request
     </button>
   </div>
+  }
 
-  <!-- Empty State -->
-  <div *ngIf="showEmptyState && !isLoading && !error" class="text-center py-5">
-    <mat-icon class="display-4 text-muted mb-3" style="font-size: 4rem;">description</mat-icon>
-    <h4 class="text-muted">No Service Requests Found</h4>
-    <p class="text-muted">
-      <mat-icon class="align-middle me-1">info</mat-icon>
-      You haven't made any service requests yet.
-    </p>
-  </div>
 
+@else{
   <!-- Desktop Table View (shown on md screens and up) -->
-  <div *ngIf="!isLoading && !error && !showEmptyState" class="mb-5 d-none d-md-block">
+  <div  class="mb-5 d-none d-md-block">
     <div class="table-responsive rounded-3 shadow-sm">
-      <table class="table table-bordered table-hover align-middle text-center mb-0">
+      <table class="table table-bordered  align-middle text-center mb-0">
         <thead class="table-primary">
           <tr>
             <th class="py-3">
@@ -66,10 +51,14 @@
               <mat-icon class="align-middle me-1">engineering</mat-icon>
               Artisan
             </th>
+            <th class="py-3">
+              <mat-icon class="align-middle me-1">rate_review</mat-icon>
+              Action
+            </th>
           </tr>
         </thead>
         <tbody class="bg-light">
-          <tr *ngFor="let request of filteredRequests | slice: pageIndex * pageSize : (pageIndex + 1) * pageSize">
+          <tr *ngFor="let request of requests | slice: pageIndex * pageSize : (pageIndex + 1) * pageSize">
             <td class="py-3">
               <mat-icon class="align-middle me-1">home_repair_service</mat-icon>
               {{ request.serviceName || 'Unknown Service' }}
@@ -79,18 +68,18 @@
               {{ request.createdAt | date:'mediumDate' }}
             </td>
             <td class="py-3">
-              <span class="status-badge d-inline-flex align-items-center justify-content-center gap-2 py-2 px-3 fw-bold"
+              <span class="status-badge d-inline-flex align-items-center justify-content-center gap-1 py-2 px-2 fw-bold"
                     [ngClass]="getStatusClass(request.status)">
                 <mat-icon class="status-icon">{{ getStatusIcon(request.status) }}</mat-icon>
-                <span class="status-text">{{ getStatusText(request.status) }}</span>
+                <span class="status-text" style="font-size: 15px;">{{ getStatusText(request.status) }}</span>
               </span>
             </td>
             <td class="py-3">
               <span *ngIf="request.paymentMethod !== null"
-                    class="payment-badge badge rounded-pill d-flex align-items-center gap-2 fw-bold p-2"
+                    class="payment-badge badge rounded-pill d-flex align-items-center gap-1 fw-bold "
                     [ngClass]="getPaymentMethodClass(request.paymentMethod)">
                 <mat-icon class="payment-icon">{{ getMethodIcon(request.paymentMethod) }}</mat-icon>
-                <span class="payment-text">{{ getMethodText(request.paymentMethod) }}</span>
+                <span class="payment-text" style="font-size: 15px;">{{ getMethodText(request.paymentMethod) }}</span>
               </span>
               <span *ngIf="!request.paymentMethod" class="text-muted fw-bold">
                 <mat-icon>help_outline</mat-icon>
@@ -98,12 +87,16 @@
               </span>
             </td>
             <td class="py-3">
-              <mat-icon class="align-middle me-1">paid</mat-icon>
               {{ request.paymentAmount || 'Not specified' }} EGP
             </td>
-            <td class="py-3">
+            <td class="py-3" style="cursor: pointer;" routerLink="/artsin/{{request.artisanId}}">
               <mat-icon class="align-middle me-1">person</mat-icon>
               {{ request.artisanName || 'Not assigned' }}
+            </td>
+            <td class="py-3">
+              <button class="btn btn-sm" style="background-color: #2980b9; color:white" (click)="openRatingDialog(request)">
+                <mat-icon>star</mat-icon> Rate
+              </button>
             </td>
           </tr>
         </tbody>
@@ -111,8 +104,8 @@
     </div>
 
     <!-- Pagination -->
-    <div class="mt-5 d-flex justify-content-center">
-      <mat-paginator [length]="filteredRequests.length"
+    <div class="mt-4 d-flex justify-content-center">
+      <mat-paginator [length]="requests.length"
                      [pageSize]="pageSize"
                      [pageSizeOptions]="[5, 10, 25, 100]"
                      (page)="onPageChange($event)"
@@ -123,9 +116,10 @@
   </div>
 
   <!-- Mobile Card View (shown on screens smaller than md) -->
-  <div *ngIf="!isLoading && !error && !showEmptyState" class="mb-5 d-block d-md-none">
+  <div  class="mb-5 d-block d-md-none">
+
     <div class="row g-3">
-      <div *ngFor="let request of filteredRequests | slice: pageIndex * pageSize : (pageIndex + 1) * pageSize" class="col-12">
+      <div *ngFor="let request of requests | slice: pageIndex * pageSize : (pageIndex + 1) * pageSize" class="col-12">
         <div class="card shadow-sm mb-3">
           <div class="card-body">
             <div class="row">
@@ -210,6 +204,13 @@
                     {{ request.artisanName || 'Not assigned' }}
                   </p>
                 </div>
+
+                  <!--   Rate   -->
+                  <div class="mb-3 text-end">
+                    <button class="btn btn-sm" style="background-color: #2980b9; color:white" (click)="openRatingDialog(request)">
+                      <mat-icon>star</mat-icon> Rate
+                    </button>
+                  </div>
               </div>
             </div>
           </div>
@@ -219,13 +220,57 @@
 
     <!-- Pagination -->
     <div class="mt-4 d-flex justify-content-center">
-      <mat-paginator [length]="filteredRequests.length"
+      <mat-paginator [length]="requests.length"
                      [pageSize]="pageSize"
                      [pageSizeOptions]="[5, 10, 25, 100]"
                      (page)="onPageChange($event)"
                      color="primary"
                      class="rounded-3 shadow-sm">
       </mat-paginator>
+    </div>
+
+  </div>
+}
+</div>
+
+
+<!-- Rating Modal -->
+<div class="modal fade" id="ratingModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-3 mt-4">
+      <div class="modal-header">
+        <h5 class="modal-title">Rate Service</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+
+        <div class="mb-4 p-3 bg-light rounded-2">
+          <div class="row g-3">
+            <div class="col-12">
+              <label for="cardNumber" class="form-label">Comment</label>
+              <textarea [(ngModel)]="Comment" class="form-control"  placeholder="your comment" rows="3"></textarea>
+
+            </div>
+            <div class="rating-stars mb-3">
+              <i *ngFor="let star of [1,2,3,4,5]"
+                  class="fas fa-star"
+                  [ngClass]="{'text-warning': star <= selectedRating, 'text-muted': star > selectedRating}"
+                  style="cursor: pointer; font-size: 20px;"
+                  (click)="setRating(star)">
+              </i>
+            </div>
+            <div *ngIf="!isRatingValid() && valid" class="text-danger small mt-2">
+              Please provide a comment and select a rating.
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button class="btn" style="background-color: #236794; color:white" (click)="submitRating()">Submit</button>
+      </div>
     </div>
   </div>
 </div>

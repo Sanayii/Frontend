@@ -16,11 +16,12 @@ export class AccountService {
   isLogged = false;
 
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+    const token = localStorage.getItem('token');
+    this.isLogged = !!token;
+  }
 
   private baseUrl = 'https://localhost:7234/api/Account';
-
-
 
 
   resetPassword(model: any) {
