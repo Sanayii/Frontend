@@ -8,10 +8,11 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { HttpClient } from '@microsoft/signalr';
 import { ContactFormService } from '../_services/contact-form.service';
 import { ContactFormDto } from '../_Models/ContactForm';
+import { CommonModule } from '@angular/common';
 
 
 @Component({
-  imports:[RouterLink,CategoriesComponent,ReactiveFormsModule],
+  imports:[RouterLink,CategoriesComponent,ReactiveFormsModule,CommonModule],
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
@@ -90,6 +91,11 @@ export class HomeComponent implements AfterViewInit {
   }
 
   onSubmit() {
+    if (this.contactForm.invalid) {
+      // Mark every control in the form as touched
+      this.contactForm.markAllAsTouched();
+      return;
+    }
     if (this.contactForm?.valid) {
       const data: ContactFormDto = this.contactForm.value;
 

@@ -360,15 +360,5 @@ body {
   -webkit-overflow-scrolling: touch;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  min-width: 700px;
-}
-
-td, th {
-  word-break: break-word;
-  white-space: normal;
-}
 
 

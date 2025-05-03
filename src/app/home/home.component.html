@@ -194,8 +194,8 @@
   </section>
 
 
-  <!-- start contact  -->
-  <section class="contact-section" id="Contact">
+   <!-- start contact  -->
+   <section class="contact-section" id="Contact">
     <div class="contact-container">
       <h2><span>Contact </span> Us</h2>
       <p>Feel free to get in touch with us. We'd love to hear from you!</p>
@@ -206,22 +206,34 @@
 
           <div class="col-md-6 mb-2 ">
             <input type="text" class="form-control" formControlName="firstName" placeholder="First Name" required>
+            <small class="text-danger" *ngIf="contactForm.get('firstName')?.touched && contactForm.get('firstName')?.hasError('required')">
+              First name is required.
+            </small>
           </div>
           <div class="col-md-6">
             <input type="text" class="form-control" formControlName="lastName" placeholder="Last Name" required>
+            <small class="text-danger" *ngIf="contactForm.get('lastName')?.touched && contactForm.get('lastName')?.hasError('required')">
+              Last name is required.
+            </small>
           </div>
         </div>
 
         <div class="form-group">
           <input formControlName="email" type="email" placeholder="Email Address" required>
+          <small class="text-danger" *ngIf="contactForm.get('email')?.touched">
+            <span *ngIf="contactForm.get('email')?.hasError('required')">Email is required.</span>
+            <span *ngIf="contactForm.get('email')?.hasError('email')">Invalid email format.</span>
+          </small>
         </div>
 
         <div class="form-group">
           <textarea formControlName="message" rows="5" placeholder="Your Message" required></textarea>
+          <small class="text-danger" *ngIf="contactForm.get('message')?.touched && contactForm.get('message')?.hasError('required')">
+            Message is required.
+          </small>
         </div>
 
         <button type="submit" class="btn-submit">Send Message</button>
       </form>
     </div>
   </section>
-

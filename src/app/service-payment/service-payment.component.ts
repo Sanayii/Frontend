@@ -61,7 +61,7 @@ export class ServicePaymentComponent implements OnInit {
     if (this.paymentid && this.serviceId && this.customerId) {
       this.paymentService.deletePayment(this.customerId, Number(this.paymentid), Number(this.serviceId)).subscribe(
         () => {
-          console.log('Payment deleted successfully');
+          alert('You Canecled Request');
           this.router.navigate(['/home']);
         },
         error => {
