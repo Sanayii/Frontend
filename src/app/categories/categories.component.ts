@@ -100,16 +100,16 @@ export class CategoriesComponent  implements AfterViewInit {
   }
   getImageForCategory(categoryName: string): string {
     const imageMap: { [key: string]: string } = {
-      'سباكة': '/assets/images/plumbing.jpeg',
-      'كهرباء': '/assets/images/electrical.jpeg',
-      'نجارة': '/assets/images/joiner.jpeg',
-      'دهانات ونقاشة': '/assets/images/debate.jpeg',
-      'تركيب سيراميك وبلاط': '/assets/images/maintenance.jpeg',
-      'حدادة وألمنيوم': '/assets/images/blacksmith.jpeg',
-      'تنظيف وصيانة منازل': '/assets/images/cleaning.jpeg',
-      'إصلاح أجهزة كهربائية': '/assets/images/elec_repair.jpeg',
-      'صيانة المكيفات والتبريد': '/assets/images/conditioning.jpeg',
-      'تصميم وحدات ديكور': '/assets/images/decor.jpeg'
+      'Plumbing': '/assets/images/plumbing.jpeg',
+      'Electrical Work': '/assets/images/electrical.jpeg',
+      'Carpentry': '/assets/images/joiner.jpeg',
+      'Painting and Finishing': '/assets/images/debate.jpeg',
+      'Ceramic and Tile Installation': '/assets/images/maintenance.jpeg',
+      'Ironwork and Aluminum Fabrication': '/assets/images/blacksmith.jpeg',
+      'Home Cleaning and Maintenance': '/assets/images/cleaning.jpeg',
+      'Electrical Appliance Repair': '/assets/images/elec_repair.jpeg',
+      'Air Conditioning and Cooling Maintenance': '/assets/images/conditioning.jpeg',
+      'Interior Unit Design': '/assets/images/decor.jpeg'
     };
     return imageMap[categoryName] || '/assets/images/decor.jpeg';
   }

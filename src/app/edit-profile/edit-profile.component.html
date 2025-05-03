@@ -70,19 +70,19 @@
           }
         </div>
         <div formArrayName="userPhones">
-          <label>Phone Numbers:</label>
+          <label class="form-label">Phone Numbers</label>
           <div *ngFor="let phone of userPhones.controls; let i = index">
-            <input [formControlName]="i" type="text" />
-            <button type="button" (click)="removePhoneInput(i)">Remove</button>
+            <input class="form-control" [formControlName]="i" type="text" />
+            <button type="button" class="btn btn-danger btn-sm mt-1 mb-1 d-block" (click)="removePhoneInput(i)">Remove</button>
           </div>
-          <button type="button" (click)="addPhoneInput()">Add Phone Number</button>
+          <button type="button" class="btn btn-primary btn-sm" (click)="addPhoneInput()">Add Phone Number</button>
         </div>
 
 
       </div>
 
       <div class="form-actions">
-        <button type="submit" class="btn btn-primary" [disabled]="editForm.invalid || isLoading">
+        <button type="submit" class="btn btn-primary save" [disabled]="editForm.invalid || isLoading">
           @if (isLoading) {
             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
             Saving...
