@@ -25,6 +25,17 @@ export class ServicePaymentComponent implements OnInit {
     }
 
 
+    handleConfirmRequest() {
+      if (this.SerDTO?.paymentMethod === PaymentMethod.Cash) {
+        // For cash payment, show alert and navigate to home
+        alert('Your request has been confirmed! The artisan will contact you soon.');
+        this.router.navigate(['/home']);
+      } else {
+        // For other payment methods, navigate to checkout
+        this.router.navigate(['/checkout-request']);
+      }
+    }
+    
   cancelRequest() {
     this.router.navigate(['/home']);
   }

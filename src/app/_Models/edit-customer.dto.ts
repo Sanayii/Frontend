@@ -1,7 +1,7 @@
 export interface EditCustomerDTO {
-  id: string;
-  fName: string;
-  lName: string;
+  id: string;         // lowercase 'id'
+  fName: string;      // lowercase 'f'
+  lName: string;      // lowercase 'l'
   age: number;
   city: string;
   street: string;

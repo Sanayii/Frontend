@@ -78,18 +78,22 @@ export class EditProfileComponent implements OnInit {
       city: customer.city,
       street: customer.street,
       government: customer.government,
-      email: customer.email
+      email: customer.email,
+
     });
 
-    /*const phoneArray = this.editForm.get('userPhones') as FormArray;
-    phoneArray.clear(); // remove any existing inputs
+    while (this.userPhones.length) {
+      this.userPhones.removeAt(0);
+    }
 
-    (customer.phoneNumbers ?? []).forEach(phone => {
-      phoneArray.push(new FormControl(phone, Validators.required));
-    });*/
-    (customer.phoneNumbers || []).forEach(phone => {
-      this.userPhones.push(this.fb.control(phone));
-    });
+    if (customer.phoneNumber && customer.phoneNumber.length > 0) {
+      customer.phoneNumber.forEach(phone => {
+        this.userPhones.push(this.fb.control(phone, Validators.required));
+      });
+    } else {
+      this.userPhones.push(this.fb.control('', Validators.required));
+    }
+
   }
 
   addPhoneInput(): void {
@@ -100,37 +104,45 @@ export class EditProfileComponent implements OnInit {
     this.userPhones.removeAt(index);
   }
 
-  onSubmit(): void {
-    if (this.editForm.invalid) {
-      this.markFormGroupTouched(this.editForm);
-      return;
-    }
-
-    const formValue = this.editForm.value;
-
-    const dto: EditCustomerDTO = {
-      id: this.customerId!,
-      fName: formValue.fName,
-      lName: formValue.lName,
-      age: formValue.age,
-      city: formValue.city,
-      street: formValue.street,
-      government: formValue.government,
-      email: formValue.email,
-      phoneNumber: formValue.userPhones
-    };
-
-    this.isLoading = true;
-    this.customerService.updateCustomer(this.customerId!, dto).subscribe({
-      next: () => {
-        this.router.navigate(['/user-profile']);
-      },
-      error: (err) => {
-        this.error = 'Failed to update profile.';
-        this.isLoading = false;
+  
+    onSubmit(): void {
+      if (this.editForm.invalid) {
+        this.markFormGroupTouched(this.editForm);
+        return;
       }
-    });
-  }
+
+      const formValue = this.editForm.value;
+
+      // Extract phone numbers from FormArray
+      const phoneNumbers = this.userPhones.controls
+    .map(control => control.value)
+    .filter(phone => phone.trim() !== '');
+
+      const dto: EditCustomerDTO = {
+        id: this.customerId!,
+        fName: formValue.fName,
+        lName: formValue.lName,
+        age: formValue.age,
+        city: formValue.city,
+        street: formValue.street,
+        government: formValue.government,
+        email: formValue.email,
+        phoneNumber: phoneNumbers // Use the extracted phone numbers
+      };
+      console.log('Sending DTO:', dto);
+
+      this.isLoading = true;
+      this.customerService.updateCustomer(this.customerId!, dto).subscribe({
+        next: () => {
+          this.router.navigate(['/user-profile']);
+        },
+        error: (err) => {
+          console.error('Update error:', err);
+          this.error = err.error?.message || 'Failed to update profile';
+          this.isLoading = false;
+        }
+      });
+    }
 
   private markFormGroupTouched(control: AbstractControl): void {
     if (control instanceof FormControl) {

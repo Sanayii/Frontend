@@ -1,11 +1,12 @@
 export class Customer {
-  userName: string = '';
+  id?: string;
+  userName: string='';
   fName: string = '';
   lName: string = '';
   city: string = '';
   street: string = '';
   government: string = '';
-  phoneNumbers: string[] = [];
+  phoneNumber: string[] = [];
   email: string = '';
   password: string = '';
   confirmPassword: string = '';
