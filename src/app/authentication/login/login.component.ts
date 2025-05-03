@@ -32,12 +32,23 @@ export class LoginComponent implements OnInit {
   get password() { return this.loginForm.get('password'); }
   get rememberMe() { return this.loginForm.get('rememberMe'); }
 
+  errorMessage: string | null = null;
+
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
       if (params['token']) {
         localStorage.setItem('token', params['token']);
         this.loginService.isLogged = true;
         this.router.navigate(['/home']);
+      } else if (params['error']) {
+        const error = params['error'];
+        if (error === 'EmailMismatch') {
+          this.errorMessage = 'Email not registered or login error.';
+        } else if (error === 'external_login_failed') {
+          this.errorMessage = 'External login failed. Please try again.';
+        } else {
+          this.errorMessage = 'An unexpected error occurred.';
+        }
       }
     });
   }

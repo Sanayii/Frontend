@@ -130,3 +130,9 @@
   font-size: 18px;
   color: #2980b9;
 }
+.error {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+  text-align: center;
+}
