@@ -17,6 +17,13 @@ export class PaymentService {
       catchError(() => of(null)) // Return null if payment not found
     );
   }
+
+  private URL = 'https://localhost:7234/api/ServiceRequestPayment';
+  deletePayment(customerId: string, paymentId: number, serviceId: number): Observable<void> {
+    const url = `${this.URL}/${customerId}/${paymentId}/${serviceId}`;
+    return this.http.delete<void>(url);
+  }
+
 }
 export interface Payment {
   id: number;

@@ -1,19 +1,59 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
+import { TokenService } from '../_services/token.service';
+import { PaymentService } from '../_services/payment.service';  
 
 @Component({
   selector: 'app-failed-payment',
-  imports: [CommonModule],
   templateUrl: './failed-payment.component.html',
-  styleUrl: './failed-payment.component.css'
+  styleUrls: ['./failed-payment.component.css']
 })
-export class FailedPaymentComponent {
-  orderAmount: number = 888;
+export class FailedPaymentComponent implements OnInit {
+  paymentId: string | null = null;
+  serviceId: string | null = null;
+  customerId: string | null = null;
 
-  constructor(private router: Router) {}
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private router: Router,
+    private test: TokenService,
+    private paymentService: PaymentService
+  ) {}
 
-  tryAgain() {
-    this.router.navigate(['/service-payment']);
+  ngOnInit(): void {
+
+    this.activatedRoute.queryParams.subscribe(params => {
+      this.paymentId = params['paymentId'];
+      this.serviceId = params['serviceId'];
+      console.log("Payment ID:", this.paymentId);
+      console.log("Service ID:", this.serviceId);
+    });
+    this.customerId = this.test.getUserIdFromToken();
+  }
+
+  // Method to delete the payment
+  deletePayment(): void {
+    if (this.paymentId && this.serviceId && this.customerId) {
+      this.paymentService.deletePayment(this.customerId, Number(this.paymentId), Number(this.serviceId)).subscribe(
+        () => {
+          console.log('Payment deleted successfully');
+
+        },
+        error => {
+          console.error('Error deleting payment:', error);
+
+        }
+      );
+    } else {
+      console.error('Missing required parameters for payment deletion');
+    }
+  }
+
+  tryAgain(): void {
+
+    this.deletePayment();
+    this.router.navigate(['../home']);
   }
 }

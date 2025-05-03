@@ -61,12 +61,18 @@
           </div>
 
           <!-- Payment Method -->
-          <select formControlName="paymentMethod" class="form-control">
-            <option *ngFor="let option of paymentOptions" [value]="option.id">
-              {{ option.name }}
-            </option>
-          </select>
-
+          <div class="col-12">
+            <div class="border rounded-3 p-3 bg-light">
+              <label for="paymentMethod" class="form-label text-muted">Payment Method</label>
+              <select formControlName="paymentMethod" class="form-select" [disabled]="!paymentOptions.length">
+                <option value="" disabled selected>-- Select Payment Method --</option>
+                <option *ngFor="let option of paymentOptions" [value]="option.id">
+                  {{ option.name }}
+                </option>
+              </select>
+            </div>
+          </div>
+          
         </div>
         <div class="modal-footer">
           <button type="submit" class="btn btn-submit" style="background-color: #2980b9;">Submit Request</button>
