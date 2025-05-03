@@ -25,55 +25,57 @@ export class CheckoutRequestComponent  implements OnInit {
   selectedRating = 0;
   SerDTO :ServiceRequestDetailsDto |null = null;
   customerId: string|null;
+  categoryId: number|null=null;
   constructor(private router: Router,public ar:ActivatedRoute,public dataService: DataServiceService,
     public paymentService: CreatePaymentService,private  test: TokenService) {
     this.customerId = this.test.getUserIdFromToken();
     this.SerDTO = this.dataService.getServiceRequestDetails();
+
   }
 
- price : number = 3000;
+ price : number = 0;
   setRating(star: number) {
     this.selectedRating = star;
   }
   ngOnInit(): void {
+    const categoryId = this.SerDTO?.categoryId ?? 0;
 
-    if (this.SerDTO?.serviceId) {
-      this.paymentService.getprice(this.SerDTO.serviceId).subscribe(
-        response => {
-          this.price = response;
-        },
-        error => {
-          console.error('Error fetching price:', error);
-        }
-      );
+    if (categoryId === 1) {
+      this.price = 100; // سباكة
+    } else if (categoryId === 2) {
+      this.price = 120; // كهرباء
+    } else if (categoryId === 3) {
+      this.price = 90; // نجارة
+    } else if (categoryId === 4) {
+      this.price = 80; // دهانات ونقاشة
+    } else if (categoryId === 5) {
+      this.price = 110; // تركيب سيراميك وبلاط
+    } else if (categoryId === 6) {
+      this.price = 130; // حدادة وألمنيوم
+    } else if (categoryId === 7) {
+      this.price = 70; // تنظيف وصيانة منازل
+    } else if (categoryId === 8) {
+      this.price = 150; // تصميم وحدات ديكور
+    } else if (categoryId === 9) {
+      this.price = 95; // إصلاح أجهزة كهربائية
+    } else if (categoryId === 10) {
+      this.price = 125; // صيانة المكيفات والتبريد
     } else {
-      console.error('Service ID is invalid or not defined.');
+      this.price = 50; // أي رقم غير موجود
     }
 
-    }
-
-
-  taxRate: number = 0.14; // 14% tax rate
-  convenienceFee: number = 50; // Flat convenience fee
-
-  // Calculate the total
-  getTotal(): number {
-    const tax = this.price * this.taxRate;
-    const total = this.price + tax + this.convenienceFee;
-    return total;
   }
 
-  getTax(): number {
-    const tax = this.price * this.taxRate;
-    return parseFloat(tax.toFixed(2));
-  }
+
+
   async pay() {
     const request = {
       PaymentId : this.SerDTO?.paymentId, // Payment ID (optional, based on your business logic)
-      amount: this.getTotal(), // Amount in cents (e.g., $20.00)
+      amount: this.price, // Amount in cents (e.g., $20.00)
       productName: this.SerDTO?.serviceName, // Product name
       successUrl: "http://localhost:4200/payment-success", // Redirection URL after success
-      cancelUrl: "http://localhost:4200/payment-failed", // Redirection URL after cancellation
+      cancelUrl: `http://localhost:4200/payment-failed?paymentId=${this.SerDTO?.paymentId}&serviceId=${this.SerDTO?.serviceId}`
+      , // Redirection URL after cancellation
       customerId: this.customerId, // Customer ID
       serviceId: this.SerDTO?.serviceId, // Your service ID (optional, based on your business logic)
     };
@@ -87,7 +89,7 @@ export class CheckoutRequestComponent  implements OnInit {
         const result = await stripe.redirectToCheckout({ sessionId: res.sessionId });
         if (result.error) {
           console.error('حدث خطأ أثناء التوجيه إلى صفحة الدفع:', result.error.message);
-          this.router.navigate(['../payment-failed']);
+          this.router.navigate([`../payment-failed?id=${this.SerDTO?.serviceId}`]);
         } else {
           this.router.navigate(['../payment-success']);
         }

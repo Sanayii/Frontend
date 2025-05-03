@@ -35,7 +35,7 @@
           <div class="mb-5 pb-3 border-bottom">
 
             <div class="d-flex align-items-start">
-              <img src="/assets/images/service-image.jpg" alt="Service Image" class="rounded-3 me-3" width="80" height="80">
+              <mat-icon class="service-icon rounded-3 me-3">build_circle</mat-icon>
               <div>
                 <h5 class="mb-2">{{ SerDTO?.serviceName }}</h5>
                 <p class="text-muted mb-2">{{ SerDTO?.description }}</p>
@@ -144,36 +144,7 @@
 
       <!-- rating -->
       <div class="card border-0 shadow-sm rounded-3 mb-4">
-
-        <div class="card-header text-white py-3 rounded-top-3" style="background-color: #2980b9;">
-          <h5 class="mb-0"><mat-icon>star</mat-icon>Rating Service</h5>
-        </div>
-
-        <div class="card-body">
-
-          <div class="mb-4 p-3 bg-light rounded-2">
-            <div class="row g-3">
-              <div class="col-12">
-                <label for="cardNumber" class="form-label">Comment</label>
-                <input type="text" class="form-control" id="cardNumber" placeholder="your comment">
-              </div>
-              <div class="col-md-6">
-                <div class="stars">
-                  <i
-                    class="fa-solid fa-star"
-                    *ngFor="let star of [1,2,3,4,5]"
-                    [ngClass]="{ 'active': star <= selectedRating }"
-                    (click)="setRating(star)">
-                  </i>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
       </div>
-
     </div>
 
 
@@ -188,20 +159,12 @@
         <div class="card-body">
           <div class="mb-4">
             <div class="d-flex justify-content-between mb-3">
-              <span>Service Fee</span>
+              <span>Inspection Fee</span>
               <span>{{price}} EGP</span>
-            </div>
-            <div class="d-flex justify-content-between mb-3">
-              <span>Tax (14%)</span>
-              <span>{{getTax()}} EGP</span>
-            </div>
-            <div class="d-flex justify-content-between mb-3">
-              <span>Convenience Fee</span>
-              <span>{{convenienceFee}} EGP</span>
             </div>
             <div class="d-flex justify-content-between fw-bold fs-5 mt-4 pt-3 border-top">
               <span>Total</span>
-              <span>{{getTotal()}} EGP</span>
+              <span>{{price}} EGP</span>
             </div>
           </div>
 
@@ -224,7 +187,7 @@
 
           <!-- Checkout Button -->
           <button mat-raised-button color="primary" class="w-100 py-3 mb-3" (click)="pay()">
-            <mat-icon>lock</mat-icon> Confirm & Pay 
+            <mat-icon>lock</mat-icon> Confirm & Pay
           </button>
 
           <!-- Security Info -->

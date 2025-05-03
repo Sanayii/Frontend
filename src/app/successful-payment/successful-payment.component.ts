@@ -1,19 +1,31 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
+import { DataServiceService } from '../_services/data-service.service';
+import { ServiceRequestDetailsDto } from '../_dtos/serive-request-details-dto';
 
 @Component({
   selector: 'app-successful-payment',
-  imports: [CommonModule],
+  standalone: true,
+  imports: [CommonModule, MatIconModule],
   templateUrl: './successful-payment.component.html',
   styleUrl: './successful-payment.component.css'
 })
-export class SuccessfulPaymentComponent {
-  orderNumber: string = '345234323421134';
+export class SuccessfulPaymentComponent implements OnInit {
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
 
-  continueShopping() {
+  ) {}
+
+  ngOnInit() {
+
+  }
+
+  continue() {
     this.router.navigate(['/home']);
   }
+
+
 }
