@@ -18,7 +18,7 @@
         <img src="/assets/images/not.jpg" alt="photo">
         <div class="content">
           <div class="description" (click)="openDetailsPopup(noti)">
-            <p>{{ noti.content }}</p>
+            <p>{{ noti.content | underscoreToSpace  }}</p>
             <p id="noti-time">{{ noti.createdAt | date: 'short' }}</p>
           </div>
           <p class="delete-noti" (click)="deleteNotification(i,noti.id)">&#10006;</p>

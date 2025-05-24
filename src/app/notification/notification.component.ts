@@ -4,10 +4,11 @@ import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
  import { NotificationDetailsComponent } from '../notification-details/notification-details.component';
  import { NotificationService } from '../_services/notification.service';
 import { TokenService } from '../_services/token.service';
+import { UnderscoreToSpacePipe } from '../underscore-to-space.pipe';
  @Component({
   selector: 'app-notification',
   standalone: true,
-  imports: [CommonModule, NotificationDetailsComponent],
+  imports: [CommonModule, NotificationDetailsComponent,UnderscoreToSpacePipe],
   templateUrl: './notification.component.html',
   styleUrls: ['./notification.component.css']
 })
